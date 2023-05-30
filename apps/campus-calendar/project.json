@@ -1,0 +1,64 @@
+{
+  "name": "campus-calendar",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/campus-calendar/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/campus-calendar",
+        "main": "apps/campus-calendar/src/main.ts",
+        "tsConfig": "apps/campus-calendar/tsconfig.app.json",
+        "assets": ["apps/campus-calendar/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/campus-calendar/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "campus-calendar:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "campus-calendar:build:development"
+        },
+        "production": {
+          "buildTarget": "campus-calendar:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/campus-calendar/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/campus-calendar/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
