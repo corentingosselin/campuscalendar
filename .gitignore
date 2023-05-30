@@ -5,6 +5,11 @@ dist
 tmp
 /out-tsc
 
+.vscode
+.idea
+
+package-lock.json
+
 # dependencies
 node_modules
 
