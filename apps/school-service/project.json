@@ -16,7 +16,8 @@
         "tsConfig": "apps/school-service/tsconfig.app.json",
         "assets": ["apps/school-service/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/school-service/webpack.config.js"
+        "webpackConfig": "apps/school-service/webpack.config.js",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},

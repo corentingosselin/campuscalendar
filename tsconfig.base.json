@@ -14,7 +14,53 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@campuscalendar/backend/api-gateway/core": [
+        "libs/backend/api-gateway/core/src/index.ts"
+      ],
+      "@campuscalendar/backend/api-gateway/data-access": [
+        "libs/backend/api-gateway/data-access/src/index.ts"
+      ],
+      "@campuscalendar/backend/api-gateway/feature": [
+        "libs/backend/api-gateway/feature/src/index.ts"
+      ],
+      "@campuscalendar/backend/api-gateway/utils": [
+        "libs/backend/api-gateway/utils/src/index.ts"
+      ],
+      "@campuscalendar/backend/auth-service/core": [
+        "libs/backend/auth-service/core/src/index.ts"
+      ],
+      "@campuscalendar/backend/auth-service/data-access": [
+        "libs/backend/auth-service/data-access/src/index.ts"
+      ],
+      "@campuscalendar/backend/auth-service/feature": [
+        "libs/backend/auth-service/feature/src/index.ts"
+      ],
+      "@campuscalendar/backend/school-service/core": [
+        "libs/backend/school-service/core/src/index.ts"
+      ],
+      "@campuscalendar/backend/school-service/data-access": [
+        "libs/backend/school-service/data-access/src/index.ts"
+      ],
+      "@campuscalendar/backend/school-service/feature": [
+        "libs/backend/school-service/feature/src/index.ts"
+      ],
+      "@campuscalendar/backend/shared/message-broker": [
+        "libs/backend/shared/message-broker/src/index.ts"
+      ],
+      "@campuscalendar/backend/shared/network": [
+        "libs/backend/shared/network/src/index.ts"
+      ],
+      "@campuscalendar/backend/user-service/core": [
+        "libs/backend/user-service/core/src/index.ts"
+      ],
+      "@campuscalendar/backend/user-service/data-access": [
+        "libs/backend/user-service/data-access/src/index.ts"
+      ],
+      "@campuscalendar/backend/user-service/feature": [
+        "libs/backend/user-service/feature/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
