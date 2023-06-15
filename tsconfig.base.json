@@ -59,7 +59,11 @@
       ],
       "@campuscalendar/backend/user-service/feature": [
         "libs/backend/user-service/feature/src/index.ts"
-      ]
+      ],
+      "@campuscalendar/shared/api-interfaces": [
+        "libs/shared/api-interfaces/src/index.ts"
+      ],
+      "@campuscalendar/shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

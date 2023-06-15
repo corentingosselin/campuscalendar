@@ -1,17 +1,25 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 import { AppModule } from './app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { RpcToHttpExceptionFilter } from '@campuscalendar/backend/shared/network';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+
+  const fastifyOptions: ConstructorParameters<typeof FastifyAdapter>[0] = {
+    logger: true,
+  };
+  const fastifyAdapter = new FastifyAdapter(fastifyOptions);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    fastifyAdapter
+  );
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const config = app.get(ConfigService);
@@ -31,9 +39,9 @@ async function bootstrap() {
   );
 
   const port = config.get('API_GATEWAY_PORT') || 3000;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   Logger.log(
-    `🚀 API-GATEWAY is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 API Gateway is running on: http://localhost:${port}/${globalPrefix}`
   );
 }
 

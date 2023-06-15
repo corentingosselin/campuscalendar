@@ -1,3 +1,4 @@
+import { UserEntity } from "@campuscalendar/backend/user-service/data-access";
 import { Options } from "@mikro-orm/core";
 
 export default {
@@ -7,7 +8,7 @@ export default {
     dbName: process.env["MYSQL_DATABASE"],
     user: process.env["MYSQL_USER"],
     password: process.env["MYSQL_PASSWORD"],
-    entities: [],
+    entities: [UserEntity],
     migrations: {
       path: "apps/user-service/migrations",
     },

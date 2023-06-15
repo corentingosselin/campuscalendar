@@ -17,6 +17,7 @@ export class RpcToHttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
 
     const error = exception.getError();
+
     let status = 500;
     let message = 'Internal server error';
 
