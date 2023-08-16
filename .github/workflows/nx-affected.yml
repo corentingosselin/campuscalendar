@@ -32,4 +32,4 @@ jobs:
       run: pnpm install
 
     - name: Build Affected Projects
-      run: pnpm run nx -- affected:build --base=origin/main --head=HEAD
+      run: ./node_modules/.bin/nx affected:build --base=origin/main --head=HEAD
