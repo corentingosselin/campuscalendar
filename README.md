@@ -27,7 +27,7 @@ If you made changes to the entities, change the package.json to target the right
     ]
   },
 ```
- Then run `pnpm run typeorm:migration:generate` to generate the new migration files.   
+ Then run `pnpm run migration:generate` to generate the new migration files.   
 
 ## How to run the migrations
 
