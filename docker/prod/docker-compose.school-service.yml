@@ -2,13 +2,11 @@ version: '3.9'
 services:
   school-service:
     env_file:
-      - ../.env.prod
+      - ../../.env.docker
     build:
-      context: ../
-      dockerfile: apps/school-service/Dockerfile
+      context: ../../
+      dockerfile: apps/school-service/docker/Dockerfile.prod
     container_name: school-service
-    profiles:
-      - production
     volumes:
       - school-service-volume:/usr/src/app
     restart: always

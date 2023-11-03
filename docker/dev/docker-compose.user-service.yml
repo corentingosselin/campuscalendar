@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  user-service:
+    env_file:
+      - ../../.env.docker
+    build:
+      context: ../../
+      dockerfile: apps/user-service/docker/Dockerfile.dev
+    container_name: user-service
+    volumes:
+      - ../../apps/user-service:/usr/src/app/apps/user-service
+      - ../../libs/backend/user-service:/usr/src/app/libs/backend/user-service
+      - ../../libs/backend/shared:/usr/src/app/libs/backend/shared
+      - ../../libs/shared:/usr/src/app/libs/shared
+    restart: always
+    ports:
+      - ${USER_SERVICE_PORT}:${USER_SERVICE_PORT}
+    depends_on:
+      - user-service-db
+  user-service-db:
+    container_name: 'user-service-db'
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_USER=${MYSQL_USER}
+    ports:
+      - '${USER_SERVICE_DB_PORT}:${USER_SERVICE_DB_PORT}'
+    volumes:
+      - user-service-db-volume:/var/lib/mysql
+volumes:
+  user-service-db-volume:

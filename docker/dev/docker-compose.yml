@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  frontend:
+    env_file:
+      - ../../.env.docker
+    build:
+      context: ../../
+      dockerfile: apps/frontend/docker/Dockerfile.dev
+    container_name: frontend 
+    volumes:
+      - ../../apps/frontend:/usr/src/app/apps/frontend
+      - ../../libs/shared:/usr/src/app/libs/shared
+    restart: always
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+  api-gateway:
+    env_file:
+      - ../../.env.docker
+    build:
+      context: ../../
+      dockerfile: apps/api-gateway/docker/Dockerfile.dev
+    container_name: api-gateway
+    volumes:
+      - ../../apps/api-gateway:/usr/src/app/apps/api-gateway
+      - ../../libs/backend/api-gateway:/usr/src/app/libs/backend/api-gateway
+      - ../../libs/backend/shared:/usr/src/app/libs/backend/shared
+      - ../../libs/shared:/usr/src/app/libs/shared
+    restart: always
+    ports:
+      - ${API_GATEWAY_PORT}:${API_GATEWAY_PORT}
+    depends_on:
+      - rabbitmq
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    ports:
+      # AMQP protocol port
+      - '${RABBITMQ_PORT}:${RABBITMQ_PORT}'
+      # HTTP management UI
+      - '15672:15672'
+    volumes:
+      - rabbitmq-volume:/var/lib/rabbitmq
+volumes:
+  rabbitmq-volume:
+name: campuscalendar-dev
