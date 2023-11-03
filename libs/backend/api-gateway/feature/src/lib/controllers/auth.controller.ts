@@ -13,6 +13,7 @@ import {
   
     @Post('login')
     login(@Body() loginUserDto: LoginUserDto) {
+      console.log('test');
       return this.authService.login(loginUserDto);
     }
 
