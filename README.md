@@ -16,8 +16,10 @@ Run `npm run docker:prod` to start the docker containers. Navigate to http://loc
 ## If you need to run the project locally and manually
 
 Run `npm i -g pnpm` to install pnpm globally. Then run `pnpm i` to install all dependencies.
-Run `pnpm run docker` to start the docker containers like databases and rabbitmq.
+Run `npm run docker:prod` to start the entire application campuscalendar like in production
 Run `nx serve <service-name>` to start the service you need to work on, be careful, some services depend on others.
+Run `npm run docker:dev` to start the development environment, if you make a change the docker container is automatically updated 
+However if you update the package.json please re-execute this command
 
 ## How to generate the migrations
 
