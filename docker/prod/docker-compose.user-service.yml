@@ -2,13 +2,11 @@ version: '3.9'
 services:
   user-service:
     env_file:
-      - ../.env.prod
+      - ../../.env.docker
     build:
-      context: ../
-      dockerfile: apps/user-service/Dockerfile
+      context: ../../
+      dockerfile: apps/user-service/docker/Dockerfile.prod
     container_name: user-service
-    profiles:
-      - production
     volumes:
       - user-service-volume:/usr/src/app
     restart: always

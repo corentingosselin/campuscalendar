@@ -1,0 +1,15 @@
+# Use an Ubuntu-based Node.js image
+FROM node
+
+WORKDIR /usr/src/app
+
+COPY package.json pnpm-lock.yaml ./
+COPY nx.json tsconfig.base.json .env.docker ./
+
+RUN npm install -g pnpm
+RUN npm install -g nx
+RUN pnpm install
+
+ENV NODE_ENV development
+
+CMD ["npx", "nx", "serve", "api-gateway"]

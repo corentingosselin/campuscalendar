@@ -2,28 +2,24 @@ version: '3.9'
 services:
   frontend:
     env_file:
-      - ../.env.prod
-    profiles:
-      - production
+      - ../../.env.docker
     build:
       context: ../
-      dockerfile: apps/frontend/Dockerfile
+      dockerfile: apps/frontend/docker/Dockerfile.prod
     container_name: frontend 
     volumes:
-      - ../dist/apps/frontend:/usr/share/nginx/html
-      - ../apps/frontend/nginx.conf:/etc/nginx/nginx.conf 
+      - ../../dist/apps/frontend:/usr/share/nginx/html
+      - ../../apps/frontend/nginx.conf:/etc/nginx/nginx.conf 
     restart: always
     ports:
       - ${FRONTEND_PORT}:80
   api-gateway:
     env_file:
-      - ../.env.prod
+      - ../../.env.docker
     build:
-      context: ../
-      dockerfile: apps/api-gateway/Dockerfile
+      context: ../../
+      dockerfile: apps/api-gateway/docker/Dockerfile.prod
     container_name: api-gateway
-    profiles:
-      - production
     volumes:
       - api-gateway-volume:/usr/src/app
     restart: always

@@ -6,7 +6,7 @@ services:
     container_name: flyway_user-service-db
     command: -url=jdbc:mysql://user-service-db:${USER_SERVICE_DB_PORT}/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true -user=${MYSQL_USER} -password=${MYSQL_PASSWORD} -connectRetries=60 -connectRetriesInterval=5 migrate
     volumes:
-      - ../apps/user-service/migrations:/flyway/sql
+      - ../../apps/user-service/migrations:/flyway/sql
     depends_on:
       - user-service-db
 
@@ -15,7 +15,7 @@ services:
     container_name: flyway_school-service-db
     command: -url=jdbc:mysql://school-service-db:${SCHOOL_SERVICE_DB_PORT}/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true -user=${MYSQL_USER} -password=${MYSQL_PASSWORD} -connectRetries=60 -connectRetriesInterval=5 migrate
     volumes:
-      - ../apps/school-service/migrations:/flyway/sql
+      - ../../apps/school-service/migrations:/flyway/sql
     depends_on:
       - school-service-db
 
