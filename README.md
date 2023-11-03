@@ -1,3 +1,5 @@
+[![Build Affected](https://github.com/corentingosselin/campuscalendar/actions/workflows/nx-affected.yml/badge.svg?branch=main)](https://github.com/corentingosselin/campuscalendar/actions/workflows/nx-affected.yml)
+
 # Campuscalendar
 
 [![Build Affected](https://github.com/corentingosselin/campuscalendar/actions/workflows/nx-affected.yml/badge.svg?branch=develop)](https://github.com/corentingosselin/campuscalendar/actions/workflows/nx-affected.yml)
