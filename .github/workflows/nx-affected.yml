@@ -22,7 +22,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install pnpm
-      run: npm install -g pnpm@7.26.3
+      run: npm install -g pnpm@8.6.0
 
     - name: Cache .pnpm-store
       uses: actions/cache@v2
