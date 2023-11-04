@@ -39,15 +39,22 @@ jobs:
     - name: Build Affected Projects
       run: ./node_modules/.bin/nx affected:build --base=origin/develop --head=HEAD
 
+    - name: Build all projects
+      if: github.ref == 'refs/heads/main' 
+      run: pnpm run build:all
+
     - name: Upload workspace
+      if: github.ref == 'refs/heads/main' 
       uses: actions/upload-artifact@v2
       with:
         name: workspace
-        path: ./
+        path: |
+          !**/node_modules
+          **
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main'  # This line ensures that the deploy job only runs on the main branch
+    if: github.ref == 'refs/heads/main'  
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
@@ -57,10 +64,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: workspace
-
-    - name: Build all projects
-      run: pnpm run build:all
-
+        
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
