@@ -12,7 +12,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+    - name: Install rsync
+      run: sudo apt-get update && sudo apt-get install -y rsync
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh/
@@ -20,11 +21,16 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 162.19.243.159 >> ~/.ssh/known_hosts
 
-    - name: Deploy to VPS
+    - name: Sync files & Deploy to VPS
       env:
-        SSH_HOST: 162.19.243.159
-        SSH_USER: debian
-        DEPLOY_PATH: /app
+        SSH_USER: ${{ secrets.SSH_USER }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
       run: |
         rsync -avz --exclude='.git/' --exclude='node_modules/' ./ $SSH_USER@$SSH_HOST:$DEPLOY_PATH
+        ssh $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && docker-compose down && docker-compose up -d --build"
+
+
+    - name: Run Application
+      run: |
         ssh $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && docker-compose down && docker-compose up -d --build"
