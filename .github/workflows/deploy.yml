@@ -1,12 +1,15 @@
-name: Build and Push Docker
-
+name: Deploy
 on:
-  push:
-    branches:
-      - deployment-action
+  workflow_run:
+    workflows: ["Build Affected"]
+    branches: [deployment-action]
+    types:
+      - completed
 
 jobs:
-  build-and-push:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Check Out Repo
