@@ -38,3 +38,34 @@ jobs:
 
     - name: Build Affected Projects
       run: ./node_modules/.bin/nx affected:build --base=origin/develop --head=HEAD
+
+    - name: Upload workspace
+      uses: actions/upload-artifact@v2
+      with:
+        name: workspace
+        path: ./
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'  # This line ensures that the deploy job only runs on the main branch
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Download workspace
+      uses: actions/download-artifact@v2
+      with:
+        name: workspace
+
+    - name: Build all projects
+      run: pnpm run build:all
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build and push Docker Images
+      run: ./tools/scripts/build-and-push.sh
