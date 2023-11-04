@@ -43,33 +43,13 @@ jobs:
       if: github.ref == 'refs/heads/main' 
       run: pnpm run build:all
 
-    - name: Upload workspace
-      if: github.ref == 'refs/heads/main' 
-      uses: actions/upload-artifact@v2
-      with:
-        name: workspace
-        path: |
-          !**/node_modules
-          **
-
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main'  
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-
-    - name: Download workspace
-      uses: actions/download-artifact@v2
-      with:
-        name: workspace
-        
     - name: Log in to Docker Hub
+      if: github.ref == 'refs/heads/main' 
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Build and push Docker Images
+      if: github.ref == 'refs/heads/main' 
       run: ./tools/scripts/build-and-push.sh
