@@ -7,7 +7,9 @@
     "docker:dev": "docker-compose -f docker/dev/docker-compose.yml -f docker/dev/docker-compose.school-service.yml -f docker/dev/docker-compose.user-service.yml -f docker/dev/docker-compose.flyway.yml --env-file docker/.docker-compose.env up -d --build",
     "docker:prod": "npm run build:all && docker-compose -f docker/prod/docker-compose.yml -f docker/prod/docker-compose.school-service.yml -f docker/prod/docker-compose.user-service.yml -f docker/prod/docker-compose.auth-service.yml -f docker/prod/docker-compose.flyway.yml --env-file docker/.docker-compose.env up -d --build",
     "migration:generate": "npx mikro-orm migration:create --initial",
-    "build:all": "nx run-many --targets=build --all"
+    "build:all": "nx run-many --targets=build --all",
+    "build:docker": "docker build -t campuscalendar/api-gateway:latest -f apps/api-gateway/docker/Dockerfile.prod . && docker build -t campuscalendar/auth-service:latest -f apps/auth-service/docker/Dockerfile.prod . && docker build -t campuscalendar/school-service:latest -f apps/school-service/docker/Dockerfile.prod . && docker build -t campuscalendar/user-service:latest -f apps/user-service/docker/Dockerfile.prod .",
+    "push:docker": "docker push campuscalendar/api-gateway:latest && docker push campuscalendar/auth-service:latest && docker push campuscalendar/school-service:latest && docker push campuscalendar/user-service:latest"
   },
   "private": true,
   "dependencies": {
