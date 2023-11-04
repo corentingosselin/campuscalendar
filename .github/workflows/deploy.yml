@@ -1,36 +1,39 @@
-name: Deploy to VPS
+name: Build and Push Docker
 
 on:
   push:
     branches:
-      - main  # This will trigger the workflow when changes are pushed to the main branch.
+      - deployment-action
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
+    - name: Check Out Repo
       uses: actions/checkout@v2
-    - name: Install rsync
-      run: sudo apt-get update && sudo apt-get install -y rsync
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh/
-        echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 162.19.243.159 >> ~/.ssh/known_hosts
 
-    - name: Sync files & Deploy to VPS
-      env:
-        SSH_USER: ${{ secrets.SSH_USER }}
-        SSH_HOST: ${{ secrets.SSH_HOST }}
-        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-      run: |
-        rsync -avz --exclude='.git/' --exclude='node_modules/' ./ $SSH_USER@$SSH_HOST:$DEPLOY_PATH
-        ssh $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && docker-compose down && docker-compose up -d --build"
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
 
+    - name: Install pnpm
+      run: npm install -g pnpm@8.6.0
 
-    - name: Run Application
-      run: |
-        ssh $SSH_USER@$SSH_HOST "cd $DEPLOY_PATH && docker-compose down && docker-compose up -d --build"
+    - name: Install Dependencies
+      run: pnpm install
+    
+    - name: Build all projects
+      run: pnpm run build:all
+
+    - name: Build images
+      run: pnpm run build:docker
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build and push Docker Images
+      run: pnpm run push:docker
