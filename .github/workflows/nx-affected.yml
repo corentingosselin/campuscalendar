@@ -52,4 +52,4 @@ jobs:
 
     - name: Build and push Docker Images
       if: github.ref == 'refs/heads/main' 
-      run: ./tools/scripts/build-and-push.sh
+      run: ./tools/scripts/build-push-docker.sh
