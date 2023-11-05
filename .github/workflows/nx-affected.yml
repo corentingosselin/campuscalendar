@@ -49,4 +49,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build and push Docker Images
+      if: github.ref == 'refs/heads/main' 
       run: ./tools/scripts/build-push-docker.sh

@@ -24,7 +24,8 @@ build_image() {
 push_image() {
   local service=$1
   echo "Pushing $service to registry..."
-  docker push "campuscalendar/$service:latest"
+  docker push "prodigyman/campuscalendar/$service:latest"
+  
   echo "$service pushed successfully."
 }
 
