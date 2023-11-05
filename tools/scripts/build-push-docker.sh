@@ -2,6 +2,9 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Define the base name for Docker images
+DOCKER_IMAGE_BASE="prodigyman/campuscalendar"
+
 # Declare an associative array of services and their Dockerfile locations
 declare -A services=(
   ["api-gateway"]="apps/api-gateway/docker/Dockerfile.prod"
@@ -15,26 +18,23 @@ declare -A services=(
 build_image() {
   local service=$1
   local dockerfile=$2
+  local tag="$DOCKER_IMAGE_BASE/$service:latest"
   echo "Building $service..."
-  docker build -t "campuscalendar/$service:latest" -f $dockerfile .
+  docker build -t "$tag" -f "$dockerfile" .
   echo "$service built successfully."
 }
 
 # Function to push a Docker image
 push_image() {
   local service=$1
+  local tag="$DOCKER_IMAGE_BASE/$service:latest"
   echo "Pushing $service to registry..."
-  docker push "prodigyman/campuscalendar/$service:latest"
-  
+  docker push "$tag"
   echo "$service pushed successfully."
 }
 
-# Build all Docker images
+# Build and Push all Docker images
 for service in "${!services[@]}"; do
   build_image "$service" "${services[$service]}"
-done
-
-# Push all Docker images
-for service in "${!services[@]}"; do
   push_image "$service"
 done
