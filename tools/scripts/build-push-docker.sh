@@ -16,7 +16,7 @@ build_image() {
   local service=$1
   local dockerfile=$2
   echo "Building $service..."
-  docker build -t "campuscalendar/$service:latest" -f $dockerfile "apps/$service/"
+  docker build -t "campuscalendar/$service:latest" -f $dockerfile .
   echo "$service built successfully."
 }
 
