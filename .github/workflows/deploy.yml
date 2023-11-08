@@ -41,6 +41,6 @@ jobs:
     - name: Deploy to VPS
       if: github.ref == 'refs/heads/main'
       run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} debian@162.19.243.159 'bash -s' < /deploy.sh
+        ssh -o StrictHostKeyChecking=no -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") debian@162.19.243.159 'bash -s' < deploy.sh
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}   
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
