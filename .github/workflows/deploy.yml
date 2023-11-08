@@ -2,9 +2,7 @@ name: Deploy
 on:
   workflow_run:
     workflows: ["Build Affected"]
-    branches: [main]
-    types:
-      - completed
+    branches: [deployment-action]
 
 jobs:
   deploy:
