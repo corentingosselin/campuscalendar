@@ -28,13 +28,9 @@ jobs:
 
     - name: Install Certificates
       run: |
-        sudo mkdir -p /etc/docker/certs.d/registry.prodigyman.fr:5000
-        sudo cp ./tools/certificates/registry.prodigyman.fr.crt /etc/docker/certs.d/registry.prodigyman.fr:5000/
+        sudo mkdir -p /etc/docker/certs.d/registry.prodigyman.fr
+        sudo cp ./tools/certificates/registry.prodigyman.fr.crt /etc/docker/certs.d/registry.prodigyman.fr/
         sudo update-ca-certificates
-        
-    - name: Validate Certificates
-      run: |
-        openssl s_client -connect registry.prodigyman.fr:5000 -servername registry.prodigyman.fr -CAfile /etc/docker/certs.d/registry.prodigyman.fr:5000/registry.prodigyman.fr.crt
 
     - name: Restart Docker
       run: sudo systemctl restart docker
@@ -42,7 +38,7 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
-        registry: registry.prodigyman.fr:5000
+        registry: registry.prodigyman.fr
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
