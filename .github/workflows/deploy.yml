@@ -37,10 +37,3 @@ jobs:
 
     - name: Build and push Docker Images
       run: ./tools/scripts/build-push-docker.sh
-
-    - name: Deploy to VPS
-      if: github.ref == 'refs/heads/main'
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} debian@162.19.243.159 'bash -s' < /deploy.sh
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}   
