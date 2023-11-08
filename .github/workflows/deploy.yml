@@ -31,6 +31,10 @@ jobs:
         sudo mkdir -p /etc/docker/certs.d/registry.prodigyman.fr:5000
         sudo cp ./tools/certificates/registry.prodigyman.fr.crt /etc/docker/certs.d/registry.prodigyman.fr:5000/
         sudo update-ca-certificates
+        
+    - name: Validate Certificates
+      run: |
+        openssl s_client -connect registry.prodigyman.fr:5000 -servername registry.prodigyman.fr -CAfile /etc/docker/certs.d/registry.prodigyman.fr:5000/registry.prodigyman.fr.crt
 
     - name: Restart Docker
       run: sudo systemctl restart docker
