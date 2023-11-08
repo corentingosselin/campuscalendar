@@ -10,9 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
     - name: Check Out Repo
       uses: actions/checkout@v2
