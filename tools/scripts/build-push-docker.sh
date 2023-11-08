@@ -3,7 +3,7 @@
 set -e
 
 # Define the base name for your docker images
-REGISTRY_BASE="gcr.io/campuscalendar"
+REGISTRY_BASE="ghcr.io/campuscalendar"
 
 # Declare an associative array of services and their Dockerfile locations
 declare -A services=(
@@ -34,10 +34,6 @@ push_image() {
   docker push "${image_name}"
   echo "${service} pushed successfully."
 }
-
-#Debug CI Action
-ls -al
-ls -al dist 
 
 # The version or tag for the images, could be set dynamically or passed into the script
 VERSION_TAG="latest"

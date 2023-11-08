@@ -33,10 +33,5 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    - name: Debug action
-      run: |
-        echo "List root folder"
-        ls -al 
-
     - name: Build and push Docker Images
       run: ./tools/scripts/build-push-docker.sh
