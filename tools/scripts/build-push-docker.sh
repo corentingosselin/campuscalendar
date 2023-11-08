@@ -44,7 +44,7 @@ VERSION_TAG="latest"
 
 # Build all Docker images
 for service in "${!services[@]}"; do
-  build_image "$service" "apps/$service/${services[$service]}" "$VERSION_TAG"
+  build_image "$service" "${services[$service]}" "$VERSION_TAG"
 done
 
 # Push all Docker images
