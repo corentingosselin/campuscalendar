@@ -37,6 +37,7 @@ push_image() {
 
 #Debug CI Action
 ls -al
+ls -al dist 
 
 # The version or tag for the images, could be set dynamically or passed into the script
 VERSION_TAG="latest"
