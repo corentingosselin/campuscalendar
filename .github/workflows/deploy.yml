@@ -37,8 +37,6 @@ jobs:
       run: |
         echo "List root folder"
         ls -al 
-        echo "List projets "
-        ls -alR
 
     - name: Build and push Docker Images
       run: ./tools/scripts/build-push-docker.sh

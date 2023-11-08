@@ -35,6 +35,9 @@ push_image() {
   echo "${service} pushed successfully."
 }
 
+#Debug CI Action
+ls -al
+
 # The version or tag for the images, could be set dynamically or passed into the script
 VERSION_TAG="latest"
 
