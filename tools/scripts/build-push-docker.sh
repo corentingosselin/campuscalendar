@@ -21,7 +21,7 @@ build_image() {
   local version_tag=$3
   local image_name="${REGISTRY_BASE}/${service}:${version_tag}"
   echo "Building ${image_name}..."
-  docker build -t "${image_name}" -f $dockerfile "apps/$service/"
+  docker build -t "${image_name}" -f $dockerfile .
   echo "${service} built successfully."
 }
 
@@ -44,7 +44,7 @@ VERSION_TAG="latest"
 
 # Build all Docker images
 for service in "${!services[@]}"; do
-  build_image "$service" "${services[$service]}" "$VERSION_TAG"
+  build_image "$service" "apps/$service/${services[$service]}" "$VERSION_TAG"
 done
 
 # Push all Docker images
