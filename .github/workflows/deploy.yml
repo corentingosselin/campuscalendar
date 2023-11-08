@@ -34,4 +34,4 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - name: Build and push Docker Images
-      run: ./tools/scripts/build-and-push.sh
+      run: ./tools/scripts/build-push-docker.sh
