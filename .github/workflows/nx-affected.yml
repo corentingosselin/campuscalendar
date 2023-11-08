@@ -34,3 +34,18 @@ jobs:
 
     - name: Build Affected Projects
       run: ./node_modules/.bin/nx affected:build --base=origin/develop --head=HEAD
+
+    - name: Build all projects
+      if: github.ref == 'refs/heads/main' 
+      run: pnpm run build:all
+
+    - name: Log in to Docker Hub
+      if: github.ref == 'refs/heads/main' 
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Build and push Docker Images
+      if: github.ref == 'refs/heads/main' 
+      run: ./tools/scripts/build-push-docker.sh
