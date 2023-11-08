@@ -60,6 +60,12 @@
       "@campuscalendar/backend/user-service/feature": [
         "libs/backend/user-service/feature/src/index.ts"
       ],
+      "@campuscalendar/data-access": [
+        "libs/frontend/feature-home/data-access/src/index.ts"
+      ],
+      "@campuscalendar/feature": [
+        "libs/frontend/feature-home/feature/src/index.ts"
+      ],
       "@campuscalendar/shared/api-interfaces": [
         "libs/shared/api-interfaces/src/index.ts"
       ],
