@@ -3,7 +3,7 @@
 set -e
 
 # Define the base name for your docker images
-REGISTRY_BASE="ghcr.io/campuscalendar"
+REGISTRY_BASE="ghcr.io/corentingosselin"
 
 # Declare an associative array of services and their Dockerfile locations
 declare -A services=(
