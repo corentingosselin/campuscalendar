@@ -1,0 +1,45 @@
+:host {
+    width: 40rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer {
+    gap: 5rem;
+    justify-content: space-between;
+}
+
+#schoolName {
+    width: 100%;
+}
+
+.school-section {
+
+    justify-content: center;
+}
+
+.school-year-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+
+// on mobile devices .content should be 100% width with margin 1rem
+// on desktop devices .content should be 40% width with margin 0
+@media screen and (max-width: 768px) {
+    :host {
+        width: 100%;
+    }
+
+    .content {
+        margin: 1rem;
+    }
+}
+

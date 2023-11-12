@@ -1,0 +1,38 @@
+<div class="content">
+  <h2>Configuration d'un compte administrateur</h2>
+
+  <div class="names-input">
+    <div class="flex-column small-gap">
+      <label for="firstName">Prénom</label>
+      <input pInputText id="firstName" placeholder="prénom" />
+    </div>
+
+    <div class="flex-column small-gap">
+      <label for="lastName">Nom de famille</label>
+      <input pInputText id="lastName" placeholder="nom de famille" />
+    </div>
+  </div>
+
+  <div class="flex-column small-gap">
+    <label for="email">Addresse email</label>
+    <input pInputText id="email" placeholder="email" />
+  </div>
+
+
+  <div class="names-input">
+    <div class="flex-column small-gap">
+      <label for="password">Mot de passe</label>
+      <input pInputText id="password" type="password" placeholder="mot de passe" />
+    </div>
+
+    <div class="flex-column small-gap">
+        <label for="password">Confirmation mot de passe</label>
+        <input pInputText id="password" type="password" placeholder="mot de passe" />
+      </div>
+  </div>
+
+  
+  <div class="next-button">
+    <p-button label="suivant" icon="pi pi-angle-right" iconPos="right" (click)="nextPage()"></p-button>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.steps-bar {
+    margin-top: 5rem;
+}
+
+#logo-setup {
+    height: 2rem;
+    margin-bottom: 1rem;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+:host ::ng-deep {
+    h2 {
+        font-weight: 300;
+        margin-bottom: 3rem;
+    }
+
+    label {
+        font-weight: 400;
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "authentification-core",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/authentification/core/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/authentification/core/**/*.ts",
+          "libs/frontend/authentification/core/**/*.html"
+        ]
+      }
+    }
+  }
+}

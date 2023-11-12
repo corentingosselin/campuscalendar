@@ -1,0 +1,12 @@
+<p-card header="Master 1">
+  <div class="flex-column small-gap">
+    <label>Ajoutez des matières</label>
+    <p-chips
+      [max]="30"
+      class="subject-input"
+      [(ngModel)]="values"
+      separator=","
+      placeholder="maths, physique,..."
+    ></p-chips> 
+  </div>
+</p-card>

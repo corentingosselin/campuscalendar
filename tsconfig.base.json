@@ -15,6 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@campuscalendar/authentification-core": [
+        "libs/frontend/authentification/core/src/index.ts"
+      ],
+      "@campuscalendar/authentification-data-access": [
+        "libs/frontend/authentification/data-access/src/index.ts"
+      ],
+      "@campuscalendar/authentification-feature-login": [
+        "libs/frontend/authentification/feature-login/src/index.ts"
+      ],
       "@campuscalendar/backend/api-gateway/core": [
         "libs/backend/api-gateway/core/src/index.ts"
       ],
@@ -60,12 +69,14 @@
       "@campuscalendar/backend/user-service/feature": [
         "libs/backend/user-service/feature/src/index.ts"
       ],
+      "@campuscalendar/core": ["libs/frontend/core/src/index.ts"],
       "@campuscalendar/data-access": [
-        "libs/frontend/feature-home/data-access/src/index.ts"
+        "libs/frontend/setup/data-access/src/index.ts"
       ],
-      "@campuscalendar/feature": [
-        "libs/frontend/feature-home/feature/src/index.ts"
+      "@campuscalendar/feature-setup": [
+        "libs/frontend/setup/feature-setup/src/index.ts"
       ],
+      "@campuscalendar/setup-core": ["libs/frontend/setup/core/src/index.ts"],
       "@campuscalendar/shared/api-interfaces": [
         "libs/shared/api-interfaces/src/index.ts"
       ],

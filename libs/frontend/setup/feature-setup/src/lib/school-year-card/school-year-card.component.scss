@@ -1,0 +1,12 @@
+:host ::ng-deep .p-orderlist-controls {
+  display: none;
+}
+
+:host ::ng-deep {
+  .p-chips {
+    width: 100%;
+  }
+  .p-inputtext {
+    width: 100%;
+  }
+}

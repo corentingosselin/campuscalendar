@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+
+body {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.small-gap {
+    gap: 0.5rem;
+}
+
+.medium-gap {
+    gap: 1rem;
+}
+
+.large-gap {
+    gap: 2rem;
+}
