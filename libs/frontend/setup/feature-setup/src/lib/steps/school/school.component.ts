@@ -5,7 +5,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ChipsModule } from 'primeng/chips';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
+import { OrderListModule } from 'primeng/orderlist';
 import { SchoolYearCardComponent } from '../../school-year-card/school-year-card.component';
+import { KeyFilterModule } from 'primeng/keyfilter';
+
+interface SchoolYear {
+  name: string;
+  subjects: string[];
+}
 
 @Component({
   selector: 'campuscalendar-step-school',
@@ -17,14 +24,28 @@ import { SchoolYearCardComponent } from '../../school-year-card/school-year-card
     FormsModule,
     CardModule,
     SchoolYearCardComponent,
+    OrderListModule,
+    KeyFilterModule,
   ],
   templateUrl: './school.component.html',
   styleUrls: ['./school.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolComponent {
+  blockSpace = /[^s]/;
+
   private router = inject(Router);
-  values: string[] | undefined;
+  years: SchoolYear[] = [];
+
+  addYear(yearName: string) {
+    this.years = [
+      ...this.years,
+      {
+        name: yearName,
+        subjects: [],
+      },
+    ];
+  }
 
   nextPage() {
     this.router.navigate(['steps/payment']);

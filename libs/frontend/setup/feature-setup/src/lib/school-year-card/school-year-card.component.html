@@ -1,5 +1,26 @@
-<p-card header="Master 1">
-  <div class="flex-column small-gap">
+<p-card  class="hover-card">
+  <ng-template pTemplate="header">
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 10px;
+      "
+    >
+      <span style="font-weight: bold; font-size: 1.2em">Master 1</span>
+      <p-button
+        icon="pi pi-trash"
+        [rounded]="true"
+        [text]="true"
+        [raised]="true"
+        severity="secondary"
+        class="close-button"
+      ></p-button>
+    </div>
+  </ng-template>
+
+  <div class="flex-column small-gap subject-section">
     <label>Ajoutez des matières</label>
     <p-chips
       [max]="30"
@@ -7,6 +28,6 @@
       [(ngModel)]="values"
       separator=","
       placeholder="maths, physique,..."
-    ></p-chips> 
+    ></p-chips>
   </div>
 </p-card>

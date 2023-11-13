@@ -15,21 +15,33 @@
         pInputText
         id="schoolName"
         placeholder="exemple: 1ère année, ..., master 1, ect "
+        (keydown.space)="$event.preventDefault()"
+        [pKeyFilter]="blockSpace"
+        #yearInput
       />
-      <p-button icon="pi pi-plus" iconPos="right" severity="secondary" id="add-school-year-button"></p-button>
+      <p-button
+        (keyup.enter)="addYear(yearInput.value)"
+        (click)="addYear(yearInput.value)"
+        icon="pi pi-plus"
+        iconPos="right"
+        severity="secondary"
+        id="add-school-year-button"
+      ></p-button>
     </div>
 
     <div class="school-year-cards">
-      <campuscalendar-school-year-card></campuscalendar-school-year-card>
-      <campuscalendar-school-year-card></campuscalendar-school-year-card>
-      <campuscalendar-school-year-card></campuscalendar-school-year-card>
-      <campuscalendar-school-year-card></campuscalendar-school-year-card>
-      <campuscalendar-school-year-card></campuscalendar-school-year-card>
-
+      <p-orderList
+        [value]="years"
+        [listStyle]="{ height: '10rem' }"
+        [dragdrop]="true"
+        header="Les années scolaires"
+      >
+        <ng-template let-item pTemplate="item">
+          <campuscalendar-school-year-card></campuscalendar-school-year-card>
+        </ng-template>
+      </p-orderList>
     </div>
-  
-  
-  </div>        
+  </div>
 
   <div class="flex-row footer">
     <div class="previous-button">
