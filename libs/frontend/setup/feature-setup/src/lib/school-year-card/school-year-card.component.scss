@@ -1,0 +1,32 @@
+:host ::ng-deep {
+  .p-chips {
+    width: 100%;
+  }
+  .p-inputtext {
+    width: 100%;
+  }
+}
+
+
+.subject-input {
+  flex-grow: 1; /* Allow the chips component to grow */
+}
+
+.subject-section {
+  width: 100%;
+}
+.subject-content {
+  width: 100%;
+  justify-content: flex-start;
+}
+:host ::ng-deep {
+    .hover-card .close-button {
+      display: none; /* Hide the button by default */
+    }
+  
+    .hover-card:hover .close-button {
+      display: block; /* Show the button when the card is hovered */
+    }
+  
+    /* Rest of your existing styles */
+  }

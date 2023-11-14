@@ -1,0 +1,20 @@
+{
+  "name": "feature-login",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/authentification/feature-login/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/authentification/feature-login/**/*.ts",
+          "libs/frontend/authentification/feature-login/**/*.html"
+        ]
+      }
+    }
+  }
+}

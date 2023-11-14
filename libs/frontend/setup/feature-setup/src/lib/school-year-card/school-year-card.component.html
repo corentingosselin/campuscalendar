@@ -1,0 +1,32 @@
+<p-card  class="hover-card">
+  <ng-template pTemplate="header">
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 10px;
+      "
+    >
+      <span style="font-weight: bold; font-size: 1.2em">{{yearName}}</span>
+      <p-button
+        icon="pi pi-times"
+        [text]="true"
+        severity="secondary"
+        class="close-button"
+        (click)="removeYear()"
+      ></p-button>
+    </div>
+  </ng-template>
+
+  <div class="flex-column small-gap subject-section">
+    <label>Ajoutez des matières</label>
+    <p-chips
+      [max]="30"
+      class="subject-input"
+      [(ngModel)]="values"
+      separator=","
+      placeholder="maths, physique,..."
+    ></p-chips>
+  </div>
+</p-card>

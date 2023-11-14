@@ -1,0 +1,20 @@
+{
+  "name": "authentification-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/authentification/data-access/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/authentification/data-access/**/*.ts",
+          "libs/frontend/authentification/data-access/**/*.html"
+        ]
+      }
+    }
+  }
+}

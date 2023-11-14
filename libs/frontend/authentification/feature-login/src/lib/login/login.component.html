@@ -1,0 +1,49 @@
+<div class="background-image">
+  <img
+    src="assets/images/login/login-background.png"
+    alt="background-school-login"
+    id="login-background-image"
+  />
+</div>
+<div class="login-page">
+  <img
+    id="logo-login"
+    src="assets/logos/svg/logo-no-background.svg"
+    alt="Campus calendar logo"
+  />
+
+  <div clas="login-container">
+    <h3>Connectez-vous à votre espace</h3>
+
+    <form class="login-form">
+      <div class="flex-column login-content">
+        <div class="flex-column">
+          <span class="p-float-label">
+            <input pInputText id="email" />
+            <label htmlFor="email">Addresse email</label>
+          </span>
+        </div>
+        <div class="flex-column">
+          <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+          <span class="p-float-label">
+            <input pInputText type="password" id="password" />
+            <label htmlFor="password">Mot de passe</label>
+          </span>
+        </div>
+
+        <p-checkbox
+          inputId="rememberMe"
+          label="Se souvenir de moi"
+          [binary]="true"
+          inputId="binary"
+        ></p-checkbox>
+
+        <p-button
+          label="Connexion"
+          class="connect-button"
+          [outlined]="true"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+</div>
