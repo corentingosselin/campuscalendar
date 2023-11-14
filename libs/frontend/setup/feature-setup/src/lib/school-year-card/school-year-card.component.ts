@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChipsModule } from 'primeng/chips';
@@ -26,6 +26,7 @@ import { DialogModule } from 'primeng/dialog';
 })
 export class SchoolYearCardComponent {
 
+  @Output() remove = new EventEmitter<string>();
 
   @Input() yearName = 'No name';
 
@@ -38,7 +39,7 @@ export class SchoolYearCardComponent {
   }
 
   removeYear() {
-    //
+    this.remove.emit(this.yearName);
   }
   
 }

@@ -16,7 +16,6 @@
         id="schoolName"
         placeholder="exemple: 1ère année, ..., master 1, ect "
         (keydown.space)="$event.preventDefault()"
-        [pKeyFilter]="blockSpace"
         (keyup.enter)="addYear(yearInput.value); yearInput.value=''"
         #yearInput
       />
@@ -36,7 +35,10 @@
         header="Les années scolaires"
       >
         <ng-template let-item pTemplate="item">
-          <campuscalendar-school-year-card [yearName]="item.name"></campuscalendar-school-year-card>
+          <campuscalendar-school-year-card 
+            [yearName]="item.name"   
+            (remove)="onYearRemoved($event)"
+          ></campuscalendar-school-year-card>
         </ng-template>
       </p-orderList>
     </div>

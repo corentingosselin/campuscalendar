@@ -32,7 +32,6 @@ interface SchoolYear {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolComponent {
-  blockSpace = /[^ ]/;
 
   private router = inject(Router);
   years: SchoolYear[] = [];
@@ -45,6 +44,10 @@ export class SchoolComponent {
         subjects: [],
       },
     ];
+  }
+
+  onYearRemoved(yearName: string) {
+    this.years = this.years.filter(year => year.name !== yearName);
   }
 
   nextPage() {
