@@ -32,7 +32,7 @@ interface SchoolYear {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolComponent {
-  blockSpace = /[^s]/;
+  blockSpace = /[^ ]/;
 
   private router = inject(Router);
   years: SchoolYear[] = [];

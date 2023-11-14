@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChipsModule } from 'primeng/chips';
@@ -25,6 +25,10 @@ import { DialogModule } from 'primeng/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SchoolYearCardComponent {
+
+
+  @Input() yearName = 'No name';
+
   values: string[] = [];
 
   visible = false;
@@ -32,4 +36,9 @@ export class SchoolYearCardComponent {
   showDialog() {
     this.visible = true;
   }
+
+  removeYear() {
+    //
+  }
+  
 }
