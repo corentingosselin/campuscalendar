@@ -3,6 +3,11 @@ import { Route } from '@angular/router';
 export const ROUTES: Route[] = [
   {
     path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     children: [ 
       {
         path: '',
@@ -20,5 +25,5 @@ export const ROUTES: Route[] = [
 
       }
     ],
-  }
+  },
 ];
