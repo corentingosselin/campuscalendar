@@ -1,0 +1,40 @@
+<div class="content">
+  <div>
+    <h2 class="size-title">Configuration des campus</h2>
+  </div>
+
+  <div class="flex-column small-gap subject-section">
+    <label>Ajoutez des campus</label>
+    <p-chips
+      [max]="30"
+      class="subject-input"
+      [(ngModel)]="campus"
+      separator=","
+      placeholder="Campus distanciel, Campus de Paris, Campus de Lyon, ..."
+    ></p-chips>
+    <small
+      *ngIf="campus.length <= 0 && triedToSubmit"
+      [style]="'color: red;'"
+      >Veuillez ajouter au moins un campus</small
+    >
+  </div>
+  <div class="flex-row footer">
+    <div class="flex-grow-1">
+      <p-button
+        label="précédent"
+        icon="pi pi-angle-left"
+        iconPos="left"
+        (click)="previousPage()"
+      ></p-button>
+    </div>
+
+    <div class="next-button">
+      <p-button
+        label="suivant"
+        icon="pi pi-angle-right"
+        iconPos="right"
+        (click)="nextPage()"
+      ></p-button>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,10 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
-import { User } from '../interfaces/user.interface';
+import { IsEmail, IsString } from 'class-validator';
+import { Administrator } from '../interfaces/user.interface';
 import { IsPasswordSecure, Match } from '@campuscalendar/shared/utils';
 
 type DEFAULT_OMIT = 'created_at' | 'updated_at' | 'id';
 
-export class CreateUserDto implements Omit<User, DEFAULT_OMIT | 'role'> {
+export class AdminDto implements Omit<Administrator, DEFAULT_OMIT> {
   
   @IsString()
   firstName!: string;
@@ -25,29 +25,3 @@ export class CreateUserDto implements Omit<User, DEFAULT_OMIT | 'role'> {
   confirmPassword!: string;
 }
 
-export class UpdateUserDto implements Partial<CreateUserDto> {
-  @IsString()
-  id!: string;
-
-  @IsOptional()
-  @IsString()
-  firstName?: string;
-
-  @IsOptional()
-  @IsString()
-  lastName?: string;
-
-  @IsOptional()
-  @IsString()
-  email?: string;
-
-  @IsOptional()
-  @IsString()
-  @IsPasswordSecure()
-  password?: string;
-
-  @IsOptional()
-  @IsString()
-  @Match('password')
-  confirmPassword?: string;
-}

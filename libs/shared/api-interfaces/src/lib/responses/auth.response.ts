@@ -1,4 +1,4 @@
-import { UserAccountResponse } from "./user.response";
+import { AdminAccountResponse } from "./user.response";
 
-export type UserSessionResponse = { token: string; user: UserAccountResponse };
+export type UserSessionResponse = { token: string; user: AdminAccountResponse };
 

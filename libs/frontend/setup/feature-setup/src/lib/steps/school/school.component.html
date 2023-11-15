@@ -1,66 +1,90 @@
-<div class="content">
-  <div>
-    <h2 class="size-title">Configuration de l'école</h2>
-  </div>
+<form [formGroup]="form" (ngSubmit)="nextPage()">
+  <div class="content">
+    <div>
+      <h2 class="size-title">Configuration de l'école</h2>
+    </div>
 
-  <div class="flex-column small-gap">
-    <label for="schoolName">Nom de l'école</label>
-    <input pInputText id="schoolName" placeholder="nom de l'école" />
-  </div>
-
-  <div class="flex-column small-gap school-section">
-    <label for="schoolName">Ajoutez les noms d'année de votre école</label>
-    <div class="flex-row small-gap">
+    <div class="flex-column small-gap">
+      <label for="schoolName">Nom de l'école</label>
       <input
         pInputText
         id="schoolName"
-        placeholder="exemple: 1ère année, ..., master 1, ect "
-        (keydown.space)="$event.preventDefault()"
-        (keyup.enter)="addYear(yearInput.value); yearInput.value=''"
-        #yearInput
+        placeholder="nom de l'école"
+        formControlName="schoolName"
+        appValidateField
       />
-      <p-button
-        (click)="addYear(yearInput.value); yearInput.value=''"
-        icon="pi pi-plus"
-        iconPos="right"
-        severity="secondary"
-        id="add-school-year-button"
-      ></p-button>
+      <campuscalendar-validation-message
+        [formGroup]="form"
+        controlName="schoolName"
+        displayName="Le nom de l'école"
+      ></campuscalendar-validation-message>
     </div>
 
-    <div class="school-year-cards">
-      <p-orderList
-        [value]="years"
-        [dragdrop]="true"
-        header="Les années scolaires"
-      >
-        <ng-template let-item pTemplate="item">
-          <campuscalendar-school-year-card 
-            [yearName]="item.name"   
-            (remove)="onYearRemoved($event)"
-          ></campuscalendar-school-year-card>
-        </ng-template>
-      </p-orderList>
+    <div class="flex-column small-gap school-section">
+      <label for="yearName">Ajoutez les noms d'année de votre école</label>
+      <div class="flex-row small-gap year-name-section">
+        <div class="flex-column small-gap flex-grow-1">
+          <input
+            pInputText
+            id="yearName"
+            placeholder="exemple: 1ère année, ..., master 1, ect "
+            (keyup.enter)="addYear(yearInput.value); yearInput.value = ''"
+            #yearInput
+            formControlName="yearName"
+          />
+          <small
+            *ngIf="years.length <= 0 && form.get('yearName')?.touched"
+            [style]="'color: red;'"
+            >Veuillez ajouter au moins une année scolaire</small
+          >
+
+          <small
+          *ngIf="years.length > 0 && !isYearCardAreValid() && form.get('yearName')?.touched"
+          [style]="'color: red;'">Une ou plusieurs années scolaires ne contiennent pas de matière</small>
+        </div>
+
+        <p-button
+          (click)="addYear(yearInput.value); yearInput.value = ''"
+          icon="pi pi-plus"
+          iconPos="right"
+          severity="secondary"
+          id="add-school-year-button"
+        ></p-button>
+      </div>
+
+      <div *ngIf="years.length >= 1" class="school-year-cards">
+        <p-orderList [value]="years" header="Les années scolaires">
+          <ng-template let-item pTemplate="item">
+            <campuscalendar-school-year-card
+              [yearName]="item.name"
+              [subjects]="item.subjects"
+              (remove)="onYearRemoved($event)"
+              (add)="onSubjectAdded($event)"
+            ></campuscalendar-school-year-card>
+          </ng-template>
+        </p-orderList>
+      </div>
+    </div>
+
+    <div class="flex-row footer">
+      <div class="flex-grow-1">
+        <p-button
+          label="précédent"
+          icon="pi pi-angle-left"
+          iconPos="left"
+          (click)="previousPage()"
+        ></p-button>
+      </div>
+
+      <div class="next-button">
+        <p-button
+          [disabled]="!isSchoolReady()"
+          label="suivant"
+          icon="pi pi-angle-right"
+          iconPos="right"
+          (click)="nextPage()"
+        ></p-button>
+      </div>
     </div>
   </div>
-
-  <div class="flex-row footer">
-    <div class="previous-button">
-      <p-button
-        label="précédent"
-        icon="pi pi-angle-left"
-        iconPos="left"
-        (click)="previousPage()"
-      ></p-button>
-    </div>
-
-    <div class="next-button">
-      <p-button
-        label="suivant"
-        icon="pi pi-angle-right"
-        iconPos="right"
-        (click)="nextPage()"
-      ></p-button>
-    </div>
-  </div>
-</div>
+</form>

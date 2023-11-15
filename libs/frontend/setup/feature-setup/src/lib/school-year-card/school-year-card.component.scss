@@ -8,7 +8,7 @@
 }
 
 .subject-input {
-  flex-grow: 1; /* Allow the chips component to grow */
+  flex-grow: 1; 
 }
 
 .subject-section {
@@ -20,11 +20,11 @@
 }
 :host ::ng-deep {
     .hover-card .close-button {
-      display: none; /* Hide the button by default */
+      visibility:hidden; /* Hide the button by default */
     }
   
     .hover-card:hover .close-button {
-      display: block; /* Show the button when the card is hovered */
+      visibility: visible; /* Show the button when the card is hovered */
     }
   
     /* Rest of your existing styles */

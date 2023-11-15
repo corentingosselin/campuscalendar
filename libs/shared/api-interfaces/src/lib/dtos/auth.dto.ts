@@ -1,5 +1,5 @@
 import { IsEmail, IsString } from 'class-validator';
-import { User } from '../interfaces/user.interface';
+import { Administrator } from '../interfaces/user.interface';
 
 type DEFAULT_OMIT =
   | 'created_at'
@@ -10,7 +10,7 @@ type DEFAULT_OMIT =
   | 'firstName'
   | 'role';
 
-export class LoginUserDto implements Omit<User, DEFAULT_OMIT> {
+export class LoginUserDto implements Omit<Administrator, DEFAULT_OMIT> {
   @IsEmail()
   email!: string;
   @IsString()

@@ -80,7 +80,10 @@
       "@campuscalendar/shared/api-interfaces": [
         "libs/shared/api-interfaces/src/index.ts"
       ],
-      "@campuscalendar/shared/utils": ["libs/shared/utils/src/index.ts"]
+      "@campuscalendar/shared/utils": ["libs/shared/utils/src/index.ts"],
+      "@campuscalendar/validator": [
+        "libs/frontend/shared/helper/validator/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

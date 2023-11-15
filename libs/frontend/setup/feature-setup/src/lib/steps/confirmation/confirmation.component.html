@@ -1,0 +1,64 @@
+<div class="content">
+  <div class="flex-column small-gap confirmation-brief">
+    <p-card header="Résumé des informations" [style]="{ width: '100%' }">
+      <div class="flex-column small-gap">
+        <div class="flex-row small-gap">
+          <span class="bold">Nom prénom:</span>
+          <span>{{ info.admin?.firstName }}</span>
+          <span>{{ info.admin?.lastName }}</span>
+        </div>
+        <div class="flex-row small-gap">
+          <span class="bold">Addresse email:</span>
+          <span>{{ info.admin?.email }}</span>
+        </div>
+        <p-divider></p-divider>
+        <div class="flex-column medium-gap">
+          <div class="flex-row small-gap">
+            <span class="bold">Nom de l'école:</span>
+            <span>{{ info.school?.name }}</span>
+          </div>
+
+          <div class="flex-column small-gap">
+            <span class="bold">Les années scolaires</span>
+
+            <div
+              *ngFor="let year of info.school?.classYear"
+              class="years-section"
+            >
+              <span class="bold"> {{ year.name }}:</span>
+              <ng-container *ngFor="let subject of year.subjects">
+                <p-tag [value]="subject"></p-tag>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <p-divider></p-divider>
+
+        <div class="flex-row campus-list">
+          <span class="bold">Les campus:</span>
+          <p-chip *ngFor="let campus of info.campus" [label]="campus"></p-chip>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="flex-row footer">
+    <div class="flex-grow-1">
+      <p-button
+        label="précédent"
+        icon="pi pi-angle-left"
+        iconPos="left"
+        (click)="previousPage()"
+      ></p-button>
+    </div>
+
+    <div>
+      <p-button
+        label="confirmer"
+        icon="pi pi-angle-right"
+        iconPos="right"
+        (click)="confirm()"
+      ></p-button>
+    </div>
+  </div>
+</div>

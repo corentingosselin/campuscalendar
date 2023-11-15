@@ -7,6 +7,7 @@ import { CardModule } from 'primeng/card';
 import { DragDropModule } from 'primeng/dragdrop';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { DialogModule } from 'primeng/dialog';
+import { SchoolYear } from '../steps/school/school.component';
 @Component({
   selector: 'campuscalendar-school-year-card',
   standalone: true,
@@ -28,14 +29,18 @@ export class SchoolYearCardComponent {
 
   @Output() remove = new EventEmitter<string>();
 
+  @Output() add = new EventEmitter<SchoolYear>();
+
+
   @Input() yearName = 'No name';
+  @Input() subjects: string[] = [];
 
-  values: string[] = [];
 
-  visible = false;
-
-  showDialog() {
-    this.visible = true;
+  addSubject() {
+    this.add.emit({
+      name: this.yearName,
+      subjects: this.subjects,
+    });
   }
 
   removeYear() {

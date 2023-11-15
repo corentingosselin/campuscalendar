@@ -5,3 +5,5 @@ export * from './lib/interfaces/campus.interface';
 export * from './lib/responses/user.response';
 export * from './lib/responses/auth.response';
 export * from './lib/entities/base.entity';
+export * from './lib/dtos/setup.dto';
+export * from './lib/dtos/campus.dto';

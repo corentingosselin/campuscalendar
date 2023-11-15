@@ -1,5 +1,5 @@
-import { User } from '../interfaces/user.interface';
+import { Admin } from "@nestjs/microservices/external/kafka.interface";
 
-export type UserResponse = Omit<User, 'confirmPassword'>;
-export type UserAccountResponse = Omit<UserResponse, 'password'>;
+export type AdminResponse = Omit<Admin, 'confirmPassword'>;
+export type AdminAccountResponse = Omit<Admin, 'password'>;
 

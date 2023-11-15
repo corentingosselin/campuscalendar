@@ -2,9 +2,7 @@
     width: 40rem;
 }
 
-:host ::ng-deep .p-orderlist-controls {
-    display: none;
-  }
+
 
 .content {
     display: flex;
@@ -12,34 +10,35 @@
     gap: 1rem;
 }
 
-#schoolName {
-    width: 100%;
+
+
+.bold {
+    font-weight: bold;
 }
 
-#yearName {
-    width: 100%;
-}
-
-.school-section {
-
-    justify-content: center;
-}
-
-.school-year-cards {
+.years-section {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    margin-top: 1rem;
+    flex-direction: row;
+    gap: 0.5rem;
+    //wrap
+    flex-wrap: wrap;
+}
+
+.campus-title {
+    width: fit-content;
+}
+
+.campus-list {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+
 }
 
 .flex-grow-1 {
     flex-grow: 1;
-}
-
-.year-name-section {
-    justify-content: space-between;
-
 }
 
 // on mobile devices .content should be 100% width with margin 1rem

@@ -24,9 +24,10 @@
     <p-chips
       [max]="30"
       class="subject-input"
-      [(ngModel)]="values"
+      [(ngModel)]="subjects"
       separator=","
       placeholder="maths, physique,..."
+      (onAdd)="addSubject()"
     ></p-chips>
   </div>
 </p-card>
