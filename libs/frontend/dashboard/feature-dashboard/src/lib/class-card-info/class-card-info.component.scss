@@ -1,0 +1,19 @@
+p {
+    margin: 0;
+}
+
+:host ::ng-deep .p-card .p-card-content {
+    padding: 0rem;
+}
+
+:host {
+    cursor: pointer;
+}
+
+:host ::ng-deep .p-card {
+    transition: box-shadow ease-in-out, transform 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+}

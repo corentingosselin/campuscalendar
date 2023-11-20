@@ -1,0 +1,20 @@
+{
+  "name": "dashboard-core",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/dashboard/core/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/dashboard/core/**/*.ts",
+          "libs/frontend/dashboard/core/**/*.html"
+        ]
+      }
+    }
+  }
+}

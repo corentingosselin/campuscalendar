@@ -1,0 +1,15 @@
+<div class="flex-column">
+  <h3>
+    Sélectionnez des journées qui ne seront pas affectées par le calendrier
+  </h3>
+  <div class="calendar">
+    <full-calendar  #calendarRef [options]="calendarOptions"></full-calendar>
+  </div>
+  
+  <p-button
+    class="next-button"
+    label="Suivant"
+    icon="pi pi-check"
+    (click)="nextStep()"
+  ></p-button>
+</div>

@@ -23,6 +23,13 @@ export const ROUTES: Route[] = [
             (m) => m.coreRoutes
           ),
 
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('@campuscalendar/dashboard-core').then(
+            (m) => m.routes
+          ),
       }
     ],
   },

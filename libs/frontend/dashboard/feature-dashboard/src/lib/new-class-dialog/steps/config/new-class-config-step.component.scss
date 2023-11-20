@@ -1,0 +1,20 @@
+
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-top: 2rem;
+  }
+
+.class-name {
+    margin-bottom: 1rem;
+}
+@media (max-width: 930px) {
+    .configuration-selectors{
+        flex-direction: column;
+    }
+
+}

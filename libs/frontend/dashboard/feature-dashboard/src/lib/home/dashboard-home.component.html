@@ -1,0 +1,66 @@
+<p-toolbar class="toolbar">
+  <h3>Supinfo</h3>
+
+  <div class="flex-row small-gap filter-inputs">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input type="text" pInputText [(ngModel)]="value" />
+    </span>
+    <p-dropdown
+      [options]="campus"
+      [(ngModel)]="selectedCampus"
+      [showClear]="true"
+      placeholder="Campus"
+    ></p-dropdown>
+    <p-dropdown
+      [options]="classes"
+      [(ngModel)]="selectedClass"
+      [showClear]="true"
+      placeholder="Année"
+    ></p-dropdown>
+  </div>
+
+  <p-button
+    label="Ajoutez une classe"
+    icon="pi pi-plus"
+    size="small"
+    (click)="openNewClassDialog()"
+  ></p-button>
+</p-toolbar>
+
+<div class="content">
+  <p-fieldset legend="Campus de Lille">
+    <h3 class="class-year-title">Master 1</h3>
+    <div class="class-list">
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+    </div>
+    <p-divider></p-divider>
+
+    <h3 class="class-year-title">Master 2</h3>
+    <div class="class-list">
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+    </div>
+  </p-fieldset>
+
+  <p-fieldset legend="Campus de Paris">
+    <h3 class="class-year-title">Première année</h3>
+    <div class="class-list">
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+      <campuscalendar-class-card-info></campuscalendar-class-card-info>
+    </div>
+  </p-fieldset>
+</div>

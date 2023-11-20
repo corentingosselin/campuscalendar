@@ -1,0 +1,19 @@
+.next-button {
+  //place right
+  margin-left: auto;
+}
+
+.sort-section {
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.class-name {
+  margin-bottom: 1rem;
+}
+@media (max-width: 930px) {
+  .configuration-selectors {
+    flex-direction: column;
+  }
+}

@@ -70,8 +70,21 @@
         "libs/backend/user-service/feature/src/index.ts"
       ],
       "@campuscalendar/core": ["libs/frontend/core/src/index.ts"],
+      "@campuscalendar/dashboard-core": [
+        "libs/frontend/dashboard/core/src/index.ts"
+      ],
+      "@campuscalendar/dashboard-data-access": [
+        "libs/frontend/dashboard/data-access/src/index.ts"
+      ],
       "@campuscalendar/data-access": [
         "libs/frontend/setup/data-access/src/index.ts"
+      ],
+      "@campuscalendar/dialog": ["libs/frontend/shared/dialog/src/index.ts"],
+      "@campuscalendar/environment": [
+        "libs/frontend/shared/environment/src/index.ts"
+      ],
+      "@campuscalendar/feature-dashboard": [
+        "libs/frontend/dashboard/feature-dashboard/src/index.ts"
       ],
       "@campuscalendar/feature-setup": [
         "libs/frontend/setup/feature-setup/src/index.ts"

@@ -1,0 +1,78 @@
+<div class="flex-column value-section">
+  <h3>Editez la durée de chaque matière</h3>
+
+  <div class="flex-row time-setter">
+    <label for="">Affectez toutes les matières à l'heure suivante</label>
+    <p-inputNumber
+      [(ngModel)]="defaultTime"
+      [formControl]="defaultTimeFormControl"
+      inputId="minmax"
+      mode="decimal"
+      [min]="0"
+      [max]="200"
+    ></p-inputNumber>
+  </div>
+
+  <div class="flex-row time-setter">
+    <label for="">Combien d'heures de cours maximum pour une journée</label>
+    <p-inputNumber
+      [formControl]="dayTimeControl"
+      inputId="minmax"
+      mode="decimal"
+      [min]="0"
+      [max]="24"
+    ></p-inputNumber>
+  </div>
+
+  <p-table
+    [value]="subjects"
+    dataKey="id"
+    editMode="row"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [scrollable]="true" scrollHeight="400px"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 20%">Matière</th>
+        <th style="width: 20%">Temps (en heure)</th>
+      </tr>
+    </ng-template>
+    <ng-template
+      pTemplate="body"
+      let-subject
+      let-editing="editing"
+      let-ri="rowIndex"
+    >
+      <tr>
+        <td>
+          {{ subject.name }}
+        </td>
+
+        <td [pEditableColumn]="subject.time" pEditableColumnField="time">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-inputNumber
+                [(ngModel)]="subject.time"
+                inputId="minmax"
+                mode="decimal"
+                [min]="0"
+                [max]="200"
+              >
+              </p-inputNumber>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ subject.time }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-button
+    class="next-button"
+    label="Suivant"
+    icon="pi pi-check"
+    (click)="nextStep()"
+  ></p-button>
+</div>

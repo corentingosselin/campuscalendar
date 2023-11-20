@@ -1,0 +1,33 @@
+{
+  "name": "environment",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/shared/environment/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "libs/frontend/environment/environment.ts",
+              "with": "libs/frontend/environment/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/shared/environment/**/*.ts",
+          "libs/frontend/shared/environment/**/*.html"
+        ]
+      }
+    }
+  }
+}

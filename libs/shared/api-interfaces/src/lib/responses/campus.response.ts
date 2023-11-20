@@ -1,3 +1,2 @@
-import { Campus } from '../interfaces/campus.interface';
 
-export type CampusResponse = Campus;
+//export type CampusResponse = Campus;

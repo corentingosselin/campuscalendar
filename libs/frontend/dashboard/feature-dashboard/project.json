@@ -1,0 +1,20 @@
+{
+  "name": "feature-dashboard",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/dashboard/feature-dashboard/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/dashboard/feature-dashboard/**/*.ts",
+          "libs/frontend/dashboard/feature-dashboard/**/*.html"
+        ]
+      }
+    }
+  }
+}

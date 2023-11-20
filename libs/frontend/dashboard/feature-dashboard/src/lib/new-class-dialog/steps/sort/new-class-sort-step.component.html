@@ -1,0 +1,35 @@
+<div class="flex-column sort-section">
+  <h3>
+    Sélectionnez et trier les matières que vous souhaitez intégrer au calendrier
+  </h3>
+
+  <div class="flex-row">
+    <p-pickList
+      [source]="subjects"
+      [target]="sortedSubjects"
+      sourceHeader="Matières"
+      targetHeader="Matières sélectionnées"
+      [dragdrop]="true"
+      [responsive]="false"
+      [sourceStyle]="{ height: '30rem' }"
+      [targetStyle]="{ height: '30rem' }"
+      breakpoint="1400px"
+    >
+      <div class="footer">
+        <p-button
+          class="next-button"
+          label="Suivant"
+          icon="pi pi-check"
+          (click)="nextStep()"
+        ></p-button>
+      </div>
+    </p-pickList>
+  </div>
+
+  <p-button
+    class="next-button"
+    label="Suivant"
+    icon="pi pi-check"
+    (click)="nextStep()"
+  ></p-button>
+</div>

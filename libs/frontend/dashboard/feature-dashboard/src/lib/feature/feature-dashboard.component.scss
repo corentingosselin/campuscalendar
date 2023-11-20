@@ -1,0 +1,103 @@
+.main-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.footer {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: small;
+  font-weight: 200;
+  color: rgb(0, 0, 151);
+}
+
+.sidebar {
+  height: 100%;
+  width: 5rem; /* Fixed width */
+  background-color: #111;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+:host ::ng-deep .home-button .pi.pi-home {
+  color: lightgray;
+}
+
+p-avatar {
+  margin-top: 1rem;
+}
+
+.content {
+  flex-grow: 1; /* Takes up the remaining space */
+  margin-left: 5rem; /* Equal to the width of the sidebar */
+  padding: 1rem; /* Adjust as needed */
+}
+
+.account {
+  //on hover pointer
+  cursor: pointer;
+}
+
+#logo-footer {
+  height: 1rem;
+  padding-right: 7rem;
+}
+
+.mobile-banner {
+  display: none;
+}
+
+//when 430 width remove footer
+@media screen and (max-width: 430px) {
+  .footer {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  #sidebar-button-mobile {
+    display: block;
+  
+  }
+
+  .content {
+    margin-left: 0rem;
+  }
+
+  .mobile-banner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1rem;
+    gap: 2rem;
+  }
+
+  #logo-banner-mobile {
+    height: 2rem;
+  }
+
+  :host ::ng-deep .p-sidebar-left {
+    width: 5rem;
+  }
+
+  .mobile-slidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+}

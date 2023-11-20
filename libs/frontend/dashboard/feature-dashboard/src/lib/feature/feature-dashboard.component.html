@@ -1,0 +1,57 @@
+<div class="main-container">
+  <p-sidebar [(visible)]="sidebarVisible" [showCloseIcon]="false">
+    <div class="mobile-slidebar-content">
+      <p-avatar icon="pi pi-user" shape="circle" class="account"></p-avatar>
+      <p-divider></p-divider>
+      <p-button
+        icon="pi pi-home"
+        [rounded]="true"
+        [text]="true"
+        [plain]="false"
+        class="home-button"
+      ></p-button>
+    </div>
+  </p-sidebar>
+
+  <div class="sidebar">
+    <p-avatar icon="pi pi-user" shape="circle" class="account"></p-avatar>
+    <p-divider></p-divider>
+    <p-button
+      icon="pi pi-home"
+      [rounded]="true"
+      [text]="true"
+      [plain]="false"
+      class="home-button"
+    ></p-button>
+  </div>
+  <div class="content">
+    <!-- Your main content goes here -->
+
+    <div class="flex-row mobile-banner">
+      <p-button
+        id="sidebar-button-mobile"
+        (click)="sidebarVisible = true"
+        icon="pi pi-bars"
+      ></p-button>
+      <img
+        src="assets/logos/svg/logo-no-background.svg"
+        alt="Campus calendar logo"
+        id="logo-banner-mobile"
+      />
+    </div>
+    <router-outlet></router-outlet>
+
+    <div class="footer">
+      <div>
+        <span>Version 1.0.0 </span>
+      </div>
+      <div>
+        <img
+          src="assets/logos/svg/logo-no-background.svg"
+          alt="Campus calendar logo"
+          id="logo-footer"
+        />
+      </div>
+    </div>
+  </div>
+</div>

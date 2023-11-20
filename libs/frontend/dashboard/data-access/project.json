@@ -1,0 +1,20 @@
+{
+  "name": "dashboard-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/dashboard/data-access/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/dashboard/data-access/**/*.ts",
+          "libs/frontend/dashboard/data-access/**/*.html"
+        ]
+      }
+    }
+  }
+}
