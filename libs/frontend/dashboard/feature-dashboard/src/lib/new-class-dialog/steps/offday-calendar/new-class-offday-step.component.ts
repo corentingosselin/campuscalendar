@@ -4,7 +4,6 @@ import {
   DialogStateModel,
   NewClassFacade,
 } from '@campuscalendar/dashboard-data-access';
-import { environment } from '@campuscalendar/environment';
 import {
   FullCalendarComponent,
   FullCalendarModule,
@@ -17,67 +16,114 @@ import multiMonthPlugin from '@fullcalendar/multimonth';
 import dayGridMonthPlugin from '@fullcalendar/daygrid';
 import { ButtonModule } from 'primeng/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CalendarDatesFacade, Holiday } from '@campuscalendar/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
   selector: 'campuscalendar-new-class-offday-step',
   standalone: true,
-  imports: [CommonModule, FullCalendarModule, ButtonModule],
+  imports: [
+    CommonModule,
+    FullCalendarModule,
+    ButtonModule,
+    CheckboxModule,
+    FormsModule,
+  ],
   templateUrl: './new-class-offday-step.component.html',
   styleUrls: ['./new-class-offday-step.component.scss'],
 })
 export class NewClassOffDayStepComponent implements OnInit {
   private newClassFacade = inject(NewClassFacade);
+  private calendarFacade = inject(CalendarDatesFacade);
+
+  _excludeWeekends = true;
+
+  set excludeWeekends(value: boolean) {
+    this._excludeWeekends = value;
+    this.updateCalendarOptions(true);
+  }
+
+  get excludeWeekends(): boolean {
+    return this._excludeWeekends;
+  }
+
   newClassState$ = this.newClassFacade.newClassState$;
+  calendarState$ = this.calendarFacade.calendarState$;
 
   @ViewChild('calendarRef') calendarComponent?: FullCalendarComponent;
 
   newClassState?: DialogStateModel;
-
+  holidays?: string[];
   calendarOptions?: CalendarOptions;
+
+  disabledDates: string[] = [];
+  blockedDates: string[] = [];
 
   ngOnInit() {
     this.newClassState$?.pipe(untilDestroyed(this)).subscribe((state) => {
       this.newClassState = state;
     });
 
-    console.log('date', this.newClassState?.config.startDate);
+    this.calendarState$?.pipe(untilDestroyed(this)).subscribe((state) => {
+      this.holidays = state.holidays.map((holiday: Holiday) => holiday.date);
+    });
 
+    this.updateCalendarOptions();
+  }
+
+  updateCalendarOptions(fetchEvents = false) {
     this.calendarOptions = {
       initialView: 'dayGridMonth',
-      plugins: [multiMonthPlugin,dayGridMonthPlugin, googleCalendarPlugin, interactionPlugin],
-      googleCalendarApiKey: environment.googleCalendarApiKey,
+      plugins: [
+        multiMonthPlugin,
+        dayGridMonthPlugin,
+        googleCalendarPlugin,
+        interactionPlugin,
+      ],
       locale: frLocale,
-      eventClick: function (clickInfo) {
-        // Check if the event is from Google Calendar
-        if (clickInfo?.event?.url.includes('google.com')) {
-          // Prevent default action (opening Google Calendar)
-          clickInfo.jsEvent.preventDefault();
-        } else {
-          clickInfo.event.remove();
+      weekends: !this._excludeWeekends,
+
+      dayCellDidMount: (info) => {
+        if (!this.holidays) return;
+        const dateStr = this.formatDateToLocalISOString(info.date);
+        if (this.holidays.includes(dateStr)) {
+          info.el.classList.add('fc-day-disabled');
+          this.blockedDates.push(dateStr);
         }
       },
-      eventSources: [
-        {
-          googleCalendarId: 'fr.french#holiday@group.v.calendar.google.com',
-          className: 'gcal-event', // Optional CSS class for styling Google Calendar events
-        },
-        [
-     
-        ],
-      ],
-      dateClick: this.addOffDay.bind(this),
+      dateClick: (info) => {
+        const clickedDateStr = this.formatDateToLocalISOString(info.date);
+        if (
+          this.disabledDates.includes(clickedDateStr) &&
+          !this.blockedDates.includes(clickedDateStr)
+        ) {
+          // Remove date from disabledDates
+          this.disabledDates = this.disabledDates.filter(
+            (date) => date !== clickedDateStr
+          );
+          info.dayEl.classList.remove('fc-day-disabled');
+          return;
+        }
+        this.disabledDates.push(clickedDateStr);
+        info.dayEl.classList.add('fc-day-disabled');
+      },
       // Enable date selection
-      selectable: true,
+      selectable: false,
       visibleRange: {
         start: this.newClassState?.config?.startDate,
         end: this.newClassState?.config.endDate,
       },
       validRange: {
-        start: '2020-10-05',
-        end: '2020-10-22'
-      }
+        start: this.newClassState?.config?.startDate,
+        end: this.newClassState?.config.endDate,
+      },
     };
+    if (fetchEvents) { 
+      if (!this.calendarComponent) return;
+      this.calendarComponent.getApi().refetchEvents();
+    }
   }
   addOffDay(info: any) {
     if (!this.calendarComponent) return;
@@ -95,9 +141,47 @@ export class NewClassOffDayStepComponent implements OnInit {
       start: dateStr,
       allDay: true,
     });
+
   }
+
+  getAvailableDates(startDate: Date, endDate: Date): Date[] {
+    const availableDates: Date[] = [];
+    const currentDate = new Date(startDate);
+  
+    while (currentDate <= endDate) {
+      // Check if the date is not a weekend
+      const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+      // Format the date to match your disabledDates and blockedDates format
+      const formattedDate = this.formatDateToLocalISOString(currentDate);
+  
+      // Check if the date is not in disabledDates or blockedDates
+      const isDisabled = this.disabledDates.includes(formattedDate);
+      const isBlocked = this.blockedDates.includes(formattedDate);
+  
+      if (!isWeekend && !isDisabled && !isBlocked) {
+        availableDates.push(new Date(currentDate));
+      }
+  
+      // Go to next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  
+    return availableDates;
+  }
+  
 
   nextStep() {
     this.newClassFacade.nextStep();
+    // TODO: Add off days to config
+    const start = this.newClassState?.config?.startDate;
+    const end = this.newClassState?.config?.endDate;
+    if (!start || !end) return;
+    const availableDates = this.getAvailableDates(start, end);
+  }
+
+  private formatDateToLocalISOString(date: Date): string {
+    const offset = date.getTimezoneOffset();
+    const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
+    return adjustedDate.toISOString().split('T')[0];
   }
 }

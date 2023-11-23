@@ -16,3 +16,16 @@ export class LoginUserDto implements Omit<Administrator, DEFAULT_OMIT> {
   @IsString()
   password!: string;
 }
+
+export class CreateUserDto implements Omit<Administrator, DEFAULT_OMIT> {
+  @IsEmail()
+  email!: string;
+  @IsString()
+  password!: string;
+  @IsString()
+  firstName!: string;
+  @IsString()
+  lastName!: string;
+  @IsString()
+  confirmPassword!: string;
+}

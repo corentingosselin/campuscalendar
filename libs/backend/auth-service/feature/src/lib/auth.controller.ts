@@ -1,5 +1,5 @@
 import { AuthService } from '@campuscalendar/backend/auth-service/data-access';
-import { LOGIN_CMD, REGISTER_CMD } from '@campuscalendar/backend/shared/message-broker';
+import { CREATE_USER_CMD, LOGIN_CMD } from '@campuscalendar/backend/shared/message-broker';
 import { CreateUserDto, LoginUserDto } from '@campuscalendar/shared/api-interfaces';
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -10,7 +10,7 @@ export class AuthController {
     private readonly authService: AuthService
   ) {}
 
-  @MessagePattern(REGISTER_CMD)
+  @MessagePattern(CREATE_USER_CMD)
   register(@Payload() registerDto: CreateUserDto) {
     return this.authService.register(registerDto);
   }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigurationService } from '@campuscalendar/data-access';
-import { SetupDto } from '@campuscalendar/shared/api-interfaces';
+import { SetupSchoolDto } from '@campuscalendar/shared/api-interfaces';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -23,7 +23,7 @@ import { ChipModule } from 'primeng/chip';
     ChipModule,
   ],
   templateUrl: './confirmation.component.html',
-  styleUrls: ['./confirmation.component.scss'],
+  styleUrls: ['./confirmation.component.scss'], 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -31,7 +31,20 @@ export class ConfirmationComponent implements OnInit {
   private router = inject(Router);
   private configService = inject(ConfigurationService);
 
-  info: SetupDto = {};
+  info: SetupSchoolDto = {
+    school: {
+      name: '',
+      classYears: [],
+    },
+    campus: [],
+    admin: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  };
 
   ngOnInit() {
     this.info = this.configService.getConfigurationData();

@@ -15,12 +15,14 @@
       *ngIf="state.currentStep === 1"
     ></campuscalendar-new-class-sort-step>
 
+    <campuscalendar-new-class-offday-step
+    *ngIf="state.currentStep === 2"
+  ></campuscalendar-new-class-offday-step>
+
     <campuscalendar-new-class-value-step
-      *ngIf="state.currentStep === 2"
+      *ngIf="state.currentStep === 3"
     ></campuscalendar-new-class-value-step>
 
-    <campuscalendar-new-class-offday-step
-      *ngIf="state.currentStep === 3"
-    ></campuscalendar-new-class-offday-step>
+   
   </div>
 </ng-container>

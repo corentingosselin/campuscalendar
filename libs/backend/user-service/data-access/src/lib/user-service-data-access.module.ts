@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserEntity } from './entities/user.entity';
+import { AdminEntity } from './entities/admin.entity';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { UserService } from './user.service';
 
@@ -12,7 +12,7 @@ import { UserService } from './user.service';
       UserService
     ],
     imports: [
-      MikroOrmModule.forFeature([UserEntity])
+      MikroOrmModule.forFeature([AdminEntity])
 
     ],
   })

@@ -11,18 +11,20 @@ import { JwtAuthService } from '../services/jwt-auth.service';
 export class JwtAuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtAuthService) {}
 
-  canActivate(
-    context: ExecutionContext
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const authorizationHeader = request.headers['authorization'];
 
-    if (!authorizationHeader) {
+    if (!authorizationHeader && !authorizationHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('Authorization header not found');
     }
 
-    const decoded = this.jwtService.loadToken(authorizationHeader);
-    request.user = decoded;
-    return true;
+    try {
+      const decoded = await this.jwtService.loadToken(authorizationHeader);
+      request.user = decoded;
+      return true;
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
   }
 }

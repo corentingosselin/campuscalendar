@@ -1,14 +1,14 @@
 import { MikroORM, UseRequestContext } from '@mikro-orm/core';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { UserEntity } from './entities/user.entity';
-import { CreateUserDto, UserResponse } from '@campuscalendar/shared/api-interfaces';
+import { AdminEntity } from './entities/admin.entity';
+import { AdminResponse, CreateUserDto } from '@campuscalendar/shared/api-interfaces';
 
 @Injectable()
 export class UserService {
   constructor(private readonly orm: MikroORM) {}
 
-  private readonly userRepository = this.orm.em.getRepository(UserEntity);
+  private readonly userRepository = this.orm.em.getRepository(AdminEntity);
 
   @UseRequestContext()
   async createUser(createUserDto: CreateUserDto) {
@@ -20,10 +20,10 @@ export class UserService {
        throw new RpcException(new BadRequestException('User already exists'));
     }
 
-    const user = new UserEntity();
+    const user = new AdminEntity();
     Object.assign(user, createUserDto);
     await this.userRepository.persist(user).flush();
-    return user as UserResponse;
+    return user as AdminResponse;
   }
 
   @UseRequestContext()
@@ -32,12 +32,12 @@ export class UserService {
     if (!user) {
       throw new RpcException(new NotFoundException(`User  not found`));
     }
-    return user as UserResponse;
+    return user as AdminResponse;
   }
 
   @UseRequestContext()
   async findUserByEmail(email: string) {
     const user = await this.userRepository.findOne({ email });
-    return user as UserResponse;
+    return user as AdminResponse;
   }
 }

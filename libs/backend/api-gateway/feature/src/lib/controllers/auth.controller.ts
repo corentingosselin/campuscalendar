@@ -1,5 +1,5 @@
 import { AuthService } from '@campuscalendar/backend/api-gateway/data-access';
-import { CreateUserDto, LoginUserDto } from '@campuscalendar/shared/api-interfaces';
+import { LoginUserDto } from '@campuscalendar/shared/api-interfaces';
 import {
     Controller,
     Post,
@@ -15,11 +15,6 @@ import {
     login(@Body() loginUserDto: LoginUserDto) {
       console.log('test');
       return this.authService.login(loginUserDto);
-    }
-
-    @Post('register')
-    async register(@Body() createUserDto: CreateUserDto) {
-      return this.authService.register(createUserDto);
     }
 
   }

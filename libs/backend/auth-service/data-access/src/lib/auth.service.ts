@@ -2,11 +2,11 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
+  AdminAccountResponse,
+  AdminResponse,
   CreateUserDto,
   JwtUserSession,
   LoginUserDto,
-  UserAccountResponse,
-  UserResponse,
   UserSessionResponse,
 } from '@campuscalendar/shared/api-interfaces';
 
@@ -28,8 +28,8 @@ export class AuthService {
     this.rpcService = new RpcService(this.userService);
   }
 
-  async validateUser(loginDto: LoginUserDto): Promise<UserResponse> {
-    const user = await this.rpcService.sendWithRpcExceptionHandler<UserResponse>(
+  async validateUser(loginDto: LoginUserDto): Promise<AdminResponse> {
+    const user = await this.rpcService.sendWithRpcExceptionHandler<AdminResponse>(
       FIND_USER_BY_EMAIL,
       loginDto.email
     );
@@ -42,23 +42,21 @@ export class AuthService {
     return user;
   }
 
-  async generateJwtToken(user: UserResponse): Promise<UserSessionResponse> {
+  async generateJwtToken(user: AdminResponse): Promise<UserSessionResponse> {
     const payload = {
       email: user.email,
       sub: user.id,
-      role: user.role,
     } as JwtUserSession;
     return {
       token: this.jwtService.sign(payload),
       user: {
         id: user.id,
         email: user.email,
-        role: user.role,
         lastName: user.lastName,
         firstName: user.firstName,
         created_at: user.created_at,
         updated_at: user.updated_at,
-      } satisfies UserAccountResponse,
+      } satisfies AdminAccountResponse,
     } as UserSessionResponse;
   }
 
@@ -74,8 +72,8 @@ export class AuthService {
   }
 
   async register(registerDto: CreateUserDto) {
-    const user: UserResponse =
-      await this.rpcService.sendWithRpcExceptionHandler<UserResponse>(
+    const user: AdminResponse =
+      await this.rpcService.sendWithRpcExceptionHandler<AdminResponse>(
         CREATE_USER_CMD,
         registerDto
       );

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CalendarDatesFacade } from '@campuscalendar/calendar';
 
 @Component({
   selector: 'campuscalendar-dashboard-core',
@@ -10,4 +11,11 @@ import { RouterModule } from '@angular/router';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardCoreComponent {}
+export class DashboardCoreComponent implements OnInit {
+
+  private calendarFacade = inject(CalendarDatesFacade);
+
+  ngOnInit() {
+    this.calendarFacade.initHolidays();
+  }
+}

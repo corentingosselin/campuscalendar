@@ -19,6 +19,13 @@
 .class-name {
   margin-bottom: 1rem;
 }
+
+:host ::ng-deep {
+  .p-inputtext {
+    width: 5rem;
+  }
+}
+
 @media (max-width: 930px) {
   .configuration-selectors {
     flex-direction: column;

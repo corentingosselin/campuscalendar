@@ -23,6 +23,7 @@ export class NewClassSortStepComponent {
   sortedSubjects = [];
 
   nextStep() {
+    this.newClassFacade.updateSubjectsStep(this.sortedSubjects);
     this.newClassFacade.nextStep();
   }
 

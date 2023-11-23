@@ -6,7 +6,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
 import { NewClassConfigStepComponent } from './steps/config/new-class-config-step.component';
-import { DialogStateModel, NewClassDialogState, NewClassFacade } from '@campuscalendar/dashboard-data-access';
+import { DialogStateModel, NewClassFacade } from '@campuscalendar/dashboard-data-access';
 import { Observable } from 'rxjs';
 import { NewClassSortStepComponent } from './steps/sort/new-class-sort-step.component';
 import { NewClassValueStepComponent } from './steps/value/new-class-value-step.component';
@@ -45,12 +45,14 @@ export class NewClassDialogComponent implements OnInit {
         label: 'Configuration',
       },
       {
-        label: 'Subject order',
+        label: 'Ordre des matières',
 
       },
       {
-        label: 'Subject time',
-
+        label: 'Jours sans cours',
+      },
+      {
+        label: 'Matières',
       },
       {
         label: 'Confirmation',

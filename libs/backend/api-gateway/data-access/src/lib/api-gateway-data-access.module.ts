@@ -2,17 +2,17 @@ import { SharedMessageBrokerModule } from '@campuscalendar/backend/shared/messag
 import { AUTH_SERVICE, SCHOOL_SERVICE, USER_SERVICE } from '@campuscalendar/backend/shared/network';
 import { Module } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
+import { SchoolService } from './services/school.service';
 
 @Module({
     controllers: [],
     providers: [
       AuthService,
-      UserService
+      SchoolService
     ],
     exports: [
       AuthService,
-      UserService
+      SchoolService
     ],
     imports: [
       SharedMessageBrokerModule.registerClient({

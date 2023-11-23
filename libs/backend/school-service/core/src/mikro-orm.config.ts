@@ -1,9 +1,5 @@
 import {
-  CampusEntity,
-  ClassEntity,
-  CourseEntity,
-  CourseScheduleSlotEntity,
-  CourseTypeEntity,
+  CampusEntity, ClassYearEntity, SchoolEntity, SubjectEntity,
 } from '@campuscalendar/backend/school-service/data-access';
 import { Options } from '@mikro-orm/core';
 
@@ -18,10 +14,9 @@ export default {
   password: process.env['MYSQL_PASSWORD'],
   entities: [
     CampusEntity,
-    ClassEntity,
-    CourseEntity,
-    CourseScheduleSlotEntity,
-    CourseTypeEntity,
+    SchoolEntity,
+    SubjectEntity,
+    ClassYearEntity
   ],
   migrations: {
     path: 'apps/school-service/migrations',

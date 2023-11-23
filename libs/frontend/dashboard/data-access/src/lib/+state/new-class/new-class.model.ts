@@ -2,6 +2,7 @@ import { Campus, Year } from '@campuscalendar/shared/api-interfaces';
 export interface DialogStateModel {
   currentStep: number;
   config: ConfigurationStateModel;
+  subjects: string[];
 }
 
 export interface ConfigurationStateModel {

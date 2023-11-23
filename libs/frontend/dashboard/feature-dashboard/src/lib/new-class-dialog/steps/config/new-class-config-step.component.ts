@@ -37,34 +37,74 @@ export class NewClassConfigStepComponent {
   rangeDates: Date[] | undefined;
   campus: Campus[] = [
     {
-      "id": "1",
-      "name": "Campus de Lille",
-      "created_at": new Date(),
-      "updated_at": new Date()
+      id: "1",
+      name: "Campus de Lille",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
     },
     {
-      "id": "2",
-      "name": "Campus de Lyon",
-      "created_at": new Date(),
-      "updated_at": new Date()
+      id: "2",
+      name: "Campus de Lyon",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
     },
     {
-      "id": "3",
-      "name": "Campus de Bordeaux",
-      "created_at": new Date(),
-      "updated_at": new Date()
+      id: "3",
+      name: "Campus de Bordeaux",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
     },
     {
-      "id": "4",
-      "name": "Campus de Marseille",
-      "created_at": new Date(),
-      "updated_at": new Date()
+      id: "4",
+      name: "Campus de Marseille",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
     },
     {
-      "id": "5",
-      "name": "Campus de Montpellier",
-      "created_at": new Date(),
-      "updated_at": new Date()
+      id: "5",
+      name: "Campus de Montpellier",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
+    },
+    {
+      id: "6",
+      name: "Campus de Nantes",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
+    },
+    {
+      id: "7",
+      name: "Campus de Paris",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
+    },
+    {
+      id: "8",
+      name: "Campus de Rennes",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
+    },
+    {
+      id: "9",
+      name: "Campus de Strasbourg",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
+    },
+    {
+      id: "10",
+      name: "Campus de Toulouse",
+      created_at: new Date(),
+      updated_at: new Date(),
+      classYears: []
     }
   ];
 

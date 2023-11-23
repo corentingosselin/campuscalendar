@@ -1,6 +1,7 @@
 import { Action, State, StateContext } from '@ngxs/store';
-import { ConfigurationStateModel, DialogStateModel } from './new-class.model';
-import { UpdateConfigStep, UpdateStep } from './new-class.action';
+import { DialogStateModel } from './new-class.model';
+import { UpdateConfigStep, UpdateStep, UpdateSubjectsStep } from './new-class.action';
+import { Injectable } from '@angular/core';
 
 @State<DialogStateModel>({
   name: 'dialog',
@@ -13,8 +14,10 @@ import { UpdateConfigStep, UpdateStep } from './new-class.action';
       campus: undefined,
       year: undefined,
     },
+    subjects: []
   },
 })
+@Injectable({ providedIn: 'root' })
 export class NewClassDialogState {
 
   @Action(UpdateStep)
@@ -37,6 +40,18 @@ export class NewClassDialogState {
     ctx.setState({
       ...state,
       config: action.payload,
+    });
+  }
+
+  @Action(UpdateSubjectsStep)
+  updateStepTwo(
+    ctx: StateContext<DialogStateModel>,
+    action: UpdateSubjectsStep
+  ) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      subjects: action.payload,
     });
   }
 

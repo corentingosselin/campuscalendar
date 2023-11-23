@@ -3,6 +3,7 @@
 
   <div class="flex-row time-setter">
     <label for="">Affectez toutes les matières à l'heure suivante</label>
+
     <p-inputNumber
       [(ngModel)]="defaultTime"
       [formControl]="defaultTimeFormControl"
@@ -14,7 +15,9 @@
   </div>
 
   <div class="flex-row time-setter">
-    <label for="">Combien d'heures de cours maximum pour une journée</label>
+    <label for="">Nombre d'heure maximum de cours par jour</label>
+
+    <span>H</span>
     <p-inputNumber
       [formControl]="dayTimeControl"
       inputId="minmax"
@@ -29,7 +32,8 @@
     dataKey="id"
     editMode="row"
     [tableStyle]="{ 'min-width': '50rem' }"
-    [scrollable]="true" scrollHeight="400px"
+    [scrollable]="true"
+    scrollHeight="400px"
   >
     <ng-template pTemplate="header">
       <tr>

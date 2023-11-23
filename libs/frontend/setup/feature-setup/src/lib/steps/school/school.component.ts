@@ -20,11 +20,8 @@ import {
   ValidationService,
 } from '@campuscalendar/validator';
 import { ConfigurationService } from '@campuscalendar/data-access';
+import { ClassYearDto } from '@campuscalendar/shared/api-interfaces';
 
-export interface SchoolYear {
-  name: string;
-  subjects: string[];
-}
 
 @Component({
   selector: 'campuscalendar-step-school',
@@ -57,7 +54,7 @@ export class SchoolComponent implements OnInit {
     yearName: new FormControl(''),
   });
 
-  years: SchoolYear[] = [];
+  years: ClassYearDto[] = [];
 
   addYear(yearName: string) {
     this.years = [
@@ -69,7 +66,7 @@ export class SchoolComponent implements OnInit {
     ];
   }
 
-  onSubjectAdded(schoolYear: SchoolYear) {
+  onSubjectAdded(schoolYear: ClassYearDto) {
     //add the new subject to existing year
     this.years[
       this.years.findIndex((year) => year.name === schoolYear.name)
@@ -94,7 +91,7 @@ export class SchoolComponent implements OnInit {
   save() {
     this.configService.updateSchoolInfo({
       name: this.form.value.schoolName || '',
-      classYear: this.years,
+      classYears: this.years,
     });
   }
 
@@ -118,8 +115,8 @@ export class SchoolComponent implements OnInit {
     this.form.patchValue({
       schoolName: info?.name,
     });
-    if (info?.classYear) {
-      this.years = info?.classYear;
+    if (info?.classYears) {
+      this.years = info?.classYears;
     }
   }
 }

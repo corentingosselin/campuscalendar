@@ -1,11 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ConfigurationService } from '@campuscalendar/data-access';
 import { ButtonModule } from 'primeng/button';
 import { ChipsModule } from 'primeng/chips';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ConfigurationService } from '@campuscalendar/data-access';
 
 @Component({
   selector: 'campuscalendar-step-campus',

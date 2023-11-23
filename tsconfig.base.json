@@ -69,6 +69,9 @@
       "@campuscalendar/backend/user-service/feature": [
         "libs/backend/user-service/feature/src/index.ts"
       ],
+      "@campuscalendar/calendar": [
+        "libs/frontend/shared/helper/calendar/src/index.ts"
+      ],
       "@campuscalendar/core": ["libs/frontend/core/src/index.ts"],
       "@campuscalendar/dashboard-core": [
         "libs/frontend/dashboard/core/src/index.ts"

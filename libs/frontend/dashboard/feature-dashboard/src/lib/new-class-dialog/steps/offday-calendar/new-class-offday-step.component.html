@@ -2,10 +2,23 @@
   <h3>
     Sélectionnez des journées qui ne seront pas affectées par le calendrier
   </h3>
+
+  <p-checkbox
+    name="excludeWeekends"
+    label="Exclure les samedis et dimanches"
+    [(ngModel)]="excludeWeekends"
+    [binary]="true"
+    class="checkbox"
+  ></p-checkbox>
+
+
   <div class="calendar">
-    <full-calendar  #calendarRef [options]="calendarOptions"></full-calendar>
+    <full-calendar #calendarRef [options]="calendarOptions"></full-calendar>
   </div>
-  
+
+  <!-- exclure les samedis et dimanche, checkbox -->
+
+
   <p-button
     class="next-button"
     label="Suivant"

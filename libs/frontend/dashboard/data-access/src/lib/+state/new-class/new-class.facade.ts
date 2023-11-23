@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { ConfigurationStateModel, DialogStateModel } from './new-class.model';
-import { UpdateConfigStep, UpdateStep } from './new-class.action';
 import { Observable } from 'rxjs';
+import { UpdateConfigStep, UpdateStep, UpdateSubjectsStep } from './new-class.action';
+import { ConfigurationStateModel, DialogStateModel } from './new-class.model';
 import { NewClassDialogState } from './new-class.state';
 
 @Injectable({ providedIn: 'root' })
@@ -20,5 +20,9 @@ export class NewClassFacade {
 
   updateConfigStep(data: ConfigurationStateModel) {
     this.store.dispatch(new UpdateConfigStep(data));
+  }
+
+  updateSubjectsStep(data: string[]) {
+    this.store.dispatch(new UpdateSubjectsStep(data));
   }
 }

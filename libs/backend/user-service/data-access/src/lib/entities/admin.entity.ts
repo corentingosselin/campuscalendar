@@ -1,10 +1,10 @@
-import { BaseEntity, User, UserRole } from '@campuscalendar/shared/api-interfaces';
+import { Administrator, BaseEntity } from '@campuscalendar/shared/api-interfaces';
 import { BeforeCreate, BeforeUpdate, Entity, Property } from '@mikro-orm/core';
 import * as argon2 from "argon2";
 
 
 @Entity()
-export class UserEntity extends BaseEntity implements User {
+export class AdminEntity extends BaseEntity implements Administrator {
   
   @Property()
   firstName!: string;
@@ -18,9 +18,6 @@ export class UserEntity extends BaseEntity implements User {
   @Property()
   password!: string;
 
-  @Property()
-  role: UserRole = UserRole.STUDENT;
-  
   @BeforeCreate()
   @BeforeUpdate()
   async encryptPassword() {

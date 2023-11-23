@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq:3.8-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    ports:
+      # AMQP protocol port
+      - '${RABBITMQ_PORT}:${RABBITMQ_PORT}'
+      # HTTP management UI
+      - '15672:15672'
+    volumes:
+      - rabbitmq-volume:/var/lib/rabbitmq
+  user-service-db:
+    container_name: 'user-service-db'
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_USER=${MYSQL_USER}
+    ports:
+      - '${USER_SERVICE_DB_PORT}:${USER_SERVICE_DB_PORT}'
+    volumes:
+      - user-service-db-volume:/var/lib/mysql
+  school-service-db:
+    container_name: 'school-service-db'
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_USER=${MYSQL_USER}
+      - MYSQL_TCP_PORT=${SCHOOL_SERVICE_DB_PORT}
+    ports:
+      - '${SCHOOL_SERVICE_DB_PORT}:${SCHOOL_SERVICE_DB_PORT}'
+    volumes:
+      - school-service-db-volume:/var/lib/mysql
+volumes:
+  rabbitmq-volume:
+  school-service-db-volume:
+  user-service-db-volume:
+name: campuscalendar-db

@@ -1,28 +1,28 @@
-import { SharedMessageBrokerModule } from '@campuscalendar/backend/shared/message-broker';
-import { USER_SERVICE } from '@campuscalendar/backend/shared/network';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { CampusEntity } from './entities/campus.entity';
-import { ClassEntity } from './entities/class.entity';
-import { CourseEntity } from './entities/course.entity';
-import { CourseScheduleSlotEntity } from './entities/course_schedule_slot.entity';
-import { CourseTypeEntity } from './entities/course_type.entity';
+import { ClassYearEntity } from './entities/class-year.entity';
+import { SchoolEntity } from './entities/school.entity';
+import { SubjectEntity } from './entities/subject.entity';
+import { SchoolService } from './school.service';
 
 @Module({
   controllers: [],
-  providers: [],
-  exports: [],
+  providers: [
+    SchoolService
+  ],
+  exports: [
+    SchoolService
+  ],
   imports: [
     MikroOrmModule.forFeature([
-      CampusEntity,
-      ClassEntity,
-      CourseEntity,
-      CourseScheduleSlotEntity,
-      CourseTypeEntity,
+      SchoolEntity,
+      ClassYearEntity,
+      SubjectEntity,
     ]),
-    SharedMessageBrokerModule.registerClient({
+    //register client for user service
+   /* SharedMessageBrokerModule.registerClient({
       name: USER_SERVICE,
-    }),
+    }), */
   ],
 })
 export class SchoolServiceDataAccessModule {}
