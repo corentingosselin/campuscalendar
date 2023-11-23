@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UpdateConfigStep, UpdateStep, UpdateSubjectsStep } from './new-class.action';
 import { ConfigurationStateModel, DialogStateModel } from './new-class.model';
 import { NewClassDialogState } from './new-class.state';
+import { Subject } from '@campuscalendar/shared/api-interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class NewClassFacade {
@@ -22,7 +23,7 @@ export class NewClassFacade {
     this.store.dispatch(new UpdateConfigStep(data));
   }
 
-  updateSubjectsStep(data: string[]) {
+  updateSubjectsStep(data: Subject[]) {
     this.store.dispatch(new UpdateSubjectsStep(data));
   }
 }

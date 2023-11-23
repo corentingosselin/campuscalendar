@@ -1,6 +1,7 @@
 import {
   CREATE_USER_CMD,
   GET_SCHOOL_CMD,
+  IS_SCHOOL_CONFIGURED_CMD,
   REGISTER_SCHOOL_CMD,
 } from '@campuscalendar/backend/shared/message-broker';
 import {
@@ -31,6 +32,10 @@ export class SchoolService {
 
   getSchool() {
     return this.rpcService.sendWithRpcExceptionHandler<SchoolResponse>(GET_SCHOOL_CMD);
+  }
+
+  isSchoolConfigured() {
+    return this.rpcService.sendWithRpcExceptionHandler<boolean>(IS_SCHOOL_CONFIGURED_CMD);
   }
 
   async registerConfiguration(setupDto: SetupSchoolDto) {

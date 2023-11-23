@@ -1,3 +1,4 @@
+import { Subject } from '@campuscalendar/shared/api-interfaces';
 import { ConfigurationStateModel } from './new-class.model';
 
 export class UpdateConfigStep {
@@ -7,7 +8,7 @@ export class UpdateConfigStep {
 
 export class UpdateSubjectsStep {
   static readonly type = '[New Class] Update Subjects Step';
-  constructor(public payload: string[]) {}
+  constructor(public payload: Subject[]) {}
 }
 
 export class UpdateStep {

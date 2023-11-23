@@ -4,6 +4,10 @@ export interface Campus extends Entity {
     name: string;   
 }
 
+export interface Year extends Entity {
+    name: string;
+}
+
 export interface ClassYear extends Entity {
     name: string;
     subjects: Subject[];

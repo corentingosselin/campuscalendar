@@ -11,10 +11,10 @@ import { Injectable } from '@angular/core';
       name: '',
       startDate: undefined,
       endDate: undefined,
-      campus: undefined,
       year: undefined,
+      campus: undefined,
     },
-    subjects: []
+    subjects: [],
   },
 })
 @Injectable({ providedIn: 'root' })
@@ -30,6 +30,8 @@ export class NewClassDialogState {
       currentStep: state.currentStep + 1,
     });
   }
+
+
 
   @Action(UpdateConfigStep)
   updateStepOne(

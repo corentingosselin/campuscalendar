@@ -1,26 +1,28 @@
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { NgxsModule } from '@ngxs/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { provideRouter, withDebugTracing } from '@angular/router';
 import { environment } from '@campuscalendar/environment';
-import { provideHttpClient } from '@angular/common/http';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { routes } from './app.routes';
+import { baseUrlInterceptor } from './base-url.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideHttpClient(withInterceptors([baseUrlInterceptor])),
+    provideRouter(routes, withDebugTracing()),
     importProvidersFrom(
       BrowserAnimationsModule,
-      NgxsModule.forRoot([], 
-        {
+      NgxsModule.forRoot([], {
         developmentMode: !environment.production,
-      }
-      
-      ),
+      }),
       // devtools always last
       NgxsReduxDevtoolsPluginModule.forRoot()
     ),
-    provideHttpClient()
   ],
 };

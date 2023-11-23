@@ -27,6 +27,13 @@ export class SchoolService {
     return school.toResponse();
   }
 
+
+  @CreateRequestContext()
+  async isSchoolConfigured() {
+    const school = await this.orm.em.getRepository(SchoolEntity).findAll();
+    return school.length === 1;
+  }
+
   @CreateRequestContext()
   async registerSchool(schoolConfigDto: SchoolConfigurationDto) {
     try {

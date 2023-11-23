@@ -1,8 +1,8 @@
-import { Campus, Year } from '@campuscalendar/shared/api-interfaces';
+import { Campus, Subject, Year } from '@campuscalendar/shared/api-interfaces';
 export interface DialogStateModel {
   currentStep: number;
   config: ConfigurationStateModel;
-  subjects: string[];
+  subjects: Subject[];
 }
 
 export interface ConfigurationStateModel {

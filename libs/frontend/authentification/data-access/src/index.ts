@@ -1,1 +1,1 @@
-export * from './lib/authentification-data-access/authentification-data-access.component';
+export * from './lib/auth.service';

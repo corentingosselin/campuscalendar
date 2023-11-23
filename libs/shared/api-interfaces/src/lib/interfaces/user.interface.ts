@@ -10,6 +10,6 @@ export interface Administrator extends Entity {
 export interface JwtUserSession {
   sub: string;
   email: string;
-  exp?: number;
+  exp: number;
   iat?: number;
 }

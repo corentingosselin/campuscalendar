@@ -92,6 +92,7 @@
       "@campuscalendar/feature-setup": [
         "libs/frontend/setup/feature-setup/src/index.ts"
       ],
+      "@campuscalendar/school": ["libs/frontend/shared/school/src/index.ts"],
       "@campuscalendar/setup-core": ["libs/frontend/setup/core/src/index.ts"],
       "@campuscalendar/shared/api-interfaces": [
         "libs/shared/api-interfaces/src/index.ts"
