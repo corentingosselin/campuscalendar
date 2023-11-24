@@ -33,8 +33,7 @@ export class AuthService {
       FIND_USER_BY_EMAIL,
       loginDto.email
     );
-
-    if (!(await verify(user.password, loginDto.password))) {
+    if (!user || !(await verify(user.password, loginDto.password))) {
       throw new RpcException(
         new UnauthorizedException('Invalid email or password.')
       );

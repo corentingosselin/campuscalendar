@@ -4,7 +4,6 @@ import { SchoolState } from '@campuscalendar/school';
 import { NgxsModule } from '@ngxs/store';
 import { AuthGuard } from './guards/auth.guard';
 import { SchoolGuard } from './guards/school.guard';
-import { SchoolNotExistGuard } from './guards/school-not-exist.guard';
 import { AlreadyLoggedGuard } from './guards/already-logged.guard';
 
 export const ROUTES: Route[] = [
@@ -38,7 +37,6 @@ export const ROUTES: Route[] = [
   },
   {
     path: 'setup',
-    canActivate: [SchoolNotExistGuard],
     loadChildren: () =>
       import('@campuscalendar/feature-setup').then((m) => m.coreRoutes),
   },

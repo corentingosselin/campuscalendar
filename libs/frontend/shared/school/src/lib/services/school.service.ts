@@ -6,6 +6,10 @@ import { SchoolResponse } from '@campuscalendar/shared/api-interfaces';
 export class SchoolService {
   private http = inject(HttpClient);
 
+  isSchoolExist() {
+    return this.http.get<boolean>('/api/school/exists');
+  }
+
   fetchSchool() {
     return this.http.get<SchoolResponse>('/api/school');
   }

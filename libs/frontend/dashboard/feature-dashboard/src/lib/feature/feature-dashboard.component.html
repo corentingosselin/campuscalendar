@@ -1,7 +1,12 @@
 <div class="main-container">
   <p-sidebar [(visible)]="sidebarVisible" [showCloseIcon]="false">
     <div class="mobile-slidebar-content">
-      <p-avatar icon="pi pi-user" shape="circle" class="account"></p-avatar>
+      <p-avatar
+        icon="pi pi-user"
+        shape="circle"
+        class="account"
+        (click)="showAccountDialog()"
+      ></p-avatar>
       <p-divider></p-divider>
       <p-button
         icon="pi pi-home"
@@ -14,7 +19,12 @@
   </p-sidebar>
 
   <div class="sidebar">
-    <p-avatar icon="pi pi-user" shape="circle" class="account"></p-avatar>
+    <p-avatar
+      icon="pi pi-user"
+      shape="circle"
+      class="account"
+      (click)="showAccountDialog()"
+    ></p-avatar>
     <p-divider></p-divider>
     <p-button
       icon="pi pi-home"

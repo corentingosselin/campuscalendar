@@ -14,7 +14,9 @@ export class JwtAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const authorizationHeader = request.headers['authorization'];
 
-    if (!authorizationHeader && !authorizationHeader.startsWith('Bearer ')) {
+    if(!authorizationHeader) throw new UnauthorizedException('Authorization header not found');
+
+    if (authorizationHeader && !authorizationHeader.startsWith('Bearer ')) {
       throw new UnauthorizedException('Authorization header not found');
     }
 

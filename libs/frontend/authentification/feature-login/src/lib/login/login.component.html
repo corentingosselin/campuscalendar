@@ -1,3 +1,5 @@
+
+
 <div class="background-image">
   <img
     src="assets/images/login/login-background.png"
@@ -13,20 +15,34 @@
   />
 
   <div clas="login-container">
-    <h3>Connectez-vous à votre espace</h3>
+    <div class="flex-column space-desc">
+      <div>
+        <h3>Connectez-vous à votre espace</h3>
+      </div>
+      <div>
+        <small *ngIf="(loadingState | async)?.errorMessage as msg"> 
+          {{msg}}
+        </small>
+      </div>
+    </div>
 
-    <form class="login-form">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="(login)">
       <div class="flex-column login-content">
         <div class="flex-column">
           <span class="p-float-label">
-            <input pInputText id="email" />
+            <input pInputText id="email" formControlName="email" />
             <label htmlFor="email">Addresse email</label>
           </span>
         </div>
         <div class="flex-column">
           <a href="#" class="forgot-password">Mot de passe oublié ?</a>
           <span class="p-float-label">
-            <input pInputText type="password" id="password" />
+            <input
+              pInputText
+              type="password"
+              id="password"
+              formControlName="password"
+            />
             <label htmlFor="password">Mot de passe</label>
           </span>
         </div>
@@ -42,6 +58,8 @@
           label="Connexion"
           class="connect-button"
           [outlined]="true"
+          (click)="login()"
+          [disabled]="(loadingState | async)?.loading"
         ></p-button>
       </div>
     </form>

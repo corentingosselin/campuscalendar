@@ -5,17 +5,25 @@ import {
 } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter, withDebugTracing } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { environment } from '@campuscalendar/environment';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { routes } from './app.routes';
-import { baseUrlInterceptor } from './base-url.interceptor';
+import { baseUrlInterceptor } from './interceptors/base-url.interceptor';
+import { unAuthorizedInterceptor } from './interceptors/unauthorized.interceptor';
+import { addTokenInterceptor } from './interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptors([baseUrlInterceptor])),
-    provideRouter(routes, withDebugTracing()),
+    provideHttpClient(
+      withInterceptors([
+        baseUrlInterceptor,
+        addTokenInterceptor,
+        unAuthorizedInterceptor,
+      ])
+    ),
+    provideRouter(routes), //  withDebugTracing()
     importProvidersFrom(
       BrowserAnimationsModule,
       NgxsModule.forRoot([], {

@@ -1,0 +1,23 @@
+<ng-container *ngIf="(accountInfo$ | async) as admin">
+    <div class="admin-info-container">
+        <div class="flex-row small-gap">
+          <span class="bold">Nom prénom:</span>
+          <span>{{ admin.account?.lastName }}</span>
+          <span>{{ admin.account?.firstName }}</span>
+        </div>
+        <div class="flex-row small-gap">
+          <span class="bold">Addresse email:</span>
+          <span>{{ admin.account?.email }}</span>
+        </div>
+        <div class="logout-button-container">
+          <p-button
+            label="Se déconnecter"
+            icon="pi pi-power-off"
+            size="small"
+            severity="danger"
+            iconPos="right"
+            (click)="logout()"
+          ></p-button>
+        </div>
+    </div>
+</ng-container>
