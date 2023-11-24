@@ -1,0 +1,20 @@
+{
+  "name": "calendar-feature",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/calendar/feature/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/calendar/feature/**/*.ts",
+          "libs/frontend/calendar/feature/**/*.html"
+        ]
+      }
+    }
+  }
+}

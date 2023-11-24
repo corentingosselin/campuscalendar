@@ -1,6 +1,6 @@
 import { Action, State, StateContext } from '@ngxs/store';
 import { DialogStateModel } from './new-class.model';
-import { UpdateConfigStep, UpdateStep, UpdateSubjectsStep } from './new-class.action';
+import { UpdateAvailableDatesStep, UpdateConfigStep, UpdateStep, UpdateSubjectTimeStep, UpdateSubjectsStep } from './new-class.action';
 import { Injectable } from '@angular/core';
 
 @State<DialogStateModel>({
@@ -15,6 +15,9 @@ import { Injectable } from '@angular/core';
       campus: undefined,
     },
     subjects: [],
+    availableDates: [],
+    subjectTimes: [],
+    hoursPerDay: 0,
   },
 })
 @Injectable({ providedIn: 'root' })
@@ -56,6 +59,32 @@ export class NewClassDialogState {
       subjects: action.payload,
     });
   }
+
+  @Action(UpdateAvailableDatesStep)
+  updateStepThree(
+    ctx: StateContext<DialogStateModel>,
+    action: UpdateAvailableDatesStep
+  ) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      availableDates: action.payload,
+    });
+  }
+
+  @Action(UpdateSubjectTimeStep)
+  updateStepFour(
+    ctx: StateContext<DialogStateModel>,
+    action: UpdateSubjectTimeStep
+  ) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      subjectTimes: action.payload.subjectTimes,
+      hoursPerDay: action.payload.hoursPerDay,
+    });
+  }
+
 
 
 }

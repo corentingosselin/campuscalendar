@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withDebugTracing } from '@angular/router';
 import { environment } from '@campuscalendar/environment';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
         unAuthorizedInterceptor,
       ])
     ),
-    provideRouter(routes), //  withDebugTracing()
+    provideRouter(routes,  withDebugTracing()), //  withDebugTracing()
     importProvidersFrom(
       BrowserAnimationsModule,
       NgxsModule.forRoot([], {

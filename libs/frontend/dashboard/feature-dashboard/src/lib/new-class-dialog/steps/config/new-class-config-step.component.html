@@ -1,75 +1,80 @@
 <h3>Configuration</h3>
 
-<form [formGroup]="form" (ngSubmit)="nextStep()">
-  <div class="flex-column small-gap class-name">
-    <label for="className">Nom de la classe</label>
-    <input
-      formControlName="className"
-      pInputText
-      id="className"
-      placeholder="nom de la classe"
-    />
-  </div>
-
-  <div class="flex-row small-gap configuration-selectors">
-    <div class="flex-column small-gap">
-      <label for="range">Période scolaire</label>
-      <p-calendar
-        formControlName="dateRange"
-        appendTo="body"
-        id="range"
-        [(ngModel)]="rangeDates"
-        selectionMode="range"
-        [readonlyInput]="true"
-        placeholder="Sélectionnez la période"
-      ></p-calendar>
-    </div>
-    <div class="flex-column small-gap">
-      <label for="range">Campus</label>
-      <p-dropdown
-        optionLabel="name"
-        formControlName="campus"
-        appendTo="body"
-        [options]="campus"
-        [(ngModel)]="selectedCampus"
-        [filter]="true"
-        filterBy="name"
-        [showClear]="false"
-        placeholder="Sélectionnez un campus"
-      >
-      </p-dropdown>
+<ng-container *ngIf="(schoolState$ | async)?.school as school">
+  <form [formGroup]="form" (ngSubmit)="nextStep()">
+    <div class="flex-column small-gap class-name">
+      <label for="className">Nom de la classe</label>
+      <input
+        formControlName="className"
+        pInputText
+        id="className"
+        placeholder="nom de la classe"
+      />
     </div>
 
-    <div class="flex-column small-gap">
-      <label for="range">Année type</label>
-      <p-dropdown
-        optionLabel="name"
-        formControlName="year"
-        appendTo="body"
-        [options]="years"
-        [(ngModel)]="selectedYear"
-        [showClear]="false"
-        placeholder="Sélectionnez une année"
-      ></p-dropdown>
+    <div class="flex-row small-gap configuration-selectors">
+      <div class="flex-column small-gap">
+        <label for="range">Période scolaire</label>
+        <p-calendar
+          formControlName="dateRange"
+          appendTo="body"
+          id="range"
+          [(ngModel)]="rangeDates"
+          selectionMode="range"
+          [readonlyInput]="true"
+          placeholder="Sélectionnez la période"
+        ></p-calendar>
+      </div>
+      <div class="flex-column small-gap">
+        <label for="range">Campus</label>
+        <p-dropdown
+          optionLabel="name"
+          formControlName="campus"
+          appendTo="body"
+          [options]="school.campuses"
+          [(ngModel)]="selectedCampus"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="false"
+          placeholder="Sélectionnez un campus"
+        >
+        </p-dropdown>
+      </div>
+
+      <div class="flex-column small-gap">
+        <label for="range">Année type</label>
+        <p-dropdown
+          optionLabel="name"
+          formControlName="year"
+          appendTo="body"
+          [options]="school.classYears"
+          [(ngModel)]="selectedYear"
+          [showClear]="false"
+          placeholder="Sélectionnez une année"
+        ></p-dropdown>
+      </div>
     </div>
-  </div>
-  <small *ngIf="!isDateRangeValid() && form.get('dateRange')?.touched" [style]="'color: red;'">
-    Veuillez sélectionner 2 dates pour la période scolaire
-  </small>
-  <div class="footer">
-    <p-button
-      class="cancel-button"
-      label="Annuler"
-      icon="pi pi-times"
-      severity="danger"
-      (click)="closeDialog()"
-    ></p-button>
-    <p-button
-      [disabled]="!form.valid || !isDateRangeValid()"
-      class="next-button"
-      label="Suivant"
-      icon="pi pi-check"
-      (click)="nextStep()"
-    ></p-button>
-  </div>
-</form>
+    <small
+      *ngIf="!isDateRangeValid() && form.get('dateRange')?.touched"
+      [style]="'color: red;'"
+    >
+      Veuillez sélectionner 2 dates pour la période scolaire
+    </small>
+    <div class="footer">
+      <p-button
+        class="cancel-button"
+        label="Annuler"
+        icon="pi pi-times"
+        severity="danger"
+        (click)="closeDialog()"
+      ></p-button>
+      <p-button
+        [disabled]="!form.valid || !isDateRangeValid()"
+        class="next-button"
+        label="Suivant"
+        icon="pi pi-check"
+        (click)="nextStep()"
+      ></p-button>
+    </div>
+  </form>
+</ng-container>

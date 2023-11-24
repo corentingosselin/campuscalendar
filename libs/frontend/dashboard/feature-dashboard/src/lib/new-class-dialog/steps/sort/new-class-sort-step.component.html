@@ -1,35 +1,34 @@
 <div class="flex-column sort-section">
-  <h3>
-    Sélectionnez et trier les matières que vous souhaitez intégrer au calendrier
-  </h3>
+  <ng-container *ngIf="(schoolState$ | async)?.school as school">
+    <h3>
+      Sélectionnez et trier les matières que vous souhaitez intégrer au
+      calendrier
+    </h3>
 
-  <div class="flex-row">
-    <p-pickList
-      [source]="subjects"
-      [target]="sortedSubjects"
-      sourceHeader="Matières"
-      targetHeader="Matières sélectionnées"
-      [dragdrop]="true"
-      [responsive]="false"
-      [sourceStyle]="{ height: '30rem' }"
-      [targetStyle]="{ height: '30rem' }"
-      breakpoint="1400px"
-    >
-      <div class="footer">
-        <p-button
-          class="next-button"
-          label="Suivant"
-          icon="pi pi-check"
-          (click)="nextStep()"
-        ></p-button>
-      </div>
-    </p-pickList>
-  </div>
+    <div class="flex-row">
+      <p-pickList
+        [source]="subjects"
+        [target]="sortedSubjects"
+        sourceHeader="Matières"
+        targetHeader="Matières sélectionnées"
+        [dragdrop]="true"
+        [responsive]="false"
+        [sourceStyle]="{ height: '30rem' }"
+        [targetStyle]="{ height: '30rem' }"
+        breakpoint="1400px"
+      >
+        <ng-template let-subject pTemplate="subject"> 
+          <p>{{subject.name}}</p>
+        </ng-template>
+      </p-pickList>
+    </div>
 
-  <p-button
-    class="next-button"
-    label="Suivant"
-    icon="pi pi-check"
-    (click)="nextStep()"
-  ></p-button>
+    <p-button
+      class="next-button"
+      label="Suivant"
+      icon="pi pi-check"
+      [disabled]="sortedSubjects.length <= 0"
+      (click)="nextStep()"
+    ></p-button>
+  </ng-container>
 </div>

@@ -1,7 +1,5 @@
-import {
-  SchoolConfigurationDto,
-} from '@campuscalendar/shared/api-interfaces';
-import { CreateRequestContext, MikroORM } from '@mikro-orm/core';
+import { SchoolConfigurationDto } from '@campuscalendar/shared/api-interfaces';
+import { CreateRequestContext, MikroORM, wrap } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 import { SchoolEntity } from './entities/school.entity';
 import { ClassYearEntity } from './entities/class-year.entity';
@@ -14,19 +12,31 @@ export class SchoolService {
 
   @CreateRequestContext()
   async getSchool() {
-    const result = await this.orm.em.getRepository(SchoolEntity).findAll();
-    const school = result[0];
+    const result = await this.orm.em.find(SchoolEntity, {});
+    const school = wrap(result[0]).toObject();
 
-    const campuses = await this.orm.em.find(CampusEntity, { school: school });
-    school.campuses = campuses;
-
-    const classYears = await this.orm.em.find(ClassYearEntity, {
+    const campusesResult = await this.orm.em.find(CampusEntity, {
       school: school,
     });
-    school.classYears = classYears;
-    return school.toResponse();
-  }
+    const classYearsResult = await this.orm.em.find(ClassYearEntity, {
+      school: school,
+    });
+    const campuses = campusesResult.map((campus) => wrap(campus).toObject());
+    school.classYears = await Promise.all(classYearsResult.map(async (classYear) => {
+      const classYearObject = wrap(classYear).toObject();
+  
+      const subjectsResult = await this.orm.em.find(SubjectEntity, {
+        classYear: classYear.id,
+      });
+      classYearObject.subjects = subjectsResult.map(subject => wrap(subject).toObject());
+  
+      return classYearObject;
+    }));
 
+    school.campuses = campuses;
+
+    return school;
+  }
 
   @CreateRequestContext()
   async isSchoolConfigured() {

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { NewClassSortStepComponent } from './steps/sort/new-class-sort-step.component';
 import { NewClassValueStepComponent } from './steps/value/new-class-value-step.component';
 import { NewClassOffDayStepComponent } from './steps/offday-calendar/new-class-offday-step.component';
+import { NewClassConfirmationStepComponent } from './steps/confirmation/new-class-confirmation-step.component';
 
 @Component({
   selector: 'campuscalendar-new-class-dialog',
@@ -24,7 +25,8 @@ import { NewClassOffDayStepComponent } from './steps/offday-calendar/new-class-o
     NewClassConfigStepComponent,
     NewClassSortStepComponent,
     NewClassValueStepComponent,
-    NewClassOffDayStepComponent
+    NewClassOffDayStepComponent,
+    NewClassConfirmationStepComponent
   ],
   templateUrl: './new-class-dialog.component.html',
   styleUrls: ['./new-class-dialog.component.scss'],

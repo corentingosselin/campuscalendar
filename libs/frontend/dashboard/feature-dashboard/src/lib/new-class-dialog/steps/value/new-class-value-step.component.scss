@@ -4,6 +4,17 @@
   margin-top: 1rem;
 }
 
+small {
+  color: red;
+}
+
+.hours-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
 .sort-section {
   gap: 1rem;
   align-items: center;

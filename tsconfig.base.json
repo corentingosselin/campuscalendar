@@ -72,6 +72,15 @@
       "@campuscalendar/calendar": [
         "libs/frontend/shared/helper/calendar/src/index.ts"
       ],
+      "@campuscalendar/calendar-core": [
+        "libs/frontend/calendar/core/src/index.ts"
+      ],
+      "@campuscalendar/calendar-data-access": [
+        "libs/frontend/calendar/data-access/src/index.ts"
+      ],
+      "@campuscalendar/calendar-feature": [
+        "libs/frontend/calendar/feature/src/index.ts"
+      ],
       "@campuscalendar/core": ["libs/frontend/core/src/index.ts"],
       "@campuscalendar/dashboard-core": [
         "libs/frontend/dashboard/core/src/index.ts"

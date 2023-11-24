@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CalendarDatesFacade, Holiday } from '@campuscalendar/calendar';
 import {
   DialogStateModel,
   NewClassFacade,
@@ -10,15 +12,12 @@ import {
 } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import frLocale from '@fullcalendar/core/locales/fr';
-import googleCalendarPlugin from '@fullcalendar/google-calendar';
+import dayGridMonthPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import multiMonthPlugin from '@fullcalendar/multimonth';
-import dayGridMonthPlugin from '@fullcalendar/daygrid';
-import { ButtonModule } from 'primeng/button';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CalendarDatesFacade, Holiday } from '@campuscalendar/calendar';
+import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { FormsModule } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -79,7 +78,6 @@ export class NewClassOffDayStepComponent implements OnInit {
       plugins: [
         multiMonthPlugin,
         dayGridMonthPlugin,
-        googleCalendarPlugin,
         interactionPlugin,
       ],
       locale: frLocale,
@@ -177,6 +175,7 @@ export class NewClassOffDayStepComponent implements OnInit {
     const end = this.newClassState?.config?.endDate;
     if (!start || !end) return;
     const availableDates = this.getAvailableDates(start, end);
+    this.newClassFacade.updateAvailableDatesStep(availableDates);
   }
 
   private formatDateToLocalISOString(date: Date): string {

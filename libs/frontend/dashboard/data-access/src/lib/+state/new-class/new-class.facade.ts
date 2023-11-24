@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
+import { Subject } from '@campuscalendar/shared/api-interfaces';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { UpdateConfigStep, UpdateStep, UpdateSubjectsStep } from './new-class.action';
-import { ConfigurationStateModel, DialogStateModel } from './new-class.model';
+import { UpdateAvailableDatesStep, UpdateConfigStep, UpdateStep, UpdateSubjectTimeStep, UpdateSubjectsStep } from './new-class.action';
+import { ConfigurationStateModel, DialogStateModel, SubjectTime } from './new-class.model';
 import { NewClassDialogState } from './new-class.state';
-import { Subject } from '@campuscalendar/shared/api-interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class NewClassFacade {
@@ -26,4 +26,15 @@ export class NewClassFacade {
   updateSubjectsStep(data: Subject[]) {
     this.store.dispatch(new UpdateSubjectsStep(data));
   }
+
+  updateAvailableDatesStep(dates: Date[]) {
+    this.store.dispatch(new UpdateAvailableDatesStep(dates));
+  }
+  
+  updateSubjectTimeStep(data: { subjectTimes: SubjectTime[], hoursPerDay: number }) {
+    this.store.dispatch(new UpdateSubjectTimeStep(data));
+  }
+
+
+
 }

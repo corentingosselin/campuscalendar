@@ -1,5 +1,27 @@
 <div class="flex-column value-section">
   <h3>Editez la durée de chaque matière</h3>
+  <small *ngIf="!isSufficientHours"> Le nombre d'heures disponibles doit être inférieur au nombre d'heures à affecter </small>
+  <div class="hours-section">
+    <p>Nombre d'heures disponibles:</p>
+    <span>{{ totalAvailableHours }} heure(s)</span>
+  </div>
+  <div class="hours-section">
+    <p>Nombre d'heures à affecter:</p>
+    <span>{{ totalRequiredHours }} heure(s)</span>
+  </div>
+
+  <p-divider></p-divider>
+
+  <div class="flex-row time-setter">
+    <label for="">Nombre d'heures maximum de cours par jour</label>
+    <p-inputNumber
+      [formControl]="dayTimeControl"
+      inputId="minmax"
+      mode="decimal"
+      [min]="0"
+      [max]="24"
+    ></p-inputNumber>
+  </div>
 
   <div class="flex-row time-setter">
     <label for="">Affectez toutes les matières à l'heure suivante</label>
@@ -14,21 +36,8 @@
     ></p-inputNumber>
   </div>
 
-  <div class="flex-row time-setter">
-    <label for="">Nombre d'heure maximum de cours par jour</label>
-
-    <span>H</span>
-    <p-inputNumber
-      [formControl]="dayTimeControl"
-      inputId="minmax"
-      mode="decimal"
-      [min]="0"
-      [max]="24"
-    ></p-inputNumber>
-  </div>
-
   <p-table
-    [value]="subjects"
+    [value]="subjectTime"
     dataKey="id"
     editMode="row"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -56,6 +65,7 @@
           <p-cellEditor>
             <ng-template pTemplate="input">
               <p-inputNumber
+                (ngModelChange)="handleSubjectTimeChange(subject, $event)"
                 [(ngModel)]="subject.time"
                 inputId="minmax"
                 mode="decimal"
@@ -77,6 +87,7 @@
     class="next-button"
     label="Suivant"
     icon="pi pi-check"
+    [disabled]="!isSufficientHours"
     (click)="nextStep()"
   ></p-button>
 </div>

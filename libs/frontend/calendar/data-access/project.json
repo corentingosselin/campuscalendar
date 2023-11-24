@@ -1,0 +1,20 @@
+{
+  "name": "calendar-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/frontend/calendar/data-access/src",
+  "prefix": "campuscalendar",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/frontend/calendar/data-access/**/*.ts",
+          "libs/frontend/calendar/data-access/**/*.html"
+        ]
+      }
+    }
+  }
+}

@@ -4,7 +4,6 @@ import { SchoolState } from '@campuscalendar/school';
 import { NgxsModule } from '@ngxs/store';
 import { AuthGuard } from './guards/auth.guard';
 import { SchoolGuard } from './guards/school.guard';
-import { AlreadyLoggedGuard } from './guards/already-logged.guard';
 
 export const ROUTES: Route[] = [
   //if path empty redirect to /dashboard
@@ -27,7 +26,7 @@ export const ROUTES: Route[] = [
       },
       {
         path: 'login',
-        canActivate: [AlreadyLoggedGuard],
+        canActivate: [],
         loadChildren: () =>
           import('@campuscalendar/authentification-feature-login').then(
             (m) => m.routes
