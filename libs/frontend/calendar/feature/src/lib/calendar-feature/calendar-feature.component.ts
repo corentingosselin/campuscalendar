@@ -54,6 +54,7 @@ export class CalendarFeatureComponent implements OnInit {
           info.el.classList.add('fc-day-disabled');
         }
       },
+      initialDate: this.calendarEvent?.startDate,
       visibleRange: {
         start: this.calendarEvent?.startDate,
         end: this.calendarEvent?.endDate,

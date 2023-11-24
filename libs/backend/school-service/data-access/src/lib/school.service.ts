@@ -14,7 +14,7 @@ export class SchoolService {
   async getSchool() {
     const result = await this.orm.em.find(SchoolEntity, {});
     const school = wrap(result[0]).toObject();
-
+  
     const campusesResult = await this.orm.em.find(CampusEntity, {
       school: school,
     });
@@ -22,7 +22,8 @@ export class SchoolService {
       school: school,
     });
     const campuses = campusesResult.map((campus) => wrap(campus).toObject());
-    school.classYears = await Promise.all(classYearsResult.map(async (classYear) => {
+  
+    let classYears = await Promise.all(classYearsResult.map(async (classYear) => {
       const classYearObject = wrap(classYear).toObject();
   
       const subjectsResult = await this.orm.em.find(SubjectEntity, {
@@ -32,11 +33,16 @@ export class SchoolService {
   
       return classYearObject;
     }));
-
+  
+    // Sort classYears by name
+    classYears = classYears.sort((a, b) => a.name.localeCompare(b.name));
+  
+    school.classYears = classYears;
     school.campuses = campuses;
-
+  
     return school;
   }
+  
 
   @CreateRequestContext()
   async isSchoolConfigured() {

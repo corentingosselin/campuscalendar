@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NewClassFacade } from '@campuscalendar/dashboard-data-access';
 import { GlobalDialogService } from '@campuscalendar/dialog';
