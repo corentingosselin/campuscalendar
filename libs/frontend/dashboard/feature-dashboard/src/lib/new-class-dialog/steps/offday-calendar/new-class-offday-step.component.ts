@@ -170,7 +170,7 @@ export class NewClassOffDayStepComponent implements OnInit {
 
   nextStep() {
     this.newClassFacade.nextStep();
-    // TODO: Add off days to config
+
     const start = this.newClassState?.config?.startDate;
     const end = this.newClassState?.config?.endDate;
     if (!start || !end) return;

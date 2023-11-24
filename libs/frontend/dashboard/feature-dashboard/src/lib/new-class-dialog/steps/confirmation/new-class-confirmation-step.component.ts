@@ -11,12 +11,13 @@ import {
   SubjectEvent,
 } from '@campuscalendar/shared/api-interfaces';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ButtonModule } from 'primeng/button';
 
 @UntilDestroy()
 @Component({
   selector: 'campuscalendar-new-class-confirmation-step',
   standalone: true,
-  imports: [CommonModule, CalendarFeatureComponent],
+  imports: [CommonModule, CalendarFeatureComponent, ButtonModule],
   templateUrl: './new-class-confirmation-step.component.html',
   styleUrls: ['./new-class-confirmation-step.component.scss'],
 })
@@ -35,50 +36,52 @@ export class NewClassConfirmationStepComponent implements OnInit {
   ): SubjectEvent[] {
     const schedule: SubjectEvent[] = [];
     let dateIndex = 0;
-    
     const formatTime = (hours: number) => hours.toString().padStart(2, '0') + ':00';
   
-    // Create a copy of subjects array to avoid mutating original objects
     const subjectsCopy = subjects.map(subject => ({ ...subject, remainingTime: subject.time }));
   
-    while (dateIndex < availableDates.length && subjectsCopy.some(subject => subject.remainingTime > 0)) {
+    while (dateIndex < availableDates.length) {
       const currentDate = new Date(availableDates[dateIndex]);
       currentDate.setHours(9, 0, 0, 0); // Set start time to 9:00 AM
       let startHour = 9;
       let dailyHoursRemaining = maxHoursPerDay;
   
-      while (dailyHoursRemaining > 0 && subjectsCopy.some(subject => subject.remainingTime > 0)) {
-        const subject = subjectsCopy.find(subject => subject.remainingTime > 0);
-        if (!subject) break;
+      for (const subject of subjectsCopy) {
+        if (subject.remainingTime <= 0) continue;
   
-        let hoursAllocated = Math.min(subject.remainingTime, dailyHoursRemaining);
-        // Adjust for lunch break
-        if (startHour < 12 && startHour + hoursAllocated > 12) {
-          hoursAllocated = 12 - startHour;
+        while (subject.remainingTime > 0 && dailyHoursRemaining > 0) {
+          let hoursAllocated = Math.min(subject.remainingTime, dailyHoursRemaining);
+          if (startHour < 12 && startHour + hoursAllocated > 12) {
+            hoursAllocated = 12 - startHour; // Adjust for lunch break
+          }
+  
+          subject.remainingTime -= hoursAllocated;
+          dailyHoursRemaining -= hoursAllocated;
+  
+          const endHour = startHour + hoursAllocated;
+          schedule.push({
+            subject: subject,
+            date: new Date(currentDate),
+            startTime: formatTime(startHour),
+            endTime: formatTime(endHour)
+          });
+  
+          startHour += hoursAllocated;
+          if (startHour >= 12 && startHour < 13) {
+            startHour = 13; // Skip lunch break
+          }
+  
+          if (startHour >= (9 + maxHoursPerDay)) {
+            break; // Day is filled, move to next day
+          }
         }
   
-        subject.remainingTime -= hoursAllocated;
-        dailyHoursRemaining -= hoursAllocated;
-  
-        const endHour = startHour + hoursAllocated;
-        schedule.push({
-          subject: subject,
-          date: new Date(currentDate),
-          startTime: formatTime(startHour),
-          endTime: formatTime(endHour)
-        });
-  
-        startHour += hoursAllocated;
-        if (startHour >= 12 && startHour < 13) {
-          startHour = 13; // Skip lunch break
-        }
-  
-        if (startHour >= (9 + maxHoursPerDay)) {
-          break; // Day is filled, move to next day
+        if (dailyHoursRemaining === 0) {
+          break; // Move to next day if the day is filled
         }
       }
   
-      dateIndex++; // Move to the next date
+      dateIndex++; // Increment to the next day
     }
   
     if (subjectsCopy.some(subject => subject.remainingTime > 0)) {
@@ -87,6 +90,7 @@ export class NewClassConfirmationStepComponent implements OnInit {
   
     return schedule;
   }
+  
   
 
   ngOnInit() {
@@ -118,5 +122,9 @@ export class NewClassConfirmationStepComponent implements OnInit {
       subjectEvents: this.subjectEvents,
       availableDates: availableDates,
     };
+  }
+
+  nextStep() {
+    this.newClassFacade.nextStep();
   }
 }

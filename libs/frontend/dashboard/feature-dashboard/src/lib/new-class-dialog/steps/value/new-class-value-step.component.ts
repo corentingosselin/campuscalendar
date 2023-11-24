@@ -30,7 +30,7 @@ export class NewClassValueStepComponent implements OnInit {
   private newClassFacade = inject(NewClassFacade);
 
   private changeDetectorRef = inject(ChangeDetectorRef);
-  defaultTime = 5;
+  defaultTime = 21;
 
   defaultTimeFormControl = new FormControl(this.defaultTime);
   dayTimeControl = new FormControl(7);

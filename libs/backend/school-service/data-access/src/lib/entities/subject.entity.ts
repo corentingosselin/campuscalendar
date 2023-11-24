@@ -10,5 +10,6 @@ export class SubjectEntity extends BaseEntity implements Subject {
 
   @ManyToOne(() => ClassYearEntity)
   classYear!: ClassYearEntity;
+
   
 }

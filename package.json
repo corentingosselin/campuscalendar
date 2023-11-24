@@ -41,6 +41,8 @@
     "@nestjs/platform-express": "^10.1.3",
     "@nestjs/platform-fastify": "^10.0.0",
     "@ngneat/until-destroy": "^10.0.0",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "@ngxs/store": "^3.8.1",
     "@nx/angular": "17.0.3",
     "amqp-connection-manager": "^4.1.13",
@@ -110,7 +112,7 @@
     "useTsNode": true,
     "tsConfigPath": "tsconfig.orm.json",
     "configPaths": [
-      "./libs/backend/user-service/core/src/mikro-orm.config.ts"
+      "./libs/backend/school-service/core/src/mikro-orm.config.ts"
     ]
   }
 }

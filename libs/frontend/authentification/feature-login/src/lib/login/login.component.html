@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="(login())">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
       <div class="flex-column login-content">
         <div class="flex-column">
           <span class="p-float-label">
@@ -60,6 +60,7 @@
           [outlined]="true"
           (click)="login()"
           [disabled]="(loadingState | async)?.loading"
+          type="submit"
         ></p-button>
       </div>
     </form>
