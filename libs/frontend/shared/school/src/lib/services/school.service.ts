@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ClassSchedulerDto, ClassSchedulerResponse, SchoolResponse } from '@campuscalendar/shared/api-interfaces';
+import { ClassSchedulerDto, ClassSchedulerInfoResponse, SchoolResponse } from '@campuscalendar/shared/api-interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class SchoolService {
@@ -15,6 +15,6 @@ export class SchoolService {
   }
 
   registerClassScheduler(classScheduler: ClassSchedulerDto) {
-    return this.http.post<ClassSchedulerResponse>('/api/school/class-scheduler', classScheduler);
+    return this.http.post<ClassSchedulerInfoResponse>('/api/school/class-scheduler', classScheduler);
   }
 }

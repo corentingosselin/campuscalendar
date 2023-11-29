@@ -31,4 +31,11 @@ export class SchoolController {
   isSchoolConfigured() {
     return this.schoolService.isSchoolConfigured();
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('class-scheduler')
+  getClassSchedulers() {
+    return this.schoolService.getClassSchedulers();
+  }
+
 }

@@ -1,4 +1,4 @@
--- Creating table `class_scheduler_entity`
+-- Create table `class_scheduler_entity`
 CREATE TABLE `class_scheduler_entity` (
   `id` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -8,11 +8,12 @@ CREATE TABLE `class_scheduler_entity` (
   `end_date` DATETIME NOT NULL,
   `campus_id` VARCHAR(255) NOT NULL,
   `school_id` VARCHAR(255) NOT NULL,
+  `class_year_id` VARCHAR(255) NOT NULL,
   `available_dates` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 ENGINE = InnoDB;
 
--- Creating table `school_entity`
+-- Create table `school_entity`
 CREATE TABLE `school_entity` (
   `id` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE `school_entity` (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 ENGINE = InnoDB;
 
--- Creating table `class_year_entity`
+-- Create table `class_year_entity`
 CREATE TABLE `class_year_entity` (
   `id` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -36,7 +37,7 @@ ALTER TABLE
 ADD
   INDEX `class_year_entity_school_id_index`(`school_id`);
 
--- Creating table `campus_entity`
+-- Create table `campus_entity`
 CREATE TABLE `campus_entity` (
   `id` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -51,7 +52,7 @@ ALTER TABLE
 ADD
   INDEX `campus_entity_school_id_index`(`school_id`);
 
--- Creating table `subject_entity`
+-- Create table `subject_entity`
 CREATE TABLE `subject_entity` (
   `id` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -66,7 +67,7 @@ ALTER TABLE
 ADD
   INDEX `subject_entity_class_year_id_index`(`class_year_id`);
 
--- Creating table `subject_event_entity`
+-- Create table `subject_event_entity`
 CREATE TABLE `subject_event_entity` (
   `id` VARCHAR(255) NOT NULL,
   `created_at` DATETIME NOT NULL,
@@ -84,7 +85,7 @@ ALTER TABLE
 ADD
   INDEX `subject_event_entity_class_scheduler_id_index`(`class_scheduler_id`);
 
--- Adding foreign key constraints
+-- Add foreign key constraints
 ALTER TABLE
   `class_year_entity`
 ADD

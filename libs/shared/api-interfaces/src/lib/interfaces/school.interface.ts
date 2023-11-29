@@ -36,6 +36,13 @@ export interface ClassScheduler extends Entity {
   calendar: CalendarClassScheduler;
 }
 
+export interface ClassSchedulerInfo extends Entity {
+  name: string;
+  campusId: string;
+  schoolId: string;
+  classYearId: string;
+}
+
 export interface SubjectEvent  {
   subject: Subject
   date: Date;

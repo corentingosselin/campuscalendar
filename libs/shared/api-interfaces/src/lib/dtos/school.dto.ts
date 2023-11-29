@@ -18,6 +18,8 @@ export class ClassSchedulerDto {
   campusId!: string;
   @IsString()
   schoolId!: string;
+  @IsString()
+  classYearId!: string;
   @IsDefined()
   calendar!: CalendarClassSchedulerDto;
 }

@@ -1,5 +1,5 @@
-import { ClassScheduler } from "@campuscalendar/shared/api-interfaces";
+import { ClassSchedulerInfo } from "@campuscalendar/shared/api-interfaces";
 
 export interface ClassSchedulerModel {
-    classes?: ClassScheduler[];
+    classes?: ClassSchedulerInfo[];
   }

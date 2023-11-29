@@ -13,6 +13,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccountDialogComponent } from './account-dialog/account-dialog.component';
 import { GlobalDialogService } from '@campuscalendar/dialog';
 import { SchoolFacade } from '@campuscalendar/school';
+import { ClassSchedulerFacade } from '@campuscalendar/dashboard-data-access';
 
 @Component({
   selector: 'campuscalendar-feature-dashboard',
@@ -36,8 +37,10 @@ export class FeatureDashboardComponent implements OnInit {
   accountDialogRef?: DynamicDialogRef;
 
   private schoolFacade = inject(SchoolFacade);
+  private classFacade = inject(ClassSchedulerFacade);
   ngOnInit(): void {
     this.schoolFacade.fetchSchoolInfo();
+    this.classFacade.fetchClassSchedulers();
       
   }
 

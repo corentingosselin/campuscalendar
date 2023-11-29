@@ -20,6 +20,9 @@ export class ClassSchedulerEntity extends BaseEntity {
   schoolId!: string;
 
   @Property()
+  classYearId!: string;
+
+  @Property()
   availableDates!: Date[];
 
   @OneToMany(

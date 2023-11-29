@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
+import { ClassSchedulerInfo } from '@campuscalendar/shared/api-interfaces';
 
 @Component({
   selector: 'campuscalendar-class-card-info',
@@ -11,6 +12,6 @@ import { CardModule } from 'primeng/card';
 })
 export class ClassCardInfoComponent {
 
-    
+    @Input() classInfo: ClassSchedulerInfo = {} as ClassSchedulerInfo;
 
 }

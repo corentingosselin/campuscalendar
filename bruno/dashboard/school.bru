@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{base_url}}/school
+  url: {{base_url}}/school/class-scheduler
   body: none
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvcmVudGluLmdvc3NlbGluQGRva2FhLmZyIiwiaWQiOiI2NTQ4YjIxMTM2ZDZjODBmZTQ3MTI0OTIiLCJpYXQiOjE3MDEwOTQ4NTQsImV4cCI6MTcxNjgxOTY1NCwiYXVkIjoidm9sZG9pem8uY29tIiwiaXNzIjoidm9sZG9pem8uY29tIn0.4j-9jbKYw25BoYZZULwyErWaNWUghgSnz0DFggwt0X8
 }

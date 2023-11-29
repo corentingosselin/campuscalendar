@@ -5,20 +5,32 @@
   <div class="flex-row small-gap filter-inputs">
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
-      <input type="text" pInputText [(ngModel)]="value" />
+      <input
+        type="text"
+        pInputText
+        [formControl]="searchControl"
+        placeholder="Recherchez une classe"
+      />
     </span>
-    <p-dropdown
-      [options]="campus"
-      [(ngModel)]="selectedCampus"
-      [showClear]="true"
-      placeholder="Campus"
-    ></p-dropdown>
-    <p-dropdown
-      [options]="classes"
-      [(ngModel)]="selectedClass"
-      [showClear]="true"
-      placeholder="Année"
-    ></p-dropdown>
+
+    <ng-container *ngIf="(schoolState$ | async)?.school as school">
+      <p-dropdown
+        [autoDisplayFirst]="false"
+        optionLabel="name"
+        [options]="school.campuses"
+        (onChange)="selectedCampus = $event.value"
+        [showClear]="true"
+        placeholder="Campus"
+      ></p-dropdown>
+      <p-dropdown
+        [autoDisplayFirst]="false"
+        optionLabel="name"
+        [options]="school.classYears"
+        (onChange)="selectedClass = $event.value"
+        [showClear]="true"
+        placeholder="Année"
+      ></p-dropdown>
+    </ng-container>
   </div>
 
   <p-button
@@ -30,38 +42,36 @@
 </p-toolbar>
 
 <div class="content">
-  <p-fieldset legend="Campus de Lille">
-    <h3 class="class-year-title">Master 1</h3>
-    <div class="class-list">
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-    </div>
-    <p-divider></p-divider>
+  <ng-container *ngIf="combinedState$ | async as combinedClasses">
+    <ng-container *ngIf="combinedClasses.length > 0; else noClassesTemplate">
+      <ng-container *ngFor="let campus of combinedClasses">
+        <p-fieldset [legend]="campus.campusName">
+          <div class="flex-column large-gap">
+            <ng-container *ngFor="let classYear of campus.classYearClasses">
+              <div>
+                <h3 class="class-year-title">{{ classYear.classYearName }}</h3>
+                <div class="class-list">
+                  <campuscalendar-class-card-info
+                    *ngFor="let classInfo of classYear.classes"
+                    [classInfo]="classInfo"
+                  ></campuscalendar-class-card-info>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </p-fieldset>
+      </ng-container>
+    </ng-container>
 
-    <h3 class="class-year-title">Master 2</h3>
-    <div class="class-list">
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-    </div>
-  </p-fieldset>
-
-  <p-fieldset legend="Campus de Paris">
-    <h3 class="class-year-title">Première année</h3>
-    <div class="class-list">
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-      <campuscalendar-class-card-info></campuscalendar-class-card-info>
-    </div>
-  </p-fieldset>
+    <!-- Template for no classes or filtered out classes -->
+    <ng-template #noClassesTemplate>
+      <h3 *ngIf="isFiltered()">
+        Aucune classe n'est disponible pour les filtres sélectionnés.
+      </h3>
+      <h3 *ngIf="!isFiltered()">
+        Aucune classe n'a été créée pour le moment. Cliquez sur Ajoutez une
+        classe.
+      </h3>
+    </ng-template>
+  </ng-container>
 </div>

@@ -1,12 +1,12 @@
-<h3>Proposition automatique de calendrier </h3>
 
-
-<campuscalendar-calendar-feature [calendar]="calendar" ></campuscalendar-calendar-feature>
-
-
+<div class="flex-row small-gap">
+<h3>Proposition automatique de calendrier</h3>
 <p-button
-class="next-button"
-label="Suivant"
-icon="pi pi-check"
-(click)="nextStep()"
+  class="confirm-button"
+  label="Confirmer"
+  (click)="nextStep()"
 ></p-button>
+</div>
+<campuscalendar-calendar-feature
+  [calendar]="calendar"
+></campuscalendar-calendar-feature>

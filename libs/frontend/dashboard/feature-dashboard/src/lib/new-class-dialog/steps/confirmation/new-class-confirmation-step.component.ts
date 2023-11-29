@@ -113,6 +113,7 @@ export class NewClassConfirmationStepComponent implements OnInit {
     let className = '';
     let schoolId = '';
     let campusId = '';
+    let classYearId = '';
     let startDate: Date | undefined;
     let endDate: Date | undefined;
     let subjectTimes: SubjectTime[] = [];
@@ -128,6 +129,7 @@ export class NewClassConfirmationStepComponent implements OnInit {
         availableDates = [...state.availableDates];
         className = state.config.name;
         if (state.config.campus) campusId = state.config.campus.id;
+        classYearId = state.config.year?.id || '';
       });
 
     this.schoolState$?.pipe(untilDestroyed(this)).subscribe((state) => {
@@ -152,6 +154,7 @@ export class NewClassConfirmationStepComponent implements OnInit {
       name: className,
       campusId: campusId,
       schoolId,
+      classYearId,
       calendar: {
         startDate: startDate,
         endDate: endDate,

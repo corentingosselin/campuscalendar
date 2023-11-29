@@ -1,18 +1,18 @@
 import {
   ClassSchedulerDto,
+  ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
   SchoolConfigurationDto,
-  Subject,
 } from '@campuscalendar/shared/api-interfaces';
 import { CreateRequestContext, MikroORM, wrap } from '@mikro-orm/core';
 import { HttpException, Injectable } from '@nestjs/common';
-import { SchoolEntity } from './entities/school.entity';
-import { ClassYearEntity } from './entities/class-year.entity';
-import { SubjectEntity } from './entities/subject.entity';
+import { RpcException } from '@nestjs/microservices';
 import { CampusEntity } from './entities/campus.entity';
 import { ClassSchedulerEntity } from './entities/class-scheduler.entity';
+import { ClassYearEntity } from './entities/class-year.entity';
+import { SchoolEntity } from './entities/school.entity';
 import { SubjectEventEntity } from './entities/subject-event.entity';
-import { RpcException } from '@nestjs/microservices';
+import { SubjectEntity } from './entities/subject.entity';
 
 @Injectable()
 export class SchoolService {
@@ -102,13 +102,65 @@ export class SchoolService {
   }
 
   @CreateRequestContext()
-  getClassSchedulers() {
-    return this.orm.em.find(ClassSchedulerEntity, {});
+  async getClassSchedulers() {
+    const classSchedulerEntities = await this.orm.em.find(
+      ClassSchedulerEntity,
+      {}
+    );
+    const classInfos = classSchedulerEntities.map((classSchedulerEntity) => {
+      return {
+        id: classSchedulerEntity.id,
+        name: classSchedulerEntity.name,
+        campusId: classSchedulerEntity.campusId,
+        schoolId: classSchedulerEntity.schoolId,
+        classYearId: classSchedulerEntity.classYearId,
+      } as ClassSchedulerInfoResponse;
+    });
+    return classInfos;
   }
 
   @CreateRequestContext()
-  getClassScheduler(id: string) {
-    return this.orm.em.findOneOrFail(ClassSchedulerEntity, { id: id });
+  async getClassScheduler(id: string) {
+    const classSchedulerEntity = await this.orm.em.findOneOrFail(
+      ClassSchedulerEntity,
+      {
+        id: id,
+      }
+    );
+
+    const campusEntity = await this.orm.em.findOneOrFail(CampusEntity, {
+      id: classSchedulerEntity.campusId,
+    });
+
+    const schoolEntity = await this.orm.em.findOneOrFail(SchoolEntity, {
+      id: classSchedulerEntity.schoolId,
+    });
+
+    const subjectsEvents = await Promise.all(
+      classSchedulerEntity.subjectEvents
+        .getItems()
+        .map(async (subjectEvent) => {
+          const subjectEntity = await this.orm.em.findOneOrFail(SubjectEntity, {
+            id: subjectEvent.subjectId,
+          });
+          return { ...subjectEvent, subject: subjectEntity };
+        })
+    );
+
+    return {
+      id: classSchedulerEntity.id,
+      created_at: classSchedulerEntity.created_at,
+      updated_at: classSchedulerEntity.updated_at,
+      name: classSchedulerEntity.name,
+      campusName: campusEntity.name,
+      schoolName: schoolEntity.name,
+      calendar: {
+        startDate: classSchedulerEntity.startDate,
+        endDate: classSchedulerEntity.endDate,
+        availableDates: classSchedulerEntity.availableDates,
+        subjectEvents: subjectsEvents,
+      },
+    } as ClassSchedulerResponse;
   }
 
   @CreateRequestContext()
@@ -123,8 +175,10 @@ export class SchoolService {
       classSchedulerDto.calendar.availableDates.map((date) => new Date(date));
     classSchedulerEntity.campusId = classSchedulerDto.campusId;
     classSchedulerEntity.schoolId = classSchedulerDto.schoolId;
+    classSchedulerEntity.classYearId = classSchedulerDto.classYearId;
 
-    let classSchedulerResponse: ClassSchedulerResponse | undefined = undefined;
+    let classSchedulerResponse: ClassSchedulerInfoResponse | undefined =
+      undefined;
 
     // Use a transaction to ensure all operations are successful
     await this.orm.em.transactional(async (em) => {
@@ -138,41 +192,20 @@ export class SchoolService {
       }
       em.persist(classSchedulerEntity);
 
-      const campusEntity = await em.findOneOrFail(CampusEntity, {
-        id: classSchedulerEntity.campusId,
-      });
-      const schoolEntity = await em.findOneOrFail(SchoolEntity, {
-        id: classSchedulerEntity.schoolId,
-      });
-
-      const subjectsEvents = await Promise.all(
-        classSchedulerEntity.subjectEvents
-          .getItems()
-          .map(async (subjectEvent) => {
-            const subjectEntity = await em.findOneOrFail(SubjectEntity, {
-              id: subjectEvent.subjectId,
-            });
-            return { ...subjectEvent, subject: subjectEntity };
-          })
-      );
-
       classSchedulerResponse = {
         id: classSchedulerEntity.id,
         created_at: classSchedulerEntity.created_at,
         updated_at: classSchedulerEntity.updated_at,
         name: classSchedulerEntity.name,
-        campusName: campusEntity.name,
-        schoolName: schoolEntity.name,
-        calendar: {
-          startDate: classSchedulerEntity.startDate,
-          endDate: classSchedulerEntity.endDate,
-          availableDates: classSchedulerEntity.availableDates,
-          subjectEvents: subjectsEvents,
-        },
+        campusId: classSchedulerEntity.campusId,
+        schoolId: classSchedulerEntity.schoolId,
+        classYearId: classSchedulerEntity.classYearId,
       };
     });
-    if(!classSchedulerResponse) throw new RpcException(new HttpException('Error registering class scheduler', 500));
+    if (!classSchedulerResponse)
+      throw new RpcException(
+        new HttpException('Error registering class scheduler', 500)
+      );
     return classSchedulerResponse;
-
   }
 }

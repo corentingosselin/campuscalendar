@@ -1,8 +1,13 @@
-import { ClassScheduler } from "@campuscalendar/shared/api-interfaces";
+import { ClassSchedulerInfo } from "@campuscalendar/shared/api-interfaces";
+
+
+export class FetchClassScheduler {
+  static readonly type = '[ClassScheduler] fetch class';
+}
 
 export class AddClassScheduler {
   static readonly type = '[ClassScheduler] add class';
-  constructor(public payload: ClassScheduler) {}
+  constructor(public payload: ClassSchedulerInfo) {}
 }
 
 export class RemoveClassScheduler {

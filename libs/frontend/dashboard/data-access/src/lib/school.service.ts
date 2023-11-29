@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import {
   ClassSchedulerDto,
+  ClassSchedulerInfo,
   ClassSchedulerResponse,
 } from '@campuscalendar/shared/api-interfaces';
 
@@ -14,5 +15,9 @@ export class SchoolService {
       '/api/school/class-scheduler',
       classScheduler
     );
+  }
+
+  fetchClassSchedulers() {
+    return this.http.get<ClassSchedulerInfo[]>('/api/school/class-scheduler');
   }
 }
