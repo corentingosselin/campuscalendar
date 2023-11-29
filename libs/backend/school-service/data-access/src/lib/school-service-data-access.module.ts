@@ -4,6 +4,8 @@ import { ClassYearEntity } from './entities/class-year.entity';
 import { SchoolEntity } from './entities/school.entity';
 import { SubjectEntity } from './entities/subject.entity';
 import { SchoolService } from './school.service';
+import { SubjectEventEntity } from './entities/subject-event.entity';
+import { ClassSchedulerEntity } from './entities/class-scheduler.entity';
 
 @Module({
   controllers: [],
@@ -15,6 +17,8 @@ import { SchoolService } from './school.service';
   ],
   imports: [
     MikroOrmModule.forFeature([
+      ClassSchedulerEntity,
+      SubjectEventEntity,
       SchoolEntity,
       ClassYearEntity,
       SubjectEntity,

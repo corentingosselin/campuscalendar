@@ -1,6 +1,6 @@
 import { SchoolService } from '@campuscalendar/backend/api-gateway/data-access';
 import { JwtAuthGuard, SchoolExistGuard } from '@campuscalendar/backend/api-gateway/utils';
-import { SetupSchoolDto } from '@campuscalendar/shared/api-interfaces';
+import { ClassSchedulerDto, SetupSchoolDto } from '@campuscalendar/shared/api-interfaces';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 
 @Controller('school')
@@ -19,6 +19,13 @@ export class SchoolController {
   school() {
     return this.schoolService.getSchool();
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('class-scheduler')
+  createClassScheduler(@Body() classScheduler: ClassSchedulerDto) {
+    return this.schoolService.createClassScheduler(classScheduler);
+  }
+
 
   @Get('exists')
   isSchoolConfigured() {

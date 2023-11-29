@@ -1,6 +1,6 @@
 import { SchoolService } from '@campuscalendar/backend/school-service/data-access';
-import { GET_SCHOOL_CMD, IS_SCHOOL_CONFIGURED_CMD, REGISTER_SCHOOL_CMD } from '@campuscalendar/backend/shared/message-broker';
-import { SchoolConfigurationDto } from '@campuscalendar/shared/api-interfaces';
+import { GET_SCHOOL_CMD, IS_SCHOOL_CONFIGURED_CMD, REGISTER_CLASS_SCHEDULER_CMD, REGISTER_SCHOOL_CMD } from '@campuscalendar/backend/shared/message-broker';
+import { ClassSchedulerDto, SchoolConfigurationDto } from '@campuscalendar/shared/api-interfaces';
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
@@ -21,5 +21,10 @@ export class SchoolController {
   @MessagePattern(IS_SCHOOL_CONFIGURED_CMD)
   isSchoolConfigured() {
     return this.schoolService.isSchoolConfigured();
+  }
+
+  @MessagePattern(REGISTER_CLASS_SCHEDULER_CMD)
+  registerClassScheduler(@Payload() classSchedulerDto: ClassSchedulerDto) {
+    return this.schoolService.registerClassScheduler(classSchedulerDto);
   }
 }

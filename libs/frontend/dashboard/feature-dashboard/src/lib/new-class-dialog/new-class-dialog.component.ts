@@ -1,17 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StepsModule } from 'primeng/steps';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+  DialogStateModel,
+  NewClassFacade,
+} from '@campuscalendar/dashboard-data-access';
 import { MenuItem } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
-import { FormsModule } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
-import { NewClassConfigStepComponent } from './steps/config/new-class-config-step.component';
-import { DialogStateModel, NewClassFacade } from '@campuscalendar/dashboard-data-access';
+import { StepsModule } from 'primeng/steps';
 import { Observable } from 'rxjs';
+import { NewClassConfigStepComponent } from './steps/config/new-class-config-step.component';
+import { NewClassConfirmationStepComponent } from './steps/confirmation/new-class-confirmation-step.component';
+import { NewClassOffDayStepComponent } from './steps/offday-calendar/new-class-offday-step.component';
 import { NewClassSortStepComponent } from './steps/sort/new-class-sort-step.component';
 import { NewClassValueStepComponent } from './steps/value/new-class-value-step.component';
-import { NewClassOffDayStepComponent } from './steps/offday-calendar/new-class-offday-step.component';
-import { NewClassConfirmationStepComponent } from './steps/confirmation/new-class-confirmation-step.component';
 
 @Component({
   selector: 'campuscalendar-new-class-dialog',
@@ -26,20 +29,19 @@ import { NewClassConfirmationStepComponent } from './steps/confirmation/new-clas
     NewClassSortStepComponent,
     NewClassValueStepComponent,
     NewClassOffDayStepComponent,
-    NewClassConfirmationStepComponent
+    NewClassConfirmationStepComponent,
   ],
   templateUrl: './new-class-dialog.component.html',
   styleUrls: ['./new-class-dialog.component.scss'],
 })
 export class NewClassDialogComponent implements OnInit {
   rangeDates: Date[] | undefined;
-
   steps: MenuItem[] | undefined;
 
-  
   private newClassFacade = inject(NewClassFacade);
-  
-  newClassState$?: Observable<DialogStateModel>  = this.newClassFacade.newClassState$;
+
+  newClassState$?: Observable<DialogStateModel> =
+    this.newClassFacade.newClassState$;
 
   ngOnInit() {
     this.steps = [
@@ -48,7 +50,6 @@ export class NewClassDialogComponent implements OnInit {
       },
       {
         label: 'Ordre des matières',
-
       },
       {
         label: 'Jours sans cours',
@@ -58,8 +59,9 @@ export class NewClassDialogComponent implements OnInit {
       },
       {
         label: 'Confirmation',
-    
       },
     ];
   }
+
+
 }

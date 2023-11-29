@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {
   AccountFacade
 } from '@campuscalendar/dashboard-data-access';
+import { GlobalDialogService } from '@campuscalendar/dialog';
 import {
   HttpError,
   JwtUserSession,
@@ -65,6 +66,7 @@ export class AuthService {
   }
 
   logout() {
+    GlobalDialogService.closeCurrentDialog();
     this.accountFacade.removeAccountInfo();
     localStorage.removeItem('userSession');
     this.router.navigate(['/login']);

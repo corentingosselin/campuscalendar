@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="content">
   <div class="flex-column small-gap confirmation-brief">
     <p-card header="Résumé des informations" [style]="{ width: '100%' }">
@@ -54,9 +55,8 @@
 
     <div>
       <p-button
-        label="confirmer"
-        icon="pi pi-angle-right"
-        iconPos="right"
+        [disabled]="disabledSubmit"
+        label="Confirmer"
         (click)="confirm()"
       ></p-button>
     </div>

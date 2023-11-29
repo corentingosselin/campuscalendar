@@ -1,23 +1,12 @@
 import { Action, State, StateContext } from '@ngxs/store';
-import { DialogStateModel } from './new-class.model';
+import { DEFAULT_STATE, DialogStateModel } from './new-class.model';
 import { UpdateAvailableDatesStep, UpdateConfigStep, UpdateStep, UpdateSubjectTimeStep, UpdateSubjectsStep } from './new-class.action';
 import { Injectable } from '@angular/core';
 
 @State<DialogStateModel>({
   name: 'dialog',
   defaults: {
-    currentStep: 0,
-    config: {
-      name: '',
-      startDate: undefined,
-      endDate: undefined,
-      year: undefined,
-      campus: undefined,
-    },
-    subjects: [],
-    availableDates: [],
-    subjectTimes: [],
-    hoursPerDay: 0,
+    ...DEFAULT_STATE
   },
 })
 @Injectable({ providedIn: 'root' })

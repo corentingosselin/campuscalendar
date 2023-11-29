@@ -15,6 +15,7 @@ import {
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { NewClassDialogComponent } from '../new-class-dialog/new-class-dialog.component';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'campuscalendar-dashboard-home',
@@ -31,6 +32,7 @@ import { NewClassDialogComponent } from '../new-class-dialog/new-class-dialog.co
     InputTextModule,
     DropdownModule,
     DynamicDialogModule,
+    ToastModule
   ],
   templateUrl: './dashboard-home.component.html',
   styleUrls: ['./dashboard-home.component.scss'],

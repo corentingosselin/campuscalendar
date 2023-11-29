@@ -9,3 +9,4 @@ export * from './lib/dtos/school-config.dto';
 export * from './lib/interfaces/school.interface';
 export * from './lib/responses/school.response';
 export * from './lib/interfaces/utils.interface';
+export * from './lib/dtos/school.dto';

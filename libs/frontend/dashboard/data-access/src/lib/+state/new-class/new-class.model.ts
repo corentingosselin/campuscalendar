@@ -19,3 +19,18 @@ export interface ConfigurationStateModel {
 export interface SubjectTime extends Subject {
   time: number;
 }
+
+export const DEFAULT_STATE: DialogStateModel = {
+  currentStep: 0,
+  config: {
+    name: '',
+    startDate: undefined,
+    endDate: undefined,
+    year: undefined,
+    campus: undefined,
+  },
+  subjects: [],
+  availableDates: [],
+  subjectTimes: [],
+  hoursPerDay: 0,
+};

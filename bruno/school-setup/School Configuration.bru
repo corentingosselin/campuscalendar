@@ -4,8 +4,138 @@ meta {
   seq: 1
 }
 
-get {
-  url: http://localhost:3000/api
-  body: none
+post {
+  url: http://localhost:3000/api/school/setup
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "school": {
+      "name": "Supinfo",
+      "classYears": [
+        {
+          "name": "1ère année",
+          "subjects": [
+            "1HTML",
+            "1O365",
+            "1PYTH",
+            "1LOGI",
+            "1ILIP",
+            "1ALGO",
+            "1WORK",
+            "1ENGL",
+            "1WEBD",
+            "1TEAM",
+            "1CDEV",
+            "1SGBD",
+            "1PROC",
+            "1LICY",
+            "1PHPD",
+            "1TALK",
+            "1MODE",
+            "1ARIT",
+            "1COMM",
+            "1LIAL"
+          ]
+        },
+        {
+          "name": "2ème année",
+          "subjects": [
+            "2AWSP",
+            "2COOR",
+            "2DTSM",
+            "2DVST",
+            "2JAVA",
+            "2CCPP",
+            "2PHPD",
+            "2SEOE",
+            "2UIXD",
+            "2LPIC",
+            "2MCSA",
+            "2DTTL",
+            "2J2E",
+            "2GRA",
+            "2ALGO",
+            "2PROJ",
+            "2ENGL"
+          ]
+        },
+        {
+          "name": "3ème année",
+          "subjects": [
+            "3ERPL",
+            "3MLSP",
+            "3MCSA",
+            "3BIGD",
+            "3LPIC",
+            "3AGIL",
+            "3TPMG",
+            "3DVSC",
+            "3VRAR",
+            "3ASPC",
+            "3ANDM",
+            "3IOSD",
+            "3MERN",
+            "3CCNA",
+            "3SECU",
+            "3PROJ",
+            "3ENGL"
+          ]
+        },
+        {
+          "name": "Master 1",
+          "subjects": [
+            "4AZUR",
+            "4DOKR",
+            "4BINT",
+            "4CHGM",
+            "4GDPR",
+            "4CCNA",
+            "4KUBE",
+            "4BOSS",
+            "4SECU",
+            "4PROJ",
+            "4ENGL",
+            "4WEBD",
+            "4AGQL",
+            "4ARCL",
+            "4HYBD",
+            "4OBSV"
+          ]
+        },
+        {
+          "name": "Master 2",
+          "subjects": [
+            "5ITIL",
+            "5BLOC",
+            "5CCNA",
+            "5ENGL",
+            "5LAMB",
+            "5HASH",
+            "5WEBD",
+            "5DESI",
+            "5PERF",
+            "5PROJ"
+          ]
+        }
+      ]
+    },
+    "campus": [
+      "Campus Distanciel",
+      "Campus Lille",
+      "Campus Paris",
+      "Campus Lyon",
+      "Campus Bordeaux",
+      "Campus Rennes"
+    ],
+    "admin": {
+      "lastName": "Gosselin",
+      "firstName": "Corentin",
+      "email": "corentin.gosselin@supinfo.com",
+      "password": "1234",
+      "confirmPassowrd": "1234"
+    }
+  }
 }

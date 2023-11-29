@@ -3,7 +3,7 @@ import { Subject } from '@campuscalendar/shared/api-interfaces';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { UpdateAvailableDatesStep, UpdateConfigStep, UpdateStep, UpdateSubjectTimeStep, UpdateSubjectsStep } from './new-class.action';
-import { ConfigurationStateModel, DialogStateModel, SubjectTime } from './new-class.model';
+import { ConfigurationStateModel, DEFAULT_STATE, DialogStateModel, SubjectTime } from './new-class.model';
 import { NewClassDialogState } from './new-class.state';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +11,7 @@ export class NewClassFacade {
 
   @Select(NewClassDialogState) newClassState$:
     | Observable<DialogStateModel>
-    | undefined;
+    | undefined ;
 
   private store = inject(Store);
 
@@ -34,6 +34,17 @@ export class NewClassFacade {
   updateSubjectTimeStep(data: { subjectTimes: SubjectTime[], hoursPerDay: number }) {
     this.store.dispatch(new UpdateSubjectTimeStep(data));
   }
+
+  reset() {
+    const currentState = this.store.snapshot();
+    this.store.reset({
+      ...currentState,
+      dialog: {
+       ...DEFAULT_STATE
+      }
+    });
+  }
+  
 
 
 

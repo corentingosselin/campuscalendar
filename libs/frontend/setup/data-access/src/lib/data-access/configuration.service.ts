@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import {
   AdminDto,
   SchoolDto,
-  SetupSchoolDto
+  SetupSchoolDto,
+  UserSessionResponse
 } from '@campuscalendar/shared/api-interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationService {
+  private http = inject(HttpClient);
+
   private setupDto: SetupSchoolDto = {
     school: {
       name: '',
@@ -37,5 +41,9 @@ export class ConfigurationService {
 
   getConfigurationData() {
     return this.setupDto;
+  }
+
+  registerSchool(schoolDto: SetupSchoolDto) {
+    return this.http.post<UserSessionResponse>('/api/school/setup', schoolDto);
   }
 }

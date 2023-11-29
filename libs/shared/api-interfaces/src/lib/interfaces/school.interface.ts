@@ -23,25 +23,31 @@ export interface School extends Entity {
   classYears: ClassYear[];
 }
 
-export interface CalendarSubjectEvent {
-  startDate: Date;
-  endDate: Date;
-  subjectEvents: SubjectEvent[];
-  availableDates: Date[];
+
+
+/**
+ * Interfaces to display calendar
+ */
+
+export interface ClassScheduler extends Entity {
+  name: string;
+  campusName: string;
+  schoolName: string;
+  calendar: CalendarClassScheduler;
 }
 
 export interface SubjectEvent  {
-  subject: Subject;
+  subject: Subject
   date: Date;
   startTime: string; 
   endTime: string;  
 }
 
-export interface ClassScheduler extends Entity {
-  name: string;
-  year: Year;
-  campus: Campus;
+export type SubjectEventType = SubjectEvent & Entity;
+export interface CalendarClassScheduler {
   startDate: Date;
   endDate: Date;
+  availableDates: Date[];
   subjectEvents: SubjectEvent[];
 }
+

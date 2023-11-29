@@ -1,4 +1,12 @@
 <h3>Proposition automatique de calendrier </h3>
 
 
-<campuscalendar-calendar-feature [calendarEvent]="calendarEvent" ></campuscalendar-calendar-feature>
+<campuscalendar-calendar-feature [calendar]="calendar" ></campuscalendar-calendar-feature>
+
+
+<p-button
+class="next-button"
+label="Suivant"
+icon="pi pi-check"
+(click)="nextStep()"
+></p-button>

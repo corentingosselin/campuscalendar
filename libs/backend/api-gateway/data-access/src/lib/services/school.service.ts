@@ -2,6 +2,7 @@ import {
   CREATE_USER_CMD,
   GET_SCHOOL_CMD,
   IS_SCHOOL_CONFIGURED_CMD,
+  REGISTER_CLASS_SCHEDULER_CMD,
   REGISTER_SCHOOL_CMD,
 } from '@campuscalendar/backend/shared/message-broker';
 import {
@@ -10,6 +11,8 @@ import {
   SCHOOL_SERVICE,
 } from '@campuscalendar/backend/shared/network';
 import {
+  ClassSchedulerDto,
+  ClassSchedulerResponse,
   SchoolConfigurationDto,
   SchoolResponse,
   SetupSchoolDto,
@@ -31,11 +34,15 @@ export class SchoolService {
   }
 
   getSchool() {
-    return this.rpcService.sendWithRpcExceptionHandler<SchoolResponse>(GET_SCHOOL_CMD);
+    return this.rpcService.sendWithRpcExceptionHandler<SchoolResponse>(
+      GET_SCHOOL_CMD
+    );
   }
 
   isSchoolConfigured() {
-    return this.rpcService.sendWithRpcExceptionHandler<boolean>(IS_SCHOOL_CONFIGURED_CMD);
+    return this.rpcService.sendWithRpcExceptionHandler<boolean>(
+      IS_SCHOOL_CONFIGURED_CMD
+    );
   }
 
   async registerConfiguration(setupDto: SetupSchoolDto) {
@@ -43,6 +50,12 @@ export class SchoolService {
       school: setupDto.school,
       campus: setupDto.campus,
     } as SchoolConfigurationDto;
+
+    const sessionResponse =
+      await this.rpcAuthService.sendWithRpcExceptionHandler<UserSessionResponse>(
+        CREATE_USER_CMD,
+        setupDto.admin
+      );
 
     const registerSchoolResult =
       await this.rpcService.sendWithRpcExceptionHandler<boolean>(
@@ -53,13 +66,13 @@ export class SchoolService {
     if (!registerSchoolResult) {
       throw new Error('School could not be registered');
     }
-
-    const sessionResponse =
-      this.rpcAuthService.sendWithRpcExceptionHandler<UserSessionResponse>(
-        CREATE_USER_CMD,
-        setupDto.admin
-      );
-
     return sessionResponse;
+  }
+
+  createClassScheduler(classScheduler: ClassSchedulerDto) {
+    return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerResponse>(
+      REGISTER_CLASS_SCHEDULER_CMD,
+      classScheduler
+    );
   }
 }

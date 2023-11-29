@@ -6,7 +6,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { CalendarSubjectEvent } from '@campuscalendar/shared/api-interfaces';
+import {
+  CalendarClassSchedulerResponse
+} from '@campuscalendar/shared/api-interfaces';
 import {
   FullCalendarComponent,
   FullCalendarModule,
@@ -25,21 +27,34 @@ import multiMonthPlugin from '@fullcalendar/multimonth';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarFeatureComponent implements OnInit {
-  @Input() calendarEvent?: CalendarSubjectEvent = {
+  @Input() calendar?: CalendarClassSchedulerResponse = {
     startDate: new Date(),
     endDate: new Date(),
-    subjectEvents: [],
     availableDates: [],
+    subjectEvents: [
+      {
+        subject: {
+          id: '',
+          name: '',
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        date: new Date(),
+        startTime: '',
+        endTime: 'string',
+
+      },
+    ],
   };
 
   @ViewChild('calendarRef') calendarComponent?: FullCalendarComponent;
   calendarOptions?: CalendarOptions;
 
   ngOnInit(): void {
-    const formattedAvailableDates = this.calendarEvent?.availableDates.map(date =>
-      this.formatDateToLocalISOString(date)
+    const formattedAvailableDates = this.calendar?.availableDates.map(
+      (date) => this.formatDateToLocalISOString(date)
     );
-    const enableWeekends = this.hasWeekend(this.calendarEvent?.availableDates);
+    const enableWeekends = this.hasWeekend(this.calendar?.availableDates);
 
     this.calendarOptions = {
       initialView: 'dayGridMonth',
@@ -54,32 +69,31 @@ export class CalendarFeatureComponent implements OnInit {
           info.el.classList.add('fc-day-disabled');
         }
       },
-      initialDate: this.calendarEvent?.startDate,
+      initialDate: this.calendar?.startDate,
       visibleRange: {
-        start: this.calendarEvent?.startDate,
-        end: this.calendarEvent?.endDate,
+        start: this.calendar?.startDate,
+        end: this.calendar?.endDate,
       },
       validRange: {
-        start: this.calendarEvent?.startDate,
-        end: this.calendarEvent?.endDate,
+        start: this.calendar?.startDate,
+        end: this.calendar?.endDate,
       },
       eventOrder: 'start',
       displayEventTime: false,
-    
-      events: this.calendarEvent?.subjectEvents.map(event => ({
+
+      events: this.calendar?.subjectEvents.map((event) => ({
         title: `${event.startTime} - ${event.endTime} ${event.subject.name}`,
         start: event.date,
         end: new Date(
-          event.date.getFullYear(), 
-          event.date.getMonth(), 
-          event.date.getDate(), 
+          event.date.getFullYear(),
+          event.date.getMonth(),
+          event.date.getDate(),
           parseInt(event.endTime.split(':')[0]), // Convert to number
-          parseInt(event.endTime.split(':')[1])  // Convert minutes part to number, if needed
+          parseInt(event.endTime.split(':')[1]) // Convert minutes part to number, if needed
         ),
-      }))
+      })),
     };
   }
-
 
   private formatDateToLocalISOString(date: Date): string {
     const offset = date.getTimezoneOffset();
@@ -88,11 +102,10 @@ export class CalendarFeatureComponent implements OnInit {
   }
 
   private hasWeekend(availableDates?: Date[]): boolean {
-    if(!availableDates) return false;
-    return availableDates.some(date => {
+    if (!availableDates) return false;
+    return availableDates.some((date) => {
       const day = date.getDay();
       return day === 0 || day === 6; // 0 for Sunday, 6 for Saturday
     });
   }
-  
 }

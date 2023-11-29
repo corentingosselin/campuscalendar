@@ -7,8 +7,7 @@ type DEFAULT_OMIT =
   | 'id'
   | 'confirmPassword'
   | 'lastName'
-  | 'firstName'
-  | 'role';
+  | 'firstName';
 
 export class LoginUserDto implements Omit<Administrator, DEFAULT_OMIT> {
   @IsEmail()
