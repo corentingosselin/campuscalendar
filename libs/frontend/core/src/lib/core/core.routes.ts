@@ -12,6 +12,13 @@ export const ROUTES: Route[] = [
     pathMatch: 'full',
     redirectTo: 'dashboard',
   },
+  {
+    path: 'share/:hash',
+    loadComponent: () =>
+      import('@campuscalendar/calendar-feature').then(
+        (m) => m.SharedCalendarComponent
+      ),
+  },
 
   {
     path: '',

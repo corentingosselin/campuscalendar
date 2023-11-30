@@ -14,6 +14,7 @@ import { ClassYearEntity } from './entities/class-year.entity';
 import { SchoolEntity } from './entities/school.entity';
 import { SubjectEventEntity } from './entities/subject-event.entity';
 import { SubjectEntity } from './entities/subject.entity';
+import { SharedCalendarEntity } from './entities/shared-calendar.entity';
 
 @Injectable()
 export class SchoolService {
@@ -108,6 +109,7 @@ export class SchoolService {
       ClassSchedulerEntity,
       {}
     );
+    
     const classInfos = classSchedulerEntities.map((classSchedulerEntity) => {
       return {
         id: classSchedulerEntity.id,
@@ -133,6 +135,10 @@ export class SchoolService {
 
     const schoolEntity = await this.orm.em.findOneOrFail(SchoolEntity, {
       id: classSchedulerEntity.schoolId,
+    });
+
+    const classYearEntity = await this.orm.em.findOneOrFail(ClassYearEntity, {
+      id: classSchedulerEntity.classYearId,
     });
 
     const subjectsEventsPromises = classSchedulerEntity.subjectEvents
@@ -162,6 +168,7 @@ export class SchoolService {
       name: classSchedulerEntity.name,
       campusName: campusEntity.name,
       schoolName: schoolEntity.name,
+      classYearName: classYearEntity.name,
       calendar: {
         startDate: classSchedulerEntity.startDate,
         endDate: classSchedulerEntity.endDate,
@@ -186,6 +193,24 @@ export class SchoolService {
     classSchedulerEntity.schoolId = classSchedulerDto.schoolId;
     classSchedulerEntity.classYearId = classSchedulerDto.classYearId;
 
+    //check if campus id and class year id are valid
+    const campusEntity = await this.orm.em.findOne(CampusEntity, {
+      id: classSchedulerDto.campusId,
+    });
+    if (!campusEntity) {
+      throw new RpcException(
+        new HttpException('Campus not found', 404)
+      );
+    }
+    const classYearEntity = await this.orm.em.findOne(ClassYearEntity, {
+      id: classSchedulerDto.classYearId,
+    });
+    if (!classYearEntity) {
+      throw new RpcException(
+        new HttpException('Class year not found', 404)
+      );
+    }
+
     let classSchedulerResponse: ClassSchedulerInfoResponse | undefined =
       undefined;
 
@@ -201,11 +226,15 @@ export class SchoolService {
       }
       em.persist(classSchedulerEntity);
 
+
+
       classSchedulerResponse = {
         id: classSchedulerEntity.id,
         created_at: classSchedulerEntity.created_at,
         updated_at: classSchedulerEntity.updated_at,
         name: classSchedulerEntity.name,
+        campusName: campusEntity.name,
+        classYearName: ClassYearEntity.name,
         campusId: classSchedulerEntity.campusId,
         schoolId: classSchedulerEntity.schoolId,
         classYearId: classSchedulerEntity.classYearId,
@@ -216,5 +245,124 @@ export class SchoolService {
         new HttpException('Error registering class scheduler', 500)
       );
     return classSchedulerResponse as ClassSchedulerInfoResponse;
+  }
+
+  @CreateRequestContext()
+  async shareCalendar(id: string) {
+    //check if shared calendar already exists
+    const sharedCalendarEntity = await this.orm.em.findOne(
+      SharedCalendarEntity,
+      { classSchedulerId: id }
+    );
+    if (sharedCalendarEntity) {
+      return {
+        hash: sharedCalendarEntity.hash,
+        enabled: sharedCalendarEntity.enabled,
+      };
+    }
+    //create shared calendar
+    const sharedCalendar = new SharedCalendarEntity();
+    sharedCalendar.classSchedulerId = id;
+    sharedCalendar.enabled = true;
+    sharedCalendar.hash = this.generateHash();
+    await this.orm.em.persist(sharedCalendar).flush();
+    return {
+      hash: sharedCalendar.hash,
+      enabled: sharedCalendar.enabled,
+    };
+  }
+
+  @CreateRequestContext()
+  async getSharedCalendar(id: string) {
+    const sharedCalendarEntity = await this.orm.em.findOne(
+      SharedCalendarEntity,
+      { classSchedulerId: id }
+    );
+    if (!sharedCalendarEntity) {
+      throw new RpcException(
+        new HttpException('Shared calendar not found', 404)
+      );
+    }
+    return {
+      hash: sharedCalendarEntity.hash,
+      enabled: sharedCalendarEntity.enabled,
+    };
+  }
+
+  @CreateRequestContext()
+  async getSharedCalendarByHash(hash: string) {
+    const sharedCalendarEntity = await this.orm.em.findOne(
+      SharedCalendarEntity,
+      { hash: hash }
+    );
+    if (!sharedCalendarEntity) {
+      throw new RpcException(
+        new HttpException('Shared calendar not found', 404)
+      );
+    }
+    // get class scheduler
+    return this.getClassScheduler(sharedCalendarEntity.classSchedulerId);
+  }
+
+  @CreateRequestContext()
+  async toggleSharedCalendar(id: string) {
+    const sharedCalendarEntity = await this.orm.em.findOne(
+      SharedCalendarEntity,
+      { classSchedulerId: id }
+    );
+    if (!sharedCalendarEntity) {
+      //check if classscheduler exists
+      const classSchedulerEntity = await this.orm.em.findOne(
+        ClassSchedulerEntity,
+        { id: id }
+      );
+      if (!classSchedulerEntity) {
+        throw new RpcException(
+          new HttpException('Class scheduler not found', 404)
+        );
+      }
+      //create shared calendar
+      const sharedCalendar = new SharedCalendarEntity();
+      console.log('id', id);
+      sharedCalendar.classSchedulerId = id;
+      sharedCalendar.enabled = true;
+      sharedCalendar.hash = this.generateHash();
+      await this.orm.em.persist(sharedCalendar).flush();
+      return {
+        hash: sharedCalendar.hash,
+        enabled: sharedCalendar.enabled,
+      };
+    }
+    sharedCalendarEntity.enabled = !sharedCalendarEntity.enabled;
+    await this.orm.em.persist(sharedCalendarEntity).flush();
+    return {
+      hash: sharedCalendarEntity.hash,
+      enabled: sharedCalendarEntity.enabled,
+    };
+  }
+
+  @CreateRequestContext()
+  async generateNewHash(id: string) {
+    const sharedCalendarEntity = await this.orm.em.findOne(
+      SharedCalendarEntity,
+      { classSchedulerId: id }
+    );
+    if (!sharedCalendarEntity) {
+      throw new RpcException(
+        new HttpException('Shared calendar not found', 404)
+      );
+    }
+    sharedCalendarEntity.hash = this.generateHash();
+    await this.orm.em.persist(sharedCalendarEntity).flush();
+    return {
+      hash: sharedCalendarEntity.hash,
+      enabled: sharedCalendarEntity.enabled,
+    };
+  }
+
+  private generateHash() {
+    // generate hash of random letters and numbers
+    const hash = Math.random().toString(16).substring(2, 15);
+    return hash;
   }
 }

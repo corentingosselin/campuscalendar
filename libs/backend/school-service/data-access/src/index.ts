@@ -6,4 +6,5 @@ export * from './lib/school-service-data-access.module';
 export * from './lib/school.service';
 export * from './lib/entities/class-scheduler.entity';
 export * from './lib/entities/subject-event.entity';
+export * from './lib/entities/shared-calendar.entity';
 

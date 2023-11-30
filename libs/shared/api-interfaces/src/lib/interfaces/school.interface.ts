@@ -32,12 +32,15 @@ export interface School extends Entity {
 export interface ClassScheduler extends Entity {
   name: string;
   campusName: string;
+  classYearName: string;
   schoolName: string;
   calendar: CalendarClassScheduler;
 }
 
 export interface ClassSchedulerInfo extends Entity {
   name: string;
+  campusName: string;
+  classYearName: string;
   campusId: string;
   schoolId: string;
   classYearId: string;

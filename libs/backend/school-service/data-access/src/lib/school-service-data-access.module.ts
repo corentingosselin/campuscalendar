@@ -6,6 +6,7 @@ import { SubjectEntity } from './entities/subject.entity';
 import { SchoolService } from './school.service';
 import { SubjectEventEntity } from './entities/subject-event.entity';
 import { ClassSchedulerEntity } from './entities/class-scheduler.entity';
+import { SharedCalendarEntity } from './entities/shared-calendar.entity';
 
 @Module({
   controllers: [],
@@ -22,6 +23,7 @@ import { ClassSchedulerEntity } from './entities/class-scheduler.entity';
       SchoolEntity,
       ClassYearEntity,
       SubjectEntity,
+      SharedCalendarEntity
     ]),
     //register client for user service
    /* SharedMessageBrokerModule.registerClient({

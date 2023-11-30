@@ -30,7 +30,7 @@
       <div class="flex-column login-content">
         <div class="flex-column">
           <span class="p-float-label">
-            <input pInputText id="email" formControlName="email" />
+            <input pInputText id="email" formControlName="email" autocomplete="username" />
             <label htmlFor="email">Addresse email</label>
           </span>
         </div>
@@ -42,6 +42,7 @@
               type="password"
               id="password"
               formControlName="password"
+              autocomplete="current-password"
             />
             <label htmlFor="password">Mot de passe</label>
           </span>

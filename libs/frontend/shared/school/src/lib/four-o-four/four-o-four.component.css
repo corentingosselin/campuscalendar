@@ -1,0 +1,91 @@
+/*======================
+    404 page
+=======================*/
+
+
+.page_404 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: 'Arvo', serif;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/22833/screenshots/1271296/media/bcf889da84d2c4ff6c172b28b5f25ecc.gif);
+  height: 455px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin: 20px 0;
+  display: inline-block;
+}
+.contant_box_404 {
+  margin-top: -37px;
+}
+
+
+/* Container styling */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 5rem;
+}
+
+/* Row styling */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+/* Column styling */
+.col-sm-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.col-sm-10 {
+  flex: 0 0 83.333333%;
+  max-width: 83.333333%;
+}
+
+/* For centering content */
+.text-center {
+  text-align: center;
+}
+
+.h2 {
+
+}
+
+/* Media query for responsiveness */
+@media (min-width: 576px) {
+  .col-sm-10 {
+      flex: 0 0 83.333333%;
+      max-width: 83.333333%;
+  }
+
+  .col-sm-offset-1 {
+      margin-left: 8.333333%;
+  }
+}

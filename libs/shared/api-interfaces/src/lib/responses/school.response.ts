@@ -10,3 +10,8 @@ export type SchoolResponse = School;
 export type ClassSchedulerInfoResponse = ClassSchedulerInfo;
 export type ClassSchedulerResponse = ClassScheduler;
 export type CalendarClassSchedulerResponse = CalendarClassScheduler;
+
+export type SharedCalendarResonse = {
+    hash: string;
+    enabled: boolean;
+}

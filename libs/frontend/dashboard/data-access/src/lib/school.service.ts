@@ -5,6 +5,7 @@ import {
   ClassSchedulerInfo,
   ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
+  SharedCalendarResonse,
 } from '@campuscalendar/shared/api-interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -25,6 +26,26 @@ export class SchoolService {
   getClassScheduler(id: string) {
     return this.http.get<ClassSchedulerResponse>(
       `/api/school/class-scheduler/${id}`
+    );
+  }
+
+  getSharedCalendar(id: string) {
+    return this.http.get<SharedCalendarResonse>(
+      `/api/school/share/${id}`
+    );
+  }
+
+  toggleShareCalendar(id: string) {
+    return this.http.post<SharedCalendarResonse>(
+      `/api/school/share/${id}/toggle`,
+      {}
+    );
+  }
+
+  generateNewSharedCalendarHash(id: string) {
+    return this.http.post<SharedCalendarResonse>(
+      `/api/school/share/${id}/new-hash`,
+      {}
     );
   }
 }

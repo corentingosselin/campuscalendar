@@ -1,3 +1,4 @@
+<p-toast [life]="2000" [preventOpenDuplicates]="true"></p-toast>
 <div class="card">
   <p-tabView styleClass="tabview-custom" (onChange)="handleTabChange($event)">
     <p-tabPanel>
@@ -10,9 +11,9 @@
 
       <div class="card">
         <p-toolbar class="toolbar">
-          <ng-container *ngIf="classScheduler$ | async as classScheduler">
-            <h3>{{ classScheduler.campusName }}</h3>
-          </ng-container>
+ 
+            <h3>{{classScheduler?.name}}</h3>
+
 
           <div class="flex-row">
             <div class="flex-row small-gap">
@@ -37,6 +38,7 @@
           </div>
         </p-toolbar>
 
+        <ng-container *ngIf="(sharedCalendar$ | async) as sharedCalendar">
         <p-card>
           <ng-template pTemplate="header">
             <div class="header-container">
@@ -45,7 +47,7 @@
                 <h3>Partager le calendrier en mode lecture</h3>
               </div>
               <div class="switch-container">
-                <p-inputSwitch [(ngModel)]="isEnabled"></p-inputSwitch>
+                <p-inputSwitch [(ngModel)]="sharedCalendar.enabled" (onChange)="toggleShare()"></p-inputSwitch>
               </div>
             </div>
           </ng-template>
@@ -57,15 +59,15 @@
               </p>
               <div class="link-container flex-row small-gap">
                 <div class="link-copy-container">
-                  <p-button [disabled]="!isEnabled" [link]="true">{{
-                    link
+                  <p-button [disabled]="!sharedCalendar.enabled" [link]="true">{{
+                    sharedCalendar.link
                   }}</p-button>
 
                   <p-button
                     icon="pi pi-copy"
                     (click)="copyLink()"
                     severity="secondary"
-                    [disabled]="!isEnabled"
+                    [disabled]="!sharedCalendar.enabled"
                   >
                   </p-button>
                 </div>
@@ -74,16 +76,18 @@
                   icon="pi pi-link"
                   size="small"
                   severity="secondary"
-                  [disabled]="!isEnabled"
+                  [disabled]="!sharedCalendar.enabled"
+                  (onClick)="generateNewHash()"
                 ></p-button>
               </div>
             </div>
           </div>
         </p-card>
+      </ng-container>
       </div>
     </p-tabPanel>
 
-    <ng-container *ngIf="classScheduler$ | async as classScheduler">
+
       <p-tabPanel>
         <ng-template pTemplate="header">
           <div class="flex-row small-gap">
@@ -92,9 +96,9 @@
           </div>
         </ng-template>
         <campuscalendar-calendar-feature
-          [calendar]="classScheduler.calendar"
+          [calendar]="classScheduler?.calendar"
         ></campuscalendar-calendar-feature>
       </p-tabPanel>
-    </ng-container>
+ 
   </p-tabView>
 </div>

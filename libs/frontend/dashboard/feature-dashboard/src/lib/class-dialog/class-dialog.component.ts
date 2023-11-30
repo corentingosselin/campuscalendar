@@ -4,25 +4,31 @@ import {
   Component,
   OnInit,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CalendarFeatureComponent } from '@campuscalendar/calendar-feature';
 import { SchoolService } from '@campuscalendar/dashboard-data-access';
+import { environment } from '@campuscalendar/environment';
 import {
-  ClassSchedulerInfo,
-  ClassSchedulerResponse,
+  ClassSchedulerResponse
 } from '@campuscalendar/shared/api-interfaces';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { TabViewModule } from 'primeng/tabview';
+import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { Observable } from 'rxjs';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { FormsModule } from '@angular/forms';
+import { BehaviorSubject, tap } from 'rxjs';
 
+interface SharedCalendarLink {
+  link: string;
+  enabled: boolean;
+}
 @Component({
   selector: 'campuscalendar-class-dialog',
   standalone: true,
@@ -37,7 +43,9 @@ import { FormsModule } from '@angular/forms';
     CardModule,
     InputSwitchModule,
     FormsModule,
+    ToastModule,
   ],
+  providers: [MessageService],
   templateUrl: './class-dialog.component.html',
   styleUrls: ['./class-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,21 +55,32 @@ export class ClassDialogComponent implements OnInit {
   private dialogConfig = inject(DynamicDialogConfig);
   private schoolService = inject(SchoolService);
 
+  private messageService = inject(MessageService);
+
   @ViewChild(CalendarFeatureComponent)
   calendarFeatureComponent?: CalendarFeatureComponent;
 
-  classInfo?: ClassSchedulerInfo = undefined;
-  classScheduler$?: Observable<ClassSchedulerResponse>;
+  classScheduler?: ClassSchedulerResponse;
+
+  sharedCalendar$: BehaviorSubject<SharedCalendarLink> = new BehaviorSubject<SharedCalendarLink>({
+    link: 'Aucun lien disponible pour le moment',
+    enabled: false,
+  });
 
   ngOnInit() {
-    this.classInfo = this.dialogConfig.data;
-    if (!this.classInfo?.id) {
-      this.ref.close();
-      return;
-    }
-    this.classScheduler$ = this.schoolService.getClassScheduler(
-      this.classInfo.id
-    );
+    this.classScheduler = this.dialogConfig.data;
+    if (!this.classScheduler) return;
+
+   this.schoolService
+      .getSharedCalendar(this.classScheduler.id)
+      .pipe(
+        tap((response) => {
+          this.sharedCalendar$.next({
+            link: `${environment.calendarBaseUrl}/calendar/${response.hash}`,
+            enabled: response.enabled,
+          });
+        })
+      ).subscribe();
   }
 
   handleTabChange(event: any) {
@@ -71,23 +90,61 @@ export class ClassDialogComponent implements OnInit {
     }
   }
 
-  isEnabled = false;
-  link = 'https://example.com';
-
   copyLink(): void {
-    if (!this.isEnabled) {
+    if (!this.sharedCalendar$.value.enabled) {
       return;
     }
 
     navigator.clipboard
-      .writeText(this.link)
+      .writeText(this.sharedCalendar$.value.link)
       .then(() => {
-        // Handle successful copy
-        console.log('Link copied to clipboard!');
+        console.log('copied');
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Lien copié',
+          detail: 'Le lien a été copié dans le presse-papier',
+        });
       })
       .catch((err) => {
-        // Handle copy error
-        console.error('Error copying link:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Une erreur est survenue lors de la copie du lien',
+        });
       });
+  }
+
+  toggleShare() {
+    if (!this.classScheduler) {
+      return;
+    }
+    this.schoolService
+      .toggleShareCalendar(this.classScheduler.id)
+      .pipe(
+        tap((response) => {
+          this.sharedCalendar$.next({
+            link: `${environment.calendarBaseUrl}/calendar/${response.hash}`,
+            enabled: response.enabled,
+          });
+        })
+      )
+      .subscribe();
+  }
+
+  generateNewHash() {
+    if (!this.classScheduler) {
+      return;
+    }
+    this.schoolService
+      .generateNewSharedCalendarHash(this.classScheduler.id)
+      .pipe(
+        tap((response) => {
+          this.sharedCalendar$.next({
+            link: `${environment.calendarBaseUrl}/calendar/${response.hash}`,
+            enabled: response.enabled,
+          });
+        })
+      )
+      .subscribe();
   }
 }

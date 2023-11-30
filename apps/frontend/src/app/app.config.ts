@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
         unAuthorizedInterceptor,
       ])
     ),
-    provideRouter(routes,  withDebugTracing()), //  withDebugTracing()
+    provideRouter(routes), //  withDebugTracing()
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

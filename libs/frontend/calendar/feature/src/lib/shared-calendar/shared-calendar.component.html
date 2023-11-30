@@ -1,0 +1,8 @@
+<ng-container *ngIf="(classScheduler$ | async) as classScheduler; else notFound">
+    {{ classScheduler }}
+    <campuscalendar-calendar-feature [calendar]="classScheduler?.calendar"></campuscalendar-calendar-feature>
+</ng-container>
+
+<ng-template #notFound>
+    <campuscalendar-404></campuscalendar-404>
+</ng-template>

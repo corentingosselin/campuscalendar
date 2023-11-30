@@ -3,9 +3,14 @@ import {
   GET_CLASS_SCHEDULERS_CMD,
   GET_CLASS_SCHEDULER_CMD,
   GET_SCHOOL_CMD,
+  GET_SHARED_CALENDAR_BY_HASH_CMD,
+  GET_SHARED_CALENDAR_CMD,
   IS_SCHOOL_CONFIGURED_CMD,
   REGISTER_CLASS_SCHEDULER_CMD,
   REGISTER_SCHOOL_CMD,
+  SHARE_CALENDAR_CMD,
+  TOGGLE_SHARED_CALENDAR_CMD,
+  UPDATE_HASH_SHARED_CALENDAR_CMD,
 } from '@campuscalendar/backend/shared/message-broker';
 import {
   AUTH_SERVICE,
@@ -18,6 +23,7 @@ import {
   SchoolConfigurationDto,
   SchoolResponse,
   SetupSchoolDto,
+  SharedCalendarResonse,
   UserSessionResponse,
 } from '@campuscalendar/shared/api-interfaces';
 import { Inject, Injectable } from '@nestjs/common';
@@ -88,6 +94,41 @@ export class SchoolService {
     return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerResponse>(
       GET_CLASS_SCHEDULER_CMD,
       id
+    );
+  }
+
+  shareCalendar(id: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<SharedCalendarResonse>(
+      SHARE_CALENDAR_CMD,
+      id
+    );
+  }
+
+  getSharedCalendar(id: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<SharedCalendarResonse>(
+      GET_SHARED_CALENDAR_CMD,
+      id
+    );
+  }
+
+  toggleSharedCalendar(id: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<SharedCalendarResonse>(
+      TOGGLE_SHARED_CALENDAR_CMD,
+      id
+    );
+  }
+
+  generateSharedCalendarNewHash(id: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<SharedCalendarResonse>(
+      UPDATE_HASH_SHARED_CALENDAR_CMD,
+      id
+    );
+  }
+
+  getSharedCalendarByHash(hash: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerResponse>(
+      GET_SHARED_CALENDAR_BY_HASH_CMD,
+      hash
     );
   }
 }

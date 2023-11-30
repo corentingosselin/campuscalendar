@@ -1,5 +1,5 @@
 import {
-  CampusEntity, ClassSchedulerEntity, ClassYearEntity, SchoolEntity, SubjectEntity, SubjectEventEntity,
+  CampusEntity, ClassSchedulerEntity, ClassYearEntity, SchoolEntity, SharedCalendarEntity, SubjectEntity, SubjectEventEntity,
 } from '@campuscalendar/backend/school-service/data-access';
 import { Options } from '@mikro-orm/core';
 
@@ -18,7 +18,8 @@ export default {
     SubjectEntity,
     ClassYearEntity,
     ClassSchedulerEntity,
-    SubjectEventEntity
+    SubjectEventEntity,
+    SharedCalendarEntity
   ],
   migrations: {
     path: 'apps/school-service/migrations',
