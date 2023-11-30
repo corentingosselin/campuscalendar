@@ -1,6 +1,7 @@
 import {
   CREATE_USER_CMD,
   GET_CLASS_SCHEDULERS_CMD,
+  GET_CLASS_SCHEDULER_CMD,
   GET_SCHOOL_CMD,
   IS_SCHOOL_CONFIGURED_CMD,
   REGISTER_CLASS_SCHEDULER_CMD,
@@ -80,6 +81,13 @@ export class SchoolService {
   getClassSchedulers() {
     return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerResponse[]>(
       GET_CLASS_SCHEDULERS_CMD
+    );
+  }
+
+  getClassScheduler(id: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerResponse>(
+      GET_CLASS_SCHEDULER_CMD,
+      id
     );
   }
 }

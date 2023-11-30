@@ -3,6 +3,7 @@ import {
   ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
   SchoolConfigurationDto,
+  SubjectEvent,
 } from '@campuscalendar/shared/api-interfaces';
 import { CreateRequestContext, MikroORM, wrap } from '@mikro-orm/core';
 import { HttpException, Injectable } from '@nestjs/common';
@@ -123,11 +124,9 @@ export class SchoolService {
   async getClassScheduler(id: string) {
     const classSchedulerEntity = await this.orm.em.findOneOrFail(
       ClassSchedulerEntity,
-      {
-        id: id,
-      }
+      { id: id },
+      { populate: ['subjectEvents'] }
     );
-
     const campusEntity = await this.orm.em.findOneOrFail(CampusEntity, {
       id: classSchedulerEntity.campusId,
     });
@@ -136,15 +135,24 @@ export class SchoolService {
       id: classSchedulerEntity.schoolId,
     });
 
-    const subjectsEvents = await Promise.all(
-      classSchedulerEntity.subjectEvents
-        .getItems()
-        .map(async (subjectEvent) => {
-          const subjectEntity = await this.orm.em.findOneOrFail(SubjectEntity, {
-            id: subjectEvent.subjectId,
-          });
-          return { ...subjectEvent, subject: subjectEntity };
-        })
+    const subjectsEventsPromises = classSchedulerEntity.subjectEvents
+      .getItems()
+      .map(async (subjectEventEntity) => {
+        const subjectEntity = await this.orm.em.findOneOrFail(SubjectEntity, {
+          id: subjectEventEntity.subjectId,
+        });
+
+        return {
+          id: subjectEventEntity.id,
+          date: subjectEventEntity.date,
+          startTime: subjectEventEntity.startTime,
+          endTime: subjectEventEntity.endTime,
+          subject: subjectEntity,
+        };
+      });
+
+    const subjectsEvents: SubjectEvent[] = await Promise.all(
+      subjectsEventsPromises
     );
 
     return {
@@ -172,7 +180,8 @@ export class SchoolService {
     );
     classSchedulerEntity.endDate = new Date(classSchedulerDto.calendar.endDate);
     classSchedulerEntity.availableDates =
-      classSchedulerDto.calendar.availableDates.map((date) => new Date(date));
+      classSchedulerDto.calendar.availableDates;
+
     classSchedulerEntity.campusId = classSchedulerDto.campusId;
     classSchedulerEntity.schoolId = classSchedulerDto.schoolId;
     classSchedulerEntity.classYearId = classSchedulerDto.classYearId;
@@ -206,6 +215,6 @@ export class SchoolService {
       throw new RpcException(
         new HttpException('Error registering class scheduler', 500)
       );
-    return classSchedulerResponse;
+    return classSchedulerResponse as ClassSchedulerInfoResponse;
   }
 }

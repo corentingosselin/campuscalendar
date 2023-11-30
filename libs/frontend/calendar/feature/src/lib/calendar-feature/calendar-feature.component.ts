@@ -6,9 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  CalendarClassSchedulerResponse
-} from '@campuscalendar/shared/api-interfaces';
+import { CalendarClassSchedulerResponse } from '@campuscalendar/shared/api-interfaces';
 import {
   FullCalendarComponent,
   FullCalendarModule,
@@ -17,11 +15,12 @@ import { CalendarOptions } from '@fullcalendar/core';
 import frLocale from '@fullcalendar/core/locales/fr';
 import dayGridMonthPlugin from '@fullcalendar/daygrid';
 import multiMonthPlugin from '@fullcalendar/multimonth';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'campuscalendar-calendar-feature',
   standalone: true,
-  imports: [CommonModule, FullCalendarModule],
+  imports: [CommonModule, FullCalendarModule, SkeletonModule],
   templateUrl: './calendar-feature.component.html',
   styleUrls: ['./calendar-feature.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +41,6 @@ export class CalendarFeatureComponent implements OnInit {
         date: new Date(),
         startTime: '',
         endTime: 'string',
-
       },
     ],
   };
@@ -51,10 +49,24 @@ export class CalendarFeatureComponent implements OnInit {
   calendarOptions?: CalendarOptions;
 
   ngOnInit(): void {
-    const formattedAvailableDates = this.calendar?.availableDates.map(
-      (date) => this.formatDateToLocalISOString(date)
+    const convertedAvailableDates = this.calendar?.availableDates.map(
+      (date) => {
+        return typeof date === 'string' ? new Date(date) : date;
+      }
     );
-    const enableWeekends = this.hasWeekend(this.calendar?.availableDates);
+
+    const formattedAvailableDates = convertedAvailableDates?.map((date) =>
+      this.formatDateToLocalISOString(date)
+    );
+    const enableWeekends = this.hasWeekend(convertedAvailableDates);
+
+    const convertedSubjectEvents = this.calendar?.subjectEvents.map((event) => {
+      return {
+        ...event,
+        date:
+          typeof event.date === 'string' ? new Date(event.date) : event.date,
+      };
+    });
 
     this.calendarOptions = {
       initialView: 'dayGridMonth',
@@ -81,7 +93,7 @@ export class CalendarFeatureComponent implements OnInit {
       eventOrder: 'start',
       displayEventTime: false,
 
-      events: this.calendar?.subjectEvents.map((event) => ({
+      events: convertedSubjectEvents?.map((event) => ({
         title: `${event.startTime} - ${event.endTime} ${event.subject.name}`,
         start: event.date,
         end: new Date(
@@ -107,5 +119,14 @@ export class CalendarFeatureComponent implements OnInit {
       const day = date.getDay();
       return day === 0 || day === 6; // 0 for Sunday, 6 for Saturday
     });
+  }
+  private isLoaded = false;
+  refreshCalendar(): void {
+    // Check if the calendar API is available
+    if (this.calendarComponent?.getApi() && !this.isLoaded) {
+      console.log('refreshing calendar');
+      this.calendarComponent.getApi().render(); // Re-renders the calendar
+      this.isLoaded = true;
+    }
   }
 }

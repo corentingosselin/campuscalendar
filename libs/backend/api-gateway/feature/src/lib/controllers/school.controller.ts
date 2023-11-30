@@ -26,6 +26,11 @@ export class SchoolController {
     return this.schoolService.createClassScheduler(classScheduler);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('class-scheduler/:id')
+  getClassScheduler(id: string) {
+    return this.schoolService.getClassScheduler(id);
+  }
 
   @Get('exists')
   isSchoolConfigured() {

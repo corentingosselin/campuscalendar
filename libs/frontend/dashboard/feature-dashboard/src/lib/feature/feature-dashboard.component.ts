@@ -47,7 +47,7 @@ export class FeatureDashboardComponent implements OnInit {
   showAccountDialog() {
     this.accountDialogRef = this.dialogService.open(AccountDialogComponent, {
       header: 'Mon compte administrateur',
-      width: '70%',
+      width: '50%',
       contentStyle: { 'max-height': '500px', overflow: 'auto' },
     });
     GlobalDialogService.setCurrentDialog(this.accountDialogRef);

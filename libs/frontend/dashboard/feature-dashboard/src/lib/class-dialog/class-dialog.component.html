@@ -1,0 +1,100 @@
+<div class="card">
+  <p-tabView styleClass="tabview-custom" (onChange)="handleTabChange($event)">
+    <p-tabPanel>
+      <ng-template pTemplate="header">
+        <div class="flex-row small-gap">
+          <i class="pi pi-book"></i>
+          <span>Informations</span>
+        </div>
+      </ng-template>
+
+      <div class="card">
+        <p-toolbar class="toolbar">
+          <ng-container *ngIf="classScheduler$ | async as classScheduler">
+            <h3>{{ classScheduler.campusName }}</h3>
+          </ng-container>
+
+          <div class="flex-row">
+            <div class="flex-row small-gap">
+              <p-button
+                icon="pi pi-clone"
+                pTooltip="Dupliquer cette classe"
+              ></p-button>
+
+              <p-button
+                icon="pi pi-upload"
+                severity="help"
+                pTooltip="Exporter cette classe"
+              ></p-button>
+            </div>
+            <p-divider [layout]="'vertical'"></p-divider>
+
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              pTooltip="Supprimer cette classe"
+            ></p-button>
+          </div>
+        </p-toolbar>
+
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="header-container">
+              <div class="header-content">
+                <i class="pi pi-share-alt"></i>
+                <h3>Partager le calendrier en mode lecture</h3>
+              </div>
+              <div class="switch-container">
+                <p-inputSwitch [(ngModel)]="isEnabled"></p-inputSwitch>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="card-content">
+            <div class="flex-column link-content">
+              <p class="share-desc">
+                Lien du partage avec mode lecture uniquement
+              </p>
+              <div class="link-container flex-row small-gap">
+                <div class="link-copy-container">
+                  <p-button [disabled]="!isEnabled" [link]="true">{{
+                    link
+                  }}</p-button>
+
+                  <p-button
+                    icon="pi pi-copy"
+                    (click)="copyLink()"
+                    severity="secondary"
+                    [disabled]="!isEnabled"
+                  >
+                  </p-button>
+                </div>
+                <p-button
+                  label="Nouveau lien"
+                  icon="pi pi-link"
+                  size="small"
+                  severity="secondary"
+                  [disabled]="!isEnabled"
+                ></p-button>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </p-tabPanel>
+
+    <ng-container *ngIf="classScheduler$ | async as classScheduler">
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <div class="flex-row small-gap">
+            <i class="pi pi-calendar"></i>
+            <span>Aperçu calendrier</span>
+          </div>
+        </ng-template>
+        <campuscalendar-calendar-feature
+          [calendar]="classScheduler.calendar"
+        ></campuscalendar-calendar-feature>
+      </p-tabPanel>
+    </ng-container>
+  </p-tabView>
+</div>

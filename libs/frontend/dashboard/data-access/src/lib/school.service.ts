@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   ClassSchedulerDto,
   ClassSchedulerInfo,
+  ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
 } from '@campuscalendar/shared/api-interfaces';
 
@@ -11,7 +12,7 @@ export class SchoolService {
   private http = inject(HttpClient);
 
   registerClassScheduler(classScheduler: ClassSchedulerDto) {
-    return this.http.post<ClassSchedulerResponse>(
+    return this.http.post<ClassSchedulerInfoResponse>(
       '/api/school/class-scheduler',
       classScheduler
     );
@@ -19,5 +20,11 @@ export class SchoolService {
 
   fetchClassSchedulers() {
     return this.http.get<ClassSchedulerInfo[]>('/api/school/class-scheduler');
+  }
+
+  getClassScheduler(id: string) {
+    return this.http.get<ClassSchedulerResponse>(
+      `/api/school/class-scheduler/${id}`
+    );
   }
 }
