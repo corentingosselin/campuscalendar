@@ -45,6 +45,11 @@ export class ClassSchedulerState {
     ctx.setState(
       state.filter((classScheduler) => classScheduler.id !== action.id)
     );
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Suppression',
+      detail: 'La classe est maintenant supprimée',
+    });
   }
 
   @Action(FetchClassScheduler)

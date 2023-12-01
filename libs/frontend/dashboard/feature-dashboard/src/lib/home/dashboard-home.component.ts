@@ -159,9 +159,6 @@ export class DashboardHomeComponent implements OnInit {
               return { campusName: campus?.name || '', classYearClasses };
             }
           );
-        }),
-        tap((campusYearClass) => {
-          console.log('campusYearClass', campusYearClass);
         })
       );
     }

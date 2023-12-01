@@ -1,7 +1,7 @@
 import { SchoolService } from '@campuscalendar/backend/api-gateway/data-access';
 import { JwtAuthGuard, SchoolExistGuard } from '@campuscalendar/backend/api-gateway/utils';
-import { ClassSchedulerDto, SetupSchoolDto } from '@campuscalendar/shared/api-interfaces';
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { ClassSchedulerDto, DuplicateClassSchedulerDto, SetupSchoolDto } from '@campuscalendar/shared/api-interfaces';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 
 @Controller('school')
 export class SchoolController {
@@ -75,4 +75,16 @@ export class SchoolController {
     return this.schoolService.getSharedCalendarByHash(hash);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Delete('class-scheduler/:id')
+  deleteClassScheduler(@Param('id') id: string) {
+    return this.schoolService.deleteClassScheduler(id);
+  }
+
+
+  @UseGuards(JwtAuthGuard)
+  @Post('class-scheduler/duplicate')
+  duplicateClassScheduler(@Body() duplicateDto: DuplicateClassSchedulerDto) {
+    return this.schoolService.duplicateClassScheduler(duplicateDto);
+  }
 }

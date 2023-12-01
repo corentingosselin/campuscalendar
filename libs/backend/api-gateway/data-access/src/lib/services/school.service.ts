@@ -1,5 +1,7 @@
 import {
   CREATE_USER_CMD,
+  DELETE_CLASS_SCHEDULER_CMD,
+  DUPLICATE_CLASS_SCHEDULER_CMD,
   GET_CLASS_SCHEDULERS_CMD,
   GET_CLASS_SCHEDULER_CMD,
   GET_SCHOOL_CMD,
@@ -19,7 +21,9 @@ import {
 } from '@campuscalendar/backend/shared/network';
 import {
   ClassSchedulerDto,
+  ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
+  DuplicateClassSchedulerDto,
   SchoolConfigurationDto,
   SchoolResponse,
   SetupSchoolDto,
@@ -129,6 +133,20 @@ export class SchoolService {
     return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerResponse>(
       GET_SHARED_CALENDAR_BY_HASH_CMD,
       hash
+    );
+  }
+
+  deleteClassScheduler(id: string) {
+    return this.rpcService.sendWithRpcExceptionHandler<boolean>(
+      DELETE_CLASS_SCHEDULER_CMD,
+      id
+    );
+  }
+
+  duplicateClassScheduler(duplicateDto: DuplicateClassSchedulerDto) {
+    return this.rpcService.sendWithRpcExceptionHandler<ClassSchedulerInfoResponse>(
+      DUPLICATE_CLASS_SCHEDULER_CMD,
+      duplicateDto
     );
   }
 }

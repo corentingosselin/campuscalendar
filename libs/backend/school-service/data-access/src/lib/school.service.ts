@@ -2,6 +2,7 @@ import {
   ClassSchedulerDto,
   ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
+  DuplicateClassSchedulerDto,
   SchoolConfigurationDto,
   SubjectEvent,
 } from '@campuscalendar/shared/api-interfaces';
@@ -109,7 +110,7 @@ export class SchoolService {
       ClassSchedulerEntity,
       {}
     );
-    
+
     const classInfos = classSchedulerEntities.map((classSchedulerEntity) => {
       return {
         id: classSchedulerEntity.id,
@@ -198,17 +199,13 @@ export class SchoolService {
       id: classSchedulerDto.campusId,
     });
     if (!campusEntity) {
-      throw new RpcException(
-        new HttpException('Campus not found', 404)
-      );
+      throw new RpcException(new HttpException('Campus not found', 404));
     }
     const classYearEntity = await this.orm.em.findOne(ClassYearEntity, {
       id: classSchedulerDto.classYearId,
     });
     if (!classYearEntity) {
-      throw new RpcException(
-        new HttpException('Class year not found', 404)
-      );
+      throw new RpcException(new HttpException('Class year not found', 404));
     }
 
     let classSchedulerResponse: ClassSchedulerInfoResponse | undefined =
@@ -225,8 +222,6 @@ export class SchoolService {
         classSchedulerEntity.subjectEvents.add(subjectEventEntity);
       }
       em.persist(classSchedulerEntity);
-
-
 
       classSchedulerResponse = {
         id: classSchedulerEntity.id,
@@ -360,9 +355,67 @@ export class SchoolService {
     };
   }
 
+  async deleteClassScheduler(id: string) {
+    const result = await this.orm.em.nativeDelete(ClassSchedulerEntity, {
+      id: id,
+    });
+    return result === 1;
+  }
+
   private generateHash() {
     // generate hash of random letters and numbers
     const hash = Math.random().toString(16).substring(2, 15);
     return hash;
+  }
+
+  async duplicateClassScheduler(duplicateDto: DuplicateClassSchedulerDto) {
+    const classSchedulerEntity = await this.orm.em.findOneOrFail(
+      ClassSchedulerEntity,
+      { id: duplicateDto.classSchedulerId },
+      { populate: ['subjectEvents'] }
+    );
+    //check if campus id and class year id are valid
+    const campusEntity = await this.orm.em.findOne(CampusEntity, {
+      id: duplicateDto.campusId,
+    });
+    if (!campusEntity) {
+      throw new RpcException(new HttpException('Campus not found', 404));
+    }
+    const classYearEntity = await this.orm.em.findOne(ClassYearEntity, {
+      id: duplicateDto.classYearId,
+    });
+    if (!classYearEntity) {
+      throw new RpcException(new HttpException('Class year not found', 404));
+    }
+
+    const classSchedulerEntityDuplicate = new ClassSchedulerEntity();
+    classSchedulerEntityDuplicate.name = duplicateDto.name;
+    classSchedulerEntityDuplicate.startDate = classSchedulerEntity.startDate;
+    classSchedulerEntityDuplicate.endDate = classSchedulerEntity.endDate;
+    classSchedulerEntityDuplicate.availableDates =
+      classSchedulerEntity.availableDates;
+
+    classSchedulerEntityDuplicate.campusId = duplicateDto.campusId;
+    classSchedulerEntityDuplicate.schoolId = duplicateDto.schoolId;
+    classSchedulerEntityDuplicate.classYearId = duplicateDto.classYearId;
+    classSchedulerEntityDuplicate.subjectEvents =
+      classSchedulerEntity.subjectEvents;
+
+    // Use a transaction to ensure all operations are successful
+    await this.orm.em.transactional(async (em) => {
+      em.persist(classSchedulerEntityDuplicate);
+    });
+
+    return {
+      id: classSchedulerEntityDuplicate.id,
+      created_at: classSchedulerEntityDuplicate.created_at,
+      updated_at: classSchedulerEntityDuplicate.updated_at,
+      name: classSchedulerEntityDuplicate.name,
+      campusName: campusEntity.name,
+      classYearName: ClassYearEntity.name,
+      campusId: classSchedulerEntityDuplicate.campusId,
+      schoolId: classSchedulerEntityDuplicate.schoolId,
+      classYearId: classSchedulerEntityDuplicate.classYearId,
+    } as ClassSchedulerInfoResponse;
   }
 }

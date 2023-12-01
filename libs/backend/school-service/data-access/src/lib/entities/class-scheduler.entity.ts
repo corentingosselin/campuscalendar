@@ -1,5 +1,11 @@
 import { BaseEntity } from '@campuscalendar/shared/api-interfaces';
-import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
+import {
+  Cascade,
+  Collection,
+  Entity,
+  OneToMany,
+  Property,
+} from '@mikro-orm/core';
 import { SubjectEventEntity } from './subject-event.entity';
 
 @Entity()
@@ -24,10 +30,10 @@ export class ClassSchedulerEntity extends BaseEntity {
 
   @Property()
   availableDates!: Date[];
-
   @OneToMany(
     () => SubjectEventEntity,
-    (subjectEvent) => subjectEvent.classScheduler
+    (subjectEvent) => subjectEvent.classScheduler,
+    { orphanRemoval: true, cascade: [Cascade.ALL] }
   )
   subjectEvents = new Collection<SubjectEventEntity>(this);
 }

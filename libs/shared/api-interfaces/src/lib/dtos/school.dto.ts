@@ -34,3 +34,16 @@ export class SubjectEventDto {
   @IsString()
   endTime!: string;
 }
+
+export class DuplicateClassSchedulerDto {
+  @IsString()
+  name!: string;
+  @IsString()
+  campusId!: string;
+  @IsString()
+  schoolId!: string;
+  @IsString()
+  classYearId!: string;
+  @IsString()
+  classSchedulerId!: string;
+}

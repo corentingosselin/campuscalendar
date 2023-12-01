@@ -4,15 +4,16 @@ import {
   Component,
   OnInit,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarFeatureComponent } from '@campuscalendar/calendar-feature';
-import { SchoolService } from '@campuscalendar/dashboard-data-access';
-import { environment } from '@campuscalendar/environment';
 import {
-  ClassSchedulerResponse
-} from '@campuscalendar/shared/api-interfaces';
+  ClassSchedulerFacade,
+  SchoolService,
+} from '@campuscalendar/dashboard-data-access';
+import { environment } from '@campuscalendar/environment';
+import { ClassSchedulerResponse } from '@campuscalendar/shared/api-interfaces';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -23,7 +24,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 
 interface SharedCalendarLink {
   link: string;
@@ -54,6 +55,7 @@ export class ClassDialogComponent implements OnInit {
   private ref = inject(DynamicDialogRef);
   private dialogConfig = inject(DynamicDialogConfig);
   private schoolService = inject(SchoolService);
+  private classFacade = inject(ClassSchedulerFacade);
 
   private messageService = inject(MessageService);
 
@@ -62,16 +64,17 @@ export class ClassDialogComponent implements OnInit {
 
   classScheduler?: ClassSchedulerResponse;
 
-  sharedCalendar$: BehaviorSubject<SharedCalendarLink> = new BehaviorSubject<SharedCalendarLink>({
-    link: 'Aucun lien disponible pour le moment',
-    enabled: false,
-  });
+  sharedCalendar$: BehaviorSubject<SharedCalendarLink> =
+    new BehaviorSubject<SharedCalendarLink>({
+      link: 'Aucun lien disponible pour le moment',
+      enabled: false,
+    });
 
   ngOnInit() {
     this.classScheduler = this.dialogConfig.data;
     if (!this.classScheduler) return;
 
-   this.schoolService
+    this.schoolService
       .getSharedCalendar(this.classScheduler.id)
       .pipe(
         tap((response) => {
@@ -80,7 +83,8 @@ export class ClassDialogComponent implements OnInit {
             enabled: response.enabled,
           });
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   handleTabChange(event: any) {
@@ -147,4 +151,40 @@ export class ClassDialogComponent implements OnInit {
       )
       .subscribe();
   }
+
+  openUrl(url: string) {
+    window.open(url, '_blank');
+  }
+
+  deleteClass() {
+    if (!this.classScheduler) {
+      return;
+    }
+    this.schoolService
+      .deleteClassScheduler(this.classScheduler.id)
+      .pipe(
+        tap((response) => {
+          if (response && this.classScheduler?.id) {
+            this.classFacade.removeClass(this.classScheduler.id);
+            this.ref.close(response);
+          }
+        }),
+        catchError((err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erreur',
+            detail: 'Une erreur est survenue lors de la suppression de la classe',
+          });
+          return err;
+        })
+      )
+      .subscribe();
+  }
+  
+  duplicateFormDisplayed = false;
+  toggleDuplicateDisplay(displayed: boolean) {
+    this.duplicateFormDisplayed = displayed;
+  }
+
+
 }

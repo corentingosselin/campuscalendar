@@ -1,6 +1,6 @@
 import { SchoolService } from '@campuscalendar/backend/school-service/data-access';
-import { GET_CLASS_SCHEDULERS_CMD, GET_CLASS_SCHEDULER_CMD, GET_SCHOOL_CMD, GET_SHARED_CALENDAR_BY_HASH_CMD, GET_SHARED_CALENDAR_CMD, IS_SCHOOL_CONFIGURED_CMD, REGISTER_CLASS_SCHEDULER_CMD, REGISTER_SCHOOL_CMD, SHARE_CALENDAR_CMD, TOGGLE_SHARED_CALENDAR_CMD, UPDATE_HASH_SHARED_CALENDAR_CMD } from '@campuscalendar/backend/shared/message-broker';
-import { ClassSchedulerDto, SchoolConfigurationDto } from '@campuscalendar/shared/api-interfaces';
+import { DELETE_CLASS_SCHEDULER_CMD, DUPLICATE_CLASS_SCHEDULER_CMD, GET_CLASS_SCHEDULERS_CMD, GET_CLASS_SCHEDULER_CMD, GET_SCHOOL_CMD, GET_SHARED_CALENDAR_BY_HASH_CMD, GET_SHARED_CALENDAR_CMD, IS_SCHOOL_CONFIGURED_CMD, REGISTER_CLASS_SCHEDULER_CMD, REGISTER_SCHOOL_CMD, SHARE_CALENDAR_CMD, TOGGLE_SHARED_CALENDAR_CMD, UPDATE_HASH_SHARED_CALENDAR_CMD } from '@campuscalendar/backend/shared/message-broker';
+import { ClassSchedulerDto, DuplicateClassSchedulerDto, SchoolConfigurationDto } from '@campuscalendar/shared/api-interfaces';
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
@@ -56,6 +56,17 @@ export class SchoolController {
   @MessagePattern(UPDATE_HASH_SHARED_CALENDAR_CMD)
   updateHashSharedCalendar(id: string) {
     return this.schoolService.generateNewHash(id);
+  }
+
+
+  @MessagePattern(DELETE_CLASS_SCHEDULER_CMD)
+  deleteClassScheduler(id: string) {
+    return this.schoolService.deleteClassScheduler(id);
+  }
+
+  @MessagePattern(DUPLICATE_CLASS_SCHEDULER_CMD)
+  duplicateClassScheduler(duplicateDto: DuplicateClassSchedulerDto) {
+    return this.schoolService.duplicateClassScheduler(duplicateDto);
   }
 
   // no admin role needed

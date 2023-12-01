@@ -48,4 +48,8 @@ export class SchoolService {
       {}
     );
   }
+
+  deleteClassScheduler(id: string) {
+    return this.http.delete<boolean>(`/api/school/class-scheduler/${id}`);
+  }
 }
