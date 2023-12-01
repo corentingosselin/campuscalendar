@@ -8,16 +8,20 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { SharedCalendarService } from '@campuscalendar/calendar-data-access';
 import { FourOFourComponent } from '@campuscalendar/school';
-import {
-  ClassScheduler
-} from '@campuscalendar/shared/api-interfaces';
+import { ClassScheduler } from '@campuscalendar/shared/api-interfaces';
 import { Observable } from 'rxjs';
 import { CalendarFeatureComponent } from '../calendar-feature/calendar-feature.component';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'campuscalendar-shared-calendar',
   standalone: true,
-  imports: [CommonModule, CalendarFeatureComponent, FourOFourComponent],
+  imports: [
+    CommonModule,
+    CalendarFeatureComponent,
+    FourOFourComponent,
+    CardModule,
+  ],
   templateUrl: './shared-calendar.component.html',
   styleUrls: ['./shared-calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,5 +38,9 @@ export class SharedCalendarComponent implements OnInit {
       this.classScheduler$ =
         this.shareCalendarService.getClassSchedulerByHash(hash);
     });
+  }
+
+  buildHeader(campusName : string, yearName: string, className: string) {
+    return `${campusName} - ${yearName} - ${className}`;
   }
 }

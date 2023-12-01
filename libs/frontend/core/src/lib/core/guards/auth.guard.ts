@@ -14,7 +14,6 @@ export class AuthGuard {
     if(!isUserLogged) {
       this.router.navigate(['/login']);
     }
-    console.log('canActivate', isUserLogged);
     return isUserLogged;
   }
 }

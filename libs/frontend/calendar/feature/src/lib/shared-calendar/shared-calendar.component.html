@@ -1,8 +1,17 @@
-<ng-container *ngIf="(classScheduler$ | async) as classScheduler; else notFound">
-    {{ classScheduler }}
-    <campuscalendar-calendar-feature [calendar]="classScheduler?.calendar"></campuscalendar-calendar-feature>
+<ng-container *ngIf="classScheduler$ | async as classScheduler; else notFound">
+  <div class="card-content">
+    <p-card
+      [header]="
+        buildHeader(classScheduler.campusName, classScheduler.classYearName, classScheduler.name)
+      "
+    >
+      <campuscalendar-calendar-feature
+        [calendar]="classScheduler?.calendar"
+      ></campuscalendar-calendar-feature>
+    </p-card>
+  </div>
 </ng-container>
 
 <ng-template #notFound>
-    <campuscalendar-404></campuscalendar-404>
+  <campuscalendar-404 [isCalendar]="true"></campuscalendar-404>
 </ng-template>

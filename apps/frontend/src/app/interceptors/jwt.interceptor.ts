@@ -11,7 +11,7 @@ export const addTokenInterceptor: HttpInterceptorFn = (
     const authService = inject(AuthService);
     
     // URLs that do not require authentication
-    const noAuthUrls = ['calendrier.api.gouv.fr'];
+    const noAuthUrls = ['calendrier.api.gouv.fr', 'api/school/calendar/'];
     if (!noAuthUrls.some(url => req.url.includes(url))) {
       const token = authService.getUserSession()?.token;
       if (token) {

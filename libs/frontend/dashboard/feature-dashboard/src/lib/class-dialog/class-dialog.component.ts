@@ -76,7 +76,7 @@ export class ClassDialogComponent implements OnInit {
       .pipe(
         tap((response) => {
           this.sharedCalendar$.next({
-            link: `${environment.calendarBaseUrl}/calendar/${response.hash}`,
+            link: `${environment.calendarBaseUrl}/share/${response.hash}`,
             enabled: response.enabled,
           });
         })
@@ -123,7 +123,7 @@ export class ClassDialogComponent implements OnInit {
       .pipe(
         tap((response) => {
           this.sharedCalendar$.next({
-            link: `${environment.calendarBaseUrl}/calendar/${response.hash}`,
+            link: `${environment.calendarBaseUrl}/share/${response.hash}`,
             enabled: response.enabled,
           });
         })
@@ -140,7 +140,7 @@ export class ClassDialogComponent implements OnInit {
       .pipe(
         tap((response) => {
           this.sharedCalendar$.next({
-            link: `${environment.calendarBaseUrl}/calendar/${response.hash}`,
+            link: `${environment.calendarBaseUrl}/share/${response.hash}`,
             enabled: response.enabled,
           });
         })

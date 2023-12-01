@@ -27,6 +27,7 @@ export const ROUTES: Route[] = [
       {
         path: 'dashboard',
         canActivate: [AuthGuard],
+        
         loadChildren: () =>
           import('@campuscalendar/dashboard-core').then((m) => m.routes),
         providers: [importProvidersFrom(NgxsModule.forFeature([SchoolState]))],
@@ -45,5 +46,10 @@ export const ROUTES: Route[] = [
     path: 'setup',
     loadChildren: () =>
       import('@campuscalendar/feature-setup').then((m) => m.coreRoutes),
+  },
+    {
+    path: '**',
+    loadComponent: () =>
+      import('@campuscalendar/school').then((m) => m.FourOFourComponent),
   },
 ];

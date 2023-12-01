@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
-    Component
+    Component,
+    Input
 } from '@angular/core';
 
 @Component({
@@ -14,6 +15,11 @@ import {
 })
 export class FourOFourComponent {
 
+  @Input() isCalendar = false;
+
+  getMainMessage() {
+    return this.isCalendar ? 'Le calendrier ne semble plus disponible' : 'La page demandée n\'existe pas';
+  }
 
 
 }
