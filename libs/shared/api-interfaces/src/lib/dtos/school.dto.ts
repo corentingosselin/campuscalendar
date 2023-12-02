@@ -43,7 +43,5 @@ export class DuplicateClassSchedulerDto {
   @IsString()
   schoolId!: string;
   @IsString()
-  classYearId!: string;
-  @IsString()
   classSchedulerId!: string;
 }

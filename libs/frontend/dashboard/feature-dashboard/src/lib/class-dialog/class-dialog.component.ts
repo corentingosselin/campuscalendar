@@ -24,7 +24,8 @@ import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
-import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, tap } from 'rxjs';
+import { DuplicateFormComponent } from '../duplicate-form/duplicate-form.component';
 
 interface SharedCalendarLink {
   link: string;
@@ -45,6 +46,7 @@ interface SharedCalendarLink {
     InputSwitchModule,
     FormsModule,
     ToastModule,
+    DuplicateFormComponent
   ],
   providers: [MessageService],
   templateUrl: './class-dialog.component.html',

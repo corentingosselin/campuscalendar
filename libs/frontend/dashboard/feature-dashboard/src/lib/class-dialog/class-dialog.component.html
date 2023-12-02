@@ -18,6 +18,7 @@
               <p-button
                 icon="pi pi-clone"
                 pTooltip="Dupliquer cette classe"
+                (onClick)="toggleDuplicateDisplay(true)"
               ></p-button>
 
               <p-button
@@ -38,8 +39,10 @@
         </p-toolbar>
 
         <ng-container *ngIf="duplicateFormDisplayed">
-    
+          <campuscalendar-duplicate-form [classSchedulerId]="classScheduler?.id">
 
+          </campuscalendar-duplicate-form>
+    
         </ng-container>
 
         <ng-container *ngIf="sharedCalendar$ | async as sharedCalendar">

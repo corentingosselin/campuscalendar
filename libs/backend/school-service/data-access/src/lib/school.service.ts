@@ -355,6 +355,7 @@ export class SchoolService {
     };
   }
 
+  @CreateRequestContext()
   async deleteClassScheduler(id: string) {
     const result = await this.orm.em.nativeDelete(ClassSchedulerEntity, {
       id: id,
@@ -368,12 +369,14 @@ export class SchoolService {
     return hash;
   }
 
+  @CreateRequestContext()
   async duplicateClassScheduler(duplicateDto: DuplicateClassSchedulerDto) {
     const classSchedulerEntity = await this.orm.em.findOneOrFail(
       ClassSchedulerEntity,
       { id: duplicateDto.classSchedulerId },
       { populate: ['subjectEvents'] }
     );
+    console.log('test');
     //check if campus id and class year id are valid
     const campusEntity = await this.orm.em.findOne(CampusEntity, {
       id: duplicateDto.campusId,
@@ -381,12 +384,10 @@ export class SchoolService {
     if (!campusEntity) {
       throw new RpcException(new HttpException('Campus not found', 404));
     }
-    const classYearEntity = await this.orm.em.findOne(ClassYearEntity, {
-      id: duplicateDto.classYearId,
-    });
-    if (!classYearEntity) {
-      throw new RpcException(new HttpException('Class year not found', 404));
-    }
+
+    console.log('test2');
+
+  
 
     const classSchedulerEntityDuplicate = new ClassSchedulerEntity();
     classSchedulerEntityDuplicate.name = duplicateDto.name;
@@ -397,7 +398,7 @@ export class SchoolService {
 
     classSchedulerEntityDuplicate.campusId = duplicateDto.campusId;
     classSchedulerEntityDuplicate.schoolId = duplicateDto.schoolId;
-    classSchedulerEntityDuplicate.classYearId = duplicateDto.classYearId;
+    classSchedulerEntityDuplicate.classYearId = classSchedulerEntity.classYearId;
     classSchedulerEntityDuplicate.subjectEvents =
       classSchedulerEntity.subjectEvents;
 
@@ -405,6 +406,9 @@ export class SchoolService {
     await this.orm.em.transactional(async (em) => {
       em.persist(classSchedulerEntityDuplicate);
     });
+
+    console.log('test3');
+
 
     return {
       id: classSchedulerEntityDuplicate.id,

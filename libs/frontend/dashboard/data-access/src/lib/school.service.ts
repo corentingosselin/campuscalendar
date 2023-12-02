@@ -5,6 +5,7 @@ import {
   ClassSchedulerInfo,
   ClassSchedulerInfoResponse,
   ClassSchedulerResponse,
+  DuplicateClassSchedulerDto,
   SharedCalendarResonse,
 } from '@campuscalendar/shared/api-interfaces';
 
@@ -51,5 +52,9 @@ export class SchoolService {
 
   deleteClassScheduler(id: string) {
     return this.http.delete<boolean>(`/api/school/class-scheduler/${id}`);
+  }
+
+  duplicateClassScheduler(duplicateDto: DuplicateClassSchedulerDto) {
+    return this.http.post<ClassSchedulerInfoResponse>('api/school/class-scheduler/duplicate', duplicateDto);
   }
 }
