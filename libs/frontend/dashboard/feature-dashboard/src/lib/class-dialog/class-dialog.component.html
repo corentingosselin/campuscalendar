@@ -25,6 +25,7 @@
                 icon="pi pi-upload"
                 severity="help"
                 pTooltip="Exporter le calendrier de cette classe"
+                (onClick)="exportCalendar()"
               ></p-button>
             </div>
             <p-divider [layout]="'vertical'"></p-divider>
@@ -39,10 +40,11 @@
         </p-toolbar>
 
         <ng-container *ngIf="duplicateFormDisplayed">
-          <campuscalendar-duplicate-form [classSchedulerId]="classScheduler?.id">
-
+          <campuscalendar-duplicate-form
+            (duplicateEvent)="toggleDuplicateDisplay($event)"
+            [classSchedulerId]="classScheduler?.id"
+          >
           </campuscalendar-duplicate-form>
-    
         </ng-container>
 
         <ng-container *ngIf="sharedCalendar$ | async as sharedCalendar">

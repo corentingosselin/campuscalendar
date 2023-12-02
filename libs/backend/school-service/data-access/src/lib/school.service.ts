@@ -6,7 +6,12 @@ import {
   SchoolConfigurationDto,
   SubjectEvent,
 } from '@campuscalendar/shared/api-interfaces';
-import { CreateRequestContext, MikroORM, wrap } from '@mikro-orm/core';
+import {
+  Collection,
+  CreateRequestContext,
+  MikroORM,
+  wrap,
+} from '@mikro-orm/core';
 import { HttpException, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { CampusEntity } from './entities/campus.entity';
@@ -376,7 +381,6 @@ export class SchoolService {
       { id: duplicateDto.classSchedulerId },
       { populate: ['subjectEvents'] }
     );
-    console.log('test');
     //check if campus id and class year id are valid
     const campusEntity = await this.orm.em.findOne(CampusEntity, {
       id: duplicateDto.campusId,
@@ -384,10 +388,6 @@ export class SchoolService {
     if (!campusEntity) {
       throw new RpcException(new HttpException('Campus not found', 404));
     }
-
-    console.log('test2');
-
-  
 
     const classSchedulerEntityDuplicate = new ClassSchedulerEntity();
     classSchedulerEntityDuplicate.name = duplicateDto.name;
@@ -398,17 +398,29 @@ export class SchoolService {
 
     classSchedulerEntityDuplicate.campusId = duplicateDto.campusId;
     classSchedulerEntityDuplicate.schoolId = duplicateDto.schoolId;
-    classSchedulerEntityDuplicate.classYearId = classSchedulerEntity.classYearId;
-    classSchedulerEntityDuplicate.subjectEvents =
-      classSchedulerEntity.subjectEvents;
+    classSchedulerEntityDuplicate.classYearId =
+      classSchedulerEntity.classYearId;
+
+    const subjectEvents = classSchedulerEntity.subjectEvents
+      .getItems()
+      .map((subjectEventEntity) => {
+        const subjectEventEntityDuplicate = new SubjectEventEntity();
+        subjectEventEntityDuplicate.date = subjectEventEntity.date;
+        subjectEventEntityDuplicate.startTime = subjectEventEntity.startTime;
+        subjectEventEntityDuplicate.endTime = subjectEventEntity.endTime;
+        subjectEventEntityDuplicate.subjectId = subjectEventEntity.subjectId;
+        subjectEventEntityDuplicate.classScheduler = classSchedulerEntityDuplicate;
+        return subjectEventEntityDuplicate;
+      });
+    classSchedulerEntityDuplicate.subjectEvents = new Collection<SubjectEventEntity>(
+      classSchedulerEntityDuplicate,
+      subjectEvents
+    );
 
     // Use a transaction to ensure all operations are successful
     await this.orm.em.transactional(async (em) => {
       em.persist(classSchedulerEntityDuplicate);
     });
-
-    console.log('test3');
-
 
     return {
       id: classSchedulerEntityDuplicate.id,

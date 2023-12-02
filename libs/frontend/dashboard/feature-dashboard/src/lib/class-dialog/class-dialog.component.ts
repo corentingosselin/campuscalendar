@@ -26,6 +26,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { BehaviorSubject, catchError, tap } from 'rxjs';
 import { DuplicateFormComponent } from '../duplicate-form/duplicate-form.component';
+import { IcsExporterService } from '@campuscalendar/calendar';
 
 interface SharedCalendarLink {
   link: string;
@@ -58,6 +59,7 @@ export class ClassDialogComponent implements OnInit {
   private dialogConfig = inject(DynamicDialogConfig);
   private schoolService = inject(SchoolService);
   private classFacade = inject(ClassSchedulerFacade);
+  private icsExporterService = inject(IcsExporterService);
 
   private messageService = inject(MessageService);
 
@@ -104,7 +106,6 @@ export class ClassDialogComponent implements OnInit {
     navigator.clipboard
       .writeText(this.sharedCalendar$.value.link)
       .then(() => {
-        console.log('copied');
         this.messageService.add({
           severity: 'success',
           summary: 'Lien copié',
@@ -186,6 +187,19 @@ export class ClassDialogComponent implements OnInit {
   duplicateFormDisplayed = false;
   toggleDuplicateDisplay(displayed: boolean) {
     this.duplicateFormDisplayed = displayed;
+  }
+
+  exportCalendar() {
+    if (!this.classScheduler) {
+      return;
+    }
+    const file = this.icsExporterService.export(this.classScheduler);
+    const url = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = file.name;
+    link.click();
+    URL.revokeObjectURL(url);
   }
 
 

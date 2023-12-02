@@ -38,7 +38,6 @@ export class NewClassSortStepComponent implements OnInit {
             const foundClassYear = classYears.find(
               (classYear) => classYear.id === selectedClassYear.id
             );
-            console.log(foundClassYear);
             return foundClassYear ? foundClassYear.subjects : [];
           })
         ) || of([])

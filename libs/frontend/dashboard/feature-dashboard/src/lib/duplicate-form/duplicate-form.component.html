@@ -1,43 +1,40 @@
 <p-card header="Dupliquer cette classe">
+  <ng-container *ngIf="(schoolState$ | async)?.school as school">
+    <form [formGroup]="form">
+      <div class="flex-row small-gap duplicate-section">
+        <div class="flex-column small-gap">
+          <label for="className">Nom de la classe</label>
+          <input
+            formControlName="className"
+            pInputText
+            id="className"
+            placeholder="nom de la classe"
+          />
+        </div>
 
-    <ng-container *ngIf="(schoolState$ | async)?.school as school">
-        <form [formGroup]="form">
+        <div class="flex-column small-gap">
+          <label for="range">Campus</label>
+          <p-dropdown
+            optionLabel="name"
+            formControlName="campus"
+            appendTo="body"
+            [options]="school.campuses"
+            [(ngModel)]="selectedCampus"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="false"
+            placeholder="Sélectionnez un campus"
+          >
+          </p-dropdown>
+        </div>
 
-            <div class="flex-row small-gap duplicate-section">
-
-                <div class="flex-column small-gap">
-                    <label for="className">Nom de la classe</label>
-                    <input
-                      formControlName="className"
-                      pInputText
-                      id="className"
-                      placeholder="nom de la classe"
-                    />
-                  </div>
-
-    <div class="flex-column small-gap">
-        <label for="range">Campus</label>
-        <p-dropdown
-          optionLabel="name"
-          formControlName="campus"
-          appendTo="body"
-          [options]="school.campuses"
-          [(ngModel)]="selectedCampus"
-          [filter]="true"
-          filterBy="name"
-          [showClear]="false"
-          placeholder="Sélectionnez un campus"
-        >
-        </p-dropdown>
+        <p-button
+          label="Dupliquer"
+          submit=""
+          (click)="duplicate()"
+          type="submit"
+        ></p-button>
       </div>
-
-      <p-button
-      label="Dupliquer"
-      submit=""
-      (click)="duplicate()"
-      type="submit"
-    ></p-button>
-    </div>
-      </form>
-    </ng-container>
+    </form>
+  </ng-container>
 </p-card>

@@ -54,7 +54,10 @@ export class SchoolService {
     return this.http.delete<boolean>(`/api/school/class-scheduler/${id}`);
   }
 
-  duplicateClassScheduler(duplicateDto: DuplicateClassSchedulerDto) {
-    return this.http.post<ClassSchedulerInfoResponse>('api/school/class-scheduler/duplicate', duplicateDto);
+  duplicateClassScheduler(duplicateClassSchedulerDto: DuplicateClassSchedulerDto) {
+    return this.http.post<ClassSchedulerInfoResponse>(
+      `/api/school/class-scheduler/duplicate`,
+      duplicateClassSchedulerDto
+    );
   }
 }

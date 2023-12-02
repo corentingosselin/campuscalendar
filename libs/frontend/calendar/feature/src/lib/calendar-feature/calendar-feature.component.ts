@@ -124,7 +124,6 @@ export class CalendarFeatureComponent implements OnInit {
   refreshCalendar(): void {
     // Check if the calendar API is available
     if (this.calendarComponent?.getApi() && !this.isLoaded) {
-      console.log('refreshing calendar');
       this.calendarComponent.getApi().render(); // Re-renders the calendar
       this.isLoaded = true;
     }

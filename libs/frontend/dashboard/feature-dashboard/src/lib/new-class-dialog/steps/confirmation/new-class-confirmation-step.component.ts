@@ -167,7 +167,6 @@ export class NewClassConfirmationStepComponent implements OnInit {
         })),
       },
     };
-    console.log(this.classScheduler);
   }
 
   nextStep() {

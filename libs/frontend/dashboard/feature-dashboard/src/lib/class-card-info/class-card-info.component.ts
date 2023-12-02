@@ -35,7 +35,10 @@ export class ClassCardInfoComponent {
           this.accountDialogRef = this.dialogService.open(
             ClassDialogComponent,
             {
-              header: classScheduler?.campusName + ' - ' + classScheduler?.classYearName,
+              header:
+                classScheduler?.campusName +
+                ' - ' +
+                classScheduler?.classYearName,
               width: '70%',
               height: '70%',
               data: classScheduler,
