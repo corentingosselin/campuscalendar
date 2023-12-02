@@ -10,7 +10,6 @@ import {
 import { ClassDialogComponent } from '../class-dialog/class-dialog.component';
 import { GlobalDialogService } from '@campuscalendar/dialog';
 import { SchoolService } from '@campuscalendar/dashboard-data-access';
-import { t } from '@mikro-orm/core';
 import { catchError, tap } from 'rxjs';
 @Component({
   selector: 'campuscalendar-class-card-info',
