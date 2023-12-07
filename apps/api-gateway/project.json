@@ -21,7 +21,8 @@
       },
       "configurations": {
         "development": {},
-        "production": {}
+        "production": {},
+        "api-gateway": {}
       }
     },
     "serve": {
@@ -36,6 +37,9 @@
         },
         "production": {
           "buildTarget": "api-gateway:build:production"
+        },
+        "api-gateway": {
+          "buildTarget": "api-gateway:build:api-gateway"
         }
       }
     },

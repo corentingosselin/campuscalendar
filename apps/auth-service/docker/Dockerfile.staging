@@ -12,22 +12,22 @@ RUN pnpm install --frozen-lockfile
 # Copier le reste des fichiers de l'application
 COPY . .
 
-RUN npm run build:school-service:staging
+RUN npm run build:auth-service:staging
 
 FROM node:18-alpine 
 
 WORKDIR /usr/src/app
 
-COPY --from=build /app/dist/apps/school-service /usr/src/app
+COPY --from=build /app/dist/apps/auth-service /usr/src/app
 
 RUN npm install -g pnpm
 RUN pnpm install --prod
 
 ENV NODE_ENV staging
-EXPOSE 3400
+EXPOSE 3200
 
 # COPY ENV
-COPY /apps/school-service/env/.env.staging /usr/src/app/.env
+COPY /apps/auth-service/env/.env.staging /usr/src/app/.env
 
 CMD node ./main.js
 
