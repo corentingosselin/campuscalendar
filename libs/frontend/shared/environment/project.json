@@ -6,18 +6,6 @@
   "tags": [],
   "projectType": "library",
   "targets": {
-    "build": {
-      "configurations": {
-        "production": {
-          "fileReplacements": [
-            {
-              "replace": "libs/frontend/environment/environment.ts",
-              "with": "libs/frontend/environment/environment.prod.ts"
-            }
-          ]
-        }
-      }
-    },
 
     "lint": {
       "executor": "@nx/eslint:lint",
