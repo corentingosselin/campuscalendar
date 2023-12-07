@@ -21,7 +21,8 @@
       },
       "configurations": {
         "development": {},
-        "production": {}
+        "production": {},
+        "staging": {}
       }
     },
     "serve": {
@@ -36,6 +37,9 @@
         },
         "production": {
           "buildTarget": "school-service:build:production"
+        },
+        "staging": {
+          "buildTarget": "school-service:build:staging"
         }
       }
     },
