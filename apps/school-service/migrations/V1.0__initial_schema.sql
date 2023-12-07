@@ -84,4 +84,5 @@ ALTER TABLE `subject_event_entity` ADD INDEX `subject_event_entity_class_schedul
 ALTER TABLE `class_year_entity` ADD CONSTRAINT `class_year_entity_school_id_foreign` FOREIGN KEY (`school_id`) REFERENCES `school_entity` (`id`) ON UPDATE CASCADE;
 ALTER TABLE `campus_entity` ADD CONSTRAINT `campus_entity_school_id_foreign` FOREIGN KEY (`school_id`) REFERENCES `school_entity` (`id`) ON UPDATE CASCADE;
 ALTER TABLE `subject_entity` ADD CONSTRAINT `subject_entity_class_year_id_foreign` FOREIGN KEY (`class_year_id`) REFERENCES `class_year_entity` (`id`) ON UPDATE CASCADE;
-ALTER TABLE `subject_event_entity` ADD CONSTRAINT `subject_event_entity_class_scheduler_id_foreign` FOREIGN KEY (`class_scheduler_id`) REFERENCES `class_scheduler_entity` (`id`) ON UPDATE
+ALTER TABLE `subject_event_entity` ADD CONSTRAINT `subject_event_entity_class_scheduler_id_foreign` FOREIGN KEY (`class_scheduler_id`) REFERENCES `class_scheduler_entity` (`id`) ON UPDATE CASCADE;
+
