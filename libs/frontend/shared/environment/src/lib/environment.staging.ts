@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://localhost:4200',
+  apiBaseUrl: 'https://campuscalendar-api-gateway-tyjrjr26kq-ew.a.run.app',
+  calendarBaseUrl: 'https://campuscalendar-tyjrjr26kq-ew.a.run.app',
 };
