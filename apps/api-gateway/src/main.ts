@@ -19,6 +19,8 @@ async function bootstrap() {
     AppModule,
     fastifyAdapter
   );
+  app.enableCors();
+
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
