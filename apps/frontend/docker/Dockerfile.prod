@@ -1,0 +1,9 @@
+FROM nginx:alpine
+
+COPY /dist/apps/frontend /usr/share/nginx/html
+
+# Copier la configuration Nginx personnalisée
+COPY ./apps/frontend/.nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Definition de l'environnement
+ENV NODE_ENV production

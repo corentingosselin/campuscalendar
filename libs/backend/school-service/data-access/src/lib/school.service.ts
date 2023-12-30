@@ -295,7 +295,7 @@ export class SchoolService {
       SharedCalendarEntity,
       { hash: hash }
     );
-    if (!sharedCalendarEntity) {
+    if (!sharedCalendarEntity || !sharedCalendarEntity.enabled) {
       throw new RpcException(
         new HttpException('Shared calendar not found', 404)
       );

@@ -14,12 +14,7 @@
     "build:api-gateway:staging": "nx run api-gateway:build:staging",
     "build:auth-service:staging": "nx run auth-service:build:staging",
     "build:front:staging": "nx run frontend:build:staging",
-    "build:all": "nx run-many --targets=build -p api-gateway,auth-service,school-service,user-service,frontend --parallel --maxParallel=4",
-    "build:docker": "docker build -t campuscalendar/api-gateway:latest -f apps/api-gateway/docker/Dockerfile.prod . && docker build -t campuscalendar/auth-service:latest -f apps/auth-service/docker/Dockerfile.prod . && docker build -t campuscalendar/school-service:latest -f apps/school-service/docker/Dockerfile.prod . && docker build -t campuscalendar/user-service:latest -f apps/user-service/docker/Dockerfile.prod .",
-    "push:docker": "docker push campuscalendar/api-gateway:latest && docker push campuscalendar/auth-service:latest && docker push campuscalendar/school-service:latest && docker push campuscalendar/user-service:latest",
-    "school-service:stg": "env-cmd -f apps/school-service/env/.env.staging nx run school-service:serve:staging",
-    "user-service:stg": "env-cmd -f apps/user-service/env/.env.staging nx run user-service:serve:staging",
-    "api-gateway:stg": "env-cmd -f apps/api-gateway/env/.env.staging nx run api-gateway:serve:staging"
+    "build:all": "nx run-many --targets=build -p api-gateway,auth-service,school-service,user-service,frontend --parallel --maxParallel=4 --configuration=production"
   },
   "private": true,
   "dependencies": {

@@ -30,6 +30,8 @@ export class RpcToHttpExceptionFilter implements ExceptionFilter {
 
     if(status === 500) {
       Logger.error(exception.stack, RpcToHttpExceptionFilter.name);
+      //LOG FULL ERROR
+      Logger.error(exception.getError(), RpcToHttpExceptionFilter.name);
     }
     
     return response.status(status).send({

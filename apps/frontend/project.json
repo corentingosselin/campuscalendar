@@ -38,7 +38,13 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "libs/frontend/shared/environment/src/lib/environment.ts",
+              "with": "libs/frontend/shared/environment/src/lib/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,
