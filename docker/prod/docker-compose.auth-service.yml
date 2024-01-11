@@ -12,5 +12,7 @@ services:
     restart: always
     ports:
       - ${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}
+    depends_on:
+      - rabbitmq
 volumes:
   auth-service-volume:

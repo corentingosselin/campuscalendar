@@ -14,6 +14,7 @@ services:
       - ${SCHOOL_SERVICE_PORT}:${SCHOOL_SERVICE_PORT}
     depends_on:
       - school-service-db
+      - rabbitmq
   school-service-db:
     container_name: 'school-service-db'
     image: mysql:latest

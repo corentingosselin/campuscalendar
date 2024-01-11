@@ -23,7 +23,9 @@ services:
     ports:
       - ${API_GATEWAY_PORT}:${API_GATEWAY_PORT}
     depends_on:
-      - rabbitmq
+      - user-service
+      - school-service
+      - auth-service
   rabbitmq:
     container_name: 'rabbitmq'
     image: rabbitmq:3.8-management-alpine

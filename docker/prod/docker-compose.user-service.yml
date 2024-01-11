@@ -14,6 +14,7 @@ services:
       - ${USER_SERVICE_PORT}:${USER_SERVICE_PORT}
     depends_on:
       - user-service-db
+      - rabbitmq
   user-service-db:
     container_name: 'user-service-db'
     image: mysql:latest
